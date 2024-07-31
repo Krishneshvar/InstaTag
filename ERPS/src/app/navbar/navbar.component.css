@@ -1,0 +1,27 @@
+.navbar {
+    margin-bottom: 20px;
+}
+
+.navtag {
+    padding: 1rem;
+    margin-top: -10px;
+    background-color: #03346E;
+    color: white;
+}
+
+.items, .items:visited {
+    color: white;
+}
+
+.items:hover {
+    color: white;
+}
+
+.material-symbols-outlined {
+    color: white;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 500,
+  'GRAD' 0,
+  'opsz' 20
+}
