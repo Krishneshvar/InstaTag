@@ -2,8 +2,27 @@
     .rounded-lg-3 { border-radius: .3rem; }
 }
 
-.one, .two {
-    height: 100vh;
+/* main {
+  background-color: black;
+} */
+
+.two {
+  height: 100vh;
+}
+
+.one {
+  margin-top: -1px;
+  margin-left: -1px;
+  height: 100vh;
+  filter: brightness(50%);
+  background-image: url(../../public/assets/Designer.jpeg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.image {
+  visibility: visible;
 }
 
 /* navbar */

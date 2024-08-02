@@ -1,27 +1,46 @@
+nav {
+    background-color: transparent;
+}
+
 .navbar {
-    margin-bottom: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background-color: rgba(255, 255, 255, 0) !important;
+    padding: 1rem;
+    margin-bottom: 0; /* Remove bottom margin */
+    transition: background-color 1s !important;
+}
+
+.navbar:hover {
+    background-color: rgb(36, 32, 28) !important; /* Change to brown on hover */
+}
+
+.navbar.scrolled {
+    background-color: black !important;
 }
 
 .navtag {
-    padding: 1rem;
-    margin-top: -10px;
-    background-color: #03346E;
-    color: white;
-}
-
-.items, .items:visited {
-    color: white;
-}
-
-.items:hover {
-    color: white;
+    margin-top: 0; /* Remove negative margin */
 }
 
 .material-symbols-outlined {
-    color: white;
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 500,
-  'GRAD' 0,
-  'opsz' 20
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 20;
+}
+
+/* Styling links inside the navbar */
+.navbar a, .navbar a:visited {
+    text-decoration: none;
+    color: white !important; /* Default color for links */
+    transition: color 0.3s; /* Smooth transition for link color change */
+}
+
+.navbar a:hover {
+    color: yellow; /* Change link color on hover */
 }
