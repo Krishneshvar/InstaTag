@@ -10,12 +10,12 @@ nav {
     z-index: 5;
     background-color: rgba(255, 255, 255, 0) !important;
     padding: 1rem;
-    margin-bottom: 0; /* Remove bottom margin */
+    margin-bottom: 0;
     transition: background-color 1s !important;
 }
 
 .navbar:hover {
-    background-color: rgb(36, 32, 28) !important; /* Change to brown on hover */
+    background-color: rgb(36, 32, 28) !important;
 }
 
 .navbar.scrolled {
@@ -23,7 +23,7 @@ nav {
 }
 
 .navtag {
-    margin-top: 0; /* Remove negative margin */
+    margin-top: 0;
 }
 
 .material-symbols-outlined {
@@ -34,13 +34,12 @@ nav {
     'opsz' 20;
 }
 
-/* Styling links inside the navbar */
 .navbar a, .navbar a:visited {
     text-decoration: none;
-    color: white !important; /* Default color for links */
-    transition: color 0.3s; /* Smooth transition for link color change */
+    color: white !important;
+    transition: color 1s;
 }
 
 .navbar a:hover {
-    color: yellow; /* Change link color on hover */
+    color: yellow;
 }
