@@ -1,2 +1,3 @@
 # InstaTag
-A version of InstaTag, made with Angular.
+
+This InstaTag version is made using Angular.
