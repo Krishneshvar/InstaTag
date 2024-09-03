@@ -4,7 +4,7 @@ function Contents() {
   return (
     <>
     <main>
-      <app-navbar></app-navbar>
+      {/* <app-navbar></app-navbar> */}
 
       <div class="one d-flex flex-column justify-content-center align-items-center text-secondary px-4 py-5 text-center rounded-3 border shadow-lg">
         <img class="car-img" src="/Designer.jpeg" alt="A car on a highway" />
@@ -80,3 +80,5 @@ function Contents() {
     </>
   );
 }
+
+export default Contents

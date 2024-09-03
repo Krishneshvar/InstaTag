@@ -1,0 +1,53 @@
+nav {
+    background-color: transparent;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background-color: rgba(255, 255, 255, 0) !important;
+    padding: 1rem;
+    margin-bottom: 0;
+    transition: background-color 1s !important;
+}
+
+.navbar:hover {
+    background-color: rgb(36, 32, 28) !important;
+}
+
+.navbar.scrolled {
+    background-color: black !important;
+}
+
+.navtag {
+    margin-top: 0;
+}
+
+.navbar a, .navbar a:visited {
+    text-decoration: none;
+    color: white !important;
+    transition: color 1s;
+}
+
+.navbar a:hover {
+    color: yellow;
+}
+
+/* Account Google Icon */
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 20;
+}
+
+/* Custom styles */
+.logo {
+    height: 3rem;
+    width: 6rem;
+    mix-blend-mode: difference;
+}
