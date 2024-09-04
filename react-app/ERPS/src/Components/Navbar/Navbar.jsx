@@ -1,28 +1,46 @@
+import { useEffect } from 'react';
 import './Navbar.css';
 
 function Navbar() {
+    useEffect(() => {
+        const handleScroll = () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <nav className="navbar-overlay">
-            <div className="container-fluid navtag">
-                <a className="navbar-brand" href="#">
-                    <img className="logo" src="/Logo.png" alt="Logo" />
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid navtag">
+                <a class="navbar-brand items" href="#">
+                    <img class="logo" src="/Logo.png" alt="Logo" />
                 </a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a className="nav-link" aria-current="page" href="#">HOME</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">ABOUT US</a>
-                        </li>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link items" aria-current="page" href="#">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link items" href="#">ABOUT US</a>
+                    </li>
                     </ul>
                     <a href="">
-                        <span className="material-symbols-outlined">
-                            account_circle
-                        </span>
+                    <span class="material-symbols-outlined">
+                    account_circle
+                    </span>
                     </a>
                 </div>
             </div>
