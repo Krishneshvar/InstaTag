@@ -51,3 +51,25 @@ nav {
     width: 6rem;
     mix-blend-mode: difference;
 }
+.modal-dialog {
+    max-width: 500px;
+    margin: 100px auto;
+}
+
+.modal-content {
+    padding: 20px;
+}
+.modal-dialog {
+    max-width: 500px;
+    margin: 100px auto;
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+.modal-header .btn-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
