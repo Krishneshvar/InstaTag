@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
+import UserDashboard from '../UserDashboard/UserDashboard';
 
 function Navbar() {
     const [showModal, setShowModal] = useState(false); // State to toggle modal visibility
     const [isLogin, setIsLogin] = useState(true); // State to toggle between Login and Register forms
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track user login status
     const modalRef = useRef(null); // Ref to the modal
 
     useEffect(() => {
@@ -29,6 +31,24 @@ function Navbar() {
 
     const toggleForm = () => {
         setIsLogin(!isLogin); // Toggle between login and register
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        // Directly set user as logged in without validation
+        setIsLoggedIn(true);
+        setShowModal(false); // Close modal on login
+    };
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+        // Handle registration logic here
+        setIsLoggedIn(true); // Simulate successful registration
+        setShowModal(false); // Close modal on successful registration
+    };
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
     };
 
     // Close modal when clicking outside
@@ -79,7 +99,7 @@ function Navbar() {
             </nav>
 
             {/* Login/Register Modal */}
-            {showModal && (
+            {showModal && !isLoggedIn && (
                 <div className="modal show d-block" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                     <div className="modal-dialog" ref={modalRef}>
                         <div className="modal-content">
@@ -90,7 +110,7 @@ function Navbar() {
                             <div className="modal-body">
                                 {/* Login Form */}
                                 {isLogin ? (
-                                    <form>
+                                    <form onSubmit={handleLogin}>
                                         <div className="mb-3">
                                             <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
                                             <input type="text" className="form-control" id="phoneNumber" placeholder="Enter Phone Number" />
@@ -103,7 +123,7 @@ function Navbar() {
                                     </form>
                                 ) : (
                                     /* Register Form */
-                                    <form>
+                                    <form onSubmit={handleRegister}>
                                         <div className="mb-3">
                                             <label htmlFor="vehicleNumber" className="form-label">Vehicle Number</label>
                                             <input type="text" className="form-control" id="vehicleNumber" placeholder="Enter Vehicle Number" />
@@ -131,6 +151,14 @@ function Navbar() {
                             </div>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* User Dashboard */}
+            {isLoggedIn && (
+                <div className="dashboard-container">
+                    <UserDashboard />
+                    <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
                 </div>
             )}
         </>
