@@ -5,7 +5,7 @@ import './UserDashboard.css';
 
 // Sample user data
 const user = {
-    name: 'Ratheesh',
+    name: 'Ratheesh Kumar',
     vehicleName: 'Audi r8',
     // vehicleIcon: '🚗', // Using an emoji as a placeholder for vehicle icon
     userImage: './profile.jpg' // Replace with the actual image URL or local path
