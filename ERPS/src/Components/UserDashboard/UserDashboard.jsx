@@ -14,10 +14,10 @@ const user = {
 function UserDashboard({ onLogout }) {
     // Sample data for recent transactions
     const transactions = [
-        { id: 1, date: '2024-09-12', tollName: 'Toll A', amount: 50 },
-        { id: 2, date: '2024-09-10', tollName: 'Toll B', amount: 30 },
-        { id: 3, date: '2024-09-08', tollName: 'Toll C', amount: 40 },
-        { id: 4, date: '2024-09-05', tollName: 'Toll D', amount: 60 },
+        { id: 1, date: '2024-09-12', tollName: 'Toll A', amount: 70 },
+        { id: 2, date: '2024-09-10', tollName: 'Toll B', amount: 45 },
+        { id: 3, date: '2024-09-08', tollName: 'Toll C', amount: 78 },
+        { id: 4, date: '2024-09-05', tollName: 'Toll D', amount: 90 },
     ];
 
     // Data for the chart
