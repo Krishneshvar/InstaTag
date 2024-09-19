@@ -27,7 +27,7 @@ function UserDashboard({ onLogout }) {
             {
                 label: `Toll Amount (₹) - ${user.vehicleIcon}`, // Include the vehicle icon in the graph label
                 data: transactions.map(tx => tx.amount),
-                borderColor: '#00D1B2', // Modern teal color for the line
+                borderColor: '#00D1B2', 
                 backgroundColor: 'rgba(0, 209, 178, 0.2)', // Light teal fill
                 fill: true,
                 tension: 0.4,
@@ -44,7 +44,7 @@ function UserDashboard({ onLogout }) {
             legend: {
                 display: true,
                 labels: {
-                    color: '#FFFFFF' // White color for labels
+                    color: '#FFFFFF' 
                 },
                 position: 'top',
             },
@@ -54,7 +54,7 @@ function UserDashboard({ onLogout }) {
                 title: {
                     display: true,
                     text: 'Date',
-                    color: '#FFFFFF', // White text for axis labels
+                    color: '#FFFFFF', 
                 },
                 ticks: {
                     color: '#FFFFFF', 
@@ -64,7 +64,7 @@ function UserDashboard({ onLogout }) {
                 title: {
                     display: true,
                     text: 'Amount (₹)',
-                    color: '#FFFFFF', // 
+                    color: '#FFFFFF', 
                 },
                 ticks: {
                     color: '#FFFFFF', // White ticks
