@@ -1,12 +1,16 @@
+// Navbar.js
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import UserDashboard from '../UserDashboard/UserDashboard';
+import Contents from '../Contents/Contents';
 
 function Navbar() {
-    const [showModal, setShowModal] = useState(false); // State to toggle modal visibility
-    const [isLogin, setIsLogin] = useState(true); // State to toggle between Login and Register forms
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track user login status
-    const modalRef = useRef(null); // Ref to the modal
+    const [showModal, setShowModal] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const modalRef = useRef(null);
+    const navigate = useNavigate();  // Add useNavigate hook
 
     useEffect(() => {
         const handleScroll = () => {
@@ -19,7 +23,6 @@ function Navbar() {
         };
 
         window.addEventListener('scroll', handleScroll);
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -30,31 +33,32 @@ function Navbar() {
     };
 
     const toggleForm = () => {
-        setIsLogin(!isLogin); // Toggle between login and register
+        setIsLogin(!isLogin);
     };
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Directly set user as logged in without validation
+        // Simulate a successful login
         setIsLoggedIn(true);
-        setShowModal(false); // Close modal on login
+        setShowModal(false);
+        // Navigate to UserDashboard
+        navigate('/dashboard');
     };
 
     const handleRegister = (e) => {
         e.preventDefault();
-        // Handle registration logic here
-        setIsLoggedIn(true); // Simulate successful registration
-        setShowModal(false); // Close modal on successful registration
+        setIsLoggedIn(true);
+        setShowModal(false);
+        navigate('/dashboard');
     };
 
     const handleLogout = () => {
         setIsLoggedIn(false);
     };
 
-    // Close modal when clicking outside
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-            setShowModal(false); // Close the modal
+            setShowModal(false);
         }
     };
 
@@ -64,7 +68,6 @@ function Navbar() {
         } else {
             document.removeEventListener('mousedown', handleClickOutside);
         }
-
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
@@ -83,7 +86,7 @@ function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link items" aria-current="page" href="#">HOME</a>
+                                <a className="nav-link items" aria-current="page" href="">HOME</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link items" href="#">ABOUT US</a>
@@ -122,7 +125,6 @@ function Navbar() {
                                         <button type="submit" className="btn btn-primary">Login</button>
                                     </form>
                                 ) : (
-                                    /* Register Form */
                                     <form onSubmit={handleRegister}>
                                         <div className="mb-3">
                                             <label htmlFor="vehicleNumber" className="form-label">Vehicle Number</label>
