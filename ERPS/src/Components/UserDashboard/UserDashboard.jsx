@@ -57,14 +57,14 @@ function UserDashboard({ onLogout }) {
                     color: '#FFFFFF', // White text for axis labels
                 },
                 ticks: {
-                    color: '#FFFFFF', // White ticks
+                    color: '#FFFFFF', 
                 }
             },
             y: {
                 title: {
                     display: true,
                     text: 'Amount (₹)',
-                    color: '#FFFFFF', // White text for axis labels
+                    color: '#FFFFFF', // 
                 },
                 ticks: {
                     color: '#FFFFFF', // White ticks
