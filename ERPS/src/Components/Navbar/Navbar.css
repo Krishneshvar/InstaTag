@@ -106,3 +106,18 @@ nav {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.reg-bound {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.reg {
+    background-color: #0d6dfc;
+    padding: 1rem;
+    color: white;
+    border-radius: 1rem;
+    border: none;
+}

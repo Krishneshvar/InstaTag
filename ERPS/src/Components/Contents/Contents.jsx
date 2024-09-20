@@ -7,7 +7,6 @@ function Contents() {
       <main>
         <Navbar /> 
         <div className="one d-flex flex-column justify-content-center align-items-center text-secondary px-4 py-5 text-center rounded-3 border shadow-lg">
-          {/* <img class="car-img" src="/Designer.jpeg" alt="A car on a highway" /> */}
           <div className="img-overlay fade-in-text">
             <h1>InstaTag</h1>
             <h2>Efficiency on the go...</h2>

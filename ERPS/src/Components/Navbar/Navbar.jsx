@@ -62,6 +62,14 @@ function Navbar() {
         }
     };
 
+    const registerQuestion = () => {
+        return(
+            <div className='reg-bound'>
+            <p>Don't have an account?</p> <button className='reg'>Register</button>
+            </div>
+        )
+    }
+
     useEffect(() => {
         if (showModal) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -148,7 +156,7 @@ function Navbar() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-link" onClick={toggleForm}>
-                                    {isLogin ? "Don't have an account? Register" : 'Already have an account? Login'}
+                                    {isLogin ? registerQuestion() : 'Already have an account? Login'}
                                 </button>
                             </div>
                         </div>
