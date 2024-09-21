@@ -121,3 +121,10 @@ nav {
     border-radius: 1rem;
     border: none;
 }
+.nav-link.items {
+    color: #000;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 18px;
+  }
+  

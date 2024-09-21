@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import UserDashboard from '../UserDashboard/UserDashboard';
 import Contents from '../Contents/Contents';
+import AboutUs from '../AboutUs/AboutUs';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     const [showModal, setShowModal] = useState(false);
@@ -94,10 +96,10 @@ function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link items" aria-current="page" href="">HOME</a>
+                            <Link className="nav-link items" to="/Contents">HOME</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link items" href="#">ABOUT US</a>
+                             <Link className="nav-link items" to="/AboutUs">ABOUT US</Link>
                             </li>
                         </ul>
                         <a href="#" onClick={toggleModal}>

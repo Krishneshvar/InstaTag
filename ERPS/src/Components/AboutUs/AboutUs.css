@@ -1,0 +1,71 @@
+.about-container {
+    padding: 20px;
+    padding-top: 100px;
+    max-width: 1500px;
+    font-family: 'Arial', sans-serif;
+    background-color: #1c1c1c; /* Dark background */
+    color: #f0f0f0; /* Light text for contrast */
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #fff; /* White title */
+  }
+  
+  .about-content,
+  .developers,
+  .tech-used {
+    margin: 30px 0;
+  }
+  
+  .developers {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .developer-card {
+    text-align: center;
+    max-width: 350px;
+    background-color: #2a2a2a; /* Dark card background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+  }
+  
+  .developer-photo {
+    width: 150px; /* Increase size for better visibility */
+    height: 150px; /* Keep it square */
+    border-radius: 50%; /* Circular shape */
+    margin-bottom: 10px;
+    object-fit: cover; /* Ensures the image is scaled and cropped properly */
+    border: 2px solid #fff; /* Optional white border around the photo */
+  }
+  
+  h2 {
+    font-size: 28px;
+    color: #f0f0f0; /* Light color for headings */
+  }
+  
+  h3 {
+    font-size: 24px;
+    color: #ddd; /* Light color for sub-headings */
+  }
+  
+  p {
+    font-size: 18px;
+    color: #ccc; /* Light grey for better readability */
+  }
+  
+  ul {
+    list-style-type: square;
+    margin-left: 20px;
+    color: #ccc; /* Light grey for list items */
+  }
+  
+  ul li {
+    font-size: 18px;
+  }
+  
+  
