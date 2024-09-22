@@ -33,7 +33,7 @@ function Contents() {
 
         <div className="b-example-divider"></div>
 
-        <div className="container col-xxl-8 px-4 py-5">
+        {/* <div className="container col-xxl-8 px-4 py-5">
           <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
             <div className="col-10 col-sm-8 col-lg-6">
               .
@@ -47,11 +47,11 @@ function Contents() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="b-example-divider"></div>
 
-        <div className="container my-5">
+        {/* <div className="container my-5">
           <div className="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
             <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
               <h1 className="display-4 fw-bold lh-1 text-body-emphasis">Border hero with cropped image and shadows</h1>
@@ -64,11 +64,11 @@ function Contents() {
             <div className="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="b-example-divider"></div>
 
-        <div className="bg-dark text-secondary px-4 py-5 text-center">
+        {/* <div className="bg-dark text-secondary px-4 py-5 text-center">
           <div className="py-5">
             <h1 className="display-5 fw-bold text-white">Dark color hero</h1>
             <div className="col-lg-6 mx-auto">
@@ -79,7 +79,7 @@ function Contents() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="b-example-divider mb-0"></div>
       </main>
