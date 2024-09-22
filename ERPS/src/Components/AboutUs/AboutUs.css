@@ -1,71 +1,134 @@
+/* Container for the entire About Us page */
 .about-container {
-    padding: 20px;
-    padding-top: 100px;
-    max-width: 1500px;
-    font-family: 'Arial', sans-serif;
-    background-color: #1c1c1c; /* Dark background */
-    color: #f0f0f0; /* Light text for contrast */
+  padding: 20px;
+  padding-top: 100px;
+  max-width: 1500px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  background-color: #1c1c1c;
+  color: #f0f0f0;
+}
+
+/* Centered page title */
+.page-title {
+  text-align: center;
+  font-size: 2.25rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Responsive margins for sections */
+.about-content,
+.developers,
+.tech-used {
+  margin: 30px 0;
+}
+
+/* Developer section with responsive layout */
+.developers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+/* Individual developer card styling */
+.developer-card {
+  text-align: center;
+  max-width: 350px;
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  flex: 1 1 300px; /* Responsive width */
+}
+
+/* Circular developer photos with proper aspect ratio */
+.developer-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+/* Headings and paragraph styling */
+h2 {
+  font-size: 2rem;
+  color: #f0f0f0;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #ddd;
+}
+
+p {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+/* Technologies list styling */
+ul {
+  list-style-type: square;
+  margin-left: 20px;
+}
+
+ul li {
+  font-size: 1rem;
+}
+
+/* Media query for tablets and smaller screens */
+@media (max-width: 768px) {
+  .about-container {
+    padding-top: 50px;
+    padding: 15px;
   }
-  
+
   .page-title {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: #fff; /* White title */
+    font-size: 2rem;
   }
-  
-  .about-content,
-  .developers,
-  .tech-used {
-    margin: 30px 0;
-  }
-  
-  .developers {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .developer-card {
-    text-align: center;
-    max-width: 350px;
-    background-color: #2a2a2a; /* Dark card background */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
-  }
-  
-  .developer-photo {
-    width: 150px; /* Increase size for better visibility */
-    height: 150px; /* Keep it square */
-    border-radius: 50%; /* Circular shape */
-    margin-bottom: 10px;
-    object-fit: cover; /* Ensures the image is scaled and cropped properly */
-    border: 2px solid #fff; /* Optional white border around the photo */
-  }
-  
+
   h2 {
-    font-size: 28px;
-    color: #f0f0f0; /* Light color for headings */
+    font-size: 1.75rem;
   }
-  
+
   h3 {
-    font-size: 24px;
-    color: #ddd; /* Light color for sub-headings */
+    font-size: 1.25rem;
   }
-  
-  p {
-    font-size: 18px;
-    color: #ccc; /* Light grey for better readability */
+
+  .developer-card {
+    max-width: 100%;
+    flex: 1 1 100%; /* Full width for smaller screens */
   }
-  
-  ul {
-    list-style-type: square;
-    margin-left: 20px;
-    color: #ccc; /* Light grey for list items */
+
+  .developer-photo {
+    width: 120px;
+    height: 120px;
   }
-  
-  ul li {
-    font-size: 18px;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.75rem;
   }
-  
-  
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  p, ul li {
+    font-size: 0.9rem;
+  }
+
+  .developer-photo {
+    width: 100px;
+    height: 100px;
+  }
+}
