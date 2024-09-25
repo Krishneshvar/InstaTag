@@ -1,6 +1,6 @@
 /* Modal styles */
 .modal-dialog {
-  max-width: 90%; /* Makes it responsive on smaller screens */
+  max-width: auto; /* Makes it responsive on smaller screens */
   margin: 100px auto;
   padding: 1rem;
   border-radius: 8px;
@@ -123,4 +123,43 @@
     padding: 0.5rem;
     font-size: 14px;
   }
+}
+/* Full-screen overlay for the login modal */
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears over all other content */
+}
+
+/* Login modal box */
+.login-modal {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    z-index: 1001; /* Ensures the modal is above the overlay */
+}
+
+/* Form elements and buttons styling */
+.login-modal .form-control {
+    margin-bottom: 1rem;
+}
+
+.login-modal .btn-primary {
+    width: 100%;
+}
+
+.login-modal .btn-secondary {
+    width: 100%;
+    background-color: #6c757d;
+    color: white;
 }

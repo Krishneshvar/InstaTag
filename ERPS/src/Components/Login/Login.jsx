@@ -40,11 +40,12 @@ function Login() {
                         <h5 className="modal-title">{isLogin ? 'Login' : 'Register'}</h5>
                     </div>
                     <div className="modal-body">
-                        {isLogin ? (
+                    {isLogin ? (
                             <form onSubmit={handleLogin}>
                                 <div className="mb-3">
                                     <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
                                     <input type="text" className="form-control" id="phoneNumber" placeholder="Enter Phone Number" />
+                                    <button type="button" className="btn btn-primary mt-2">Get OTP</button> {/* Get OTP Button */}
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="otp" className="form-label">OTP</label>
@@ -52,8 +53,8 @@ function Login() {
                                 </div>
                                 <button type="submit" className="btn btn-primary">Login</button>
                             </form>
-                        ) : (
-                            <form onSubmit={handleRegister}>
+                            ) : (
+                                <form onSubmit={handleRegister}>
                                 <div className="mb-3">
                                     <label htmlFor="vehicleNumber" className="form-label">Vehicle Number</label>
                                     <input type="text" className="form-control" id="vehicleNumber" placeholder="Enter Vehicle Number" />
@@ -65,13 +66,14 @@ function Login() {
                                 <div className="mb-3">
                                     <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
                                     <input type="text" className="form-control" id="phoneNumber" placeholder="Enter Phone Number" />
+                                    <button type="button" className="btn btn-primary mt-2">Get OTP</button> {/* Get OTP Button */}
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="otp" className="form-label">OTP</label>
                                     <input type="text" className="form-control" id="otp" placeholder="Enter OTP" />
                                 </div>
                                 <button type="submit" className="btn btn-primary">Register</button>
-                            </form>
+                            </form>                            
                         )}
                     </div>
                     <div className="modal-footer">
