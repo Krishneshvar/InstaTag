@@ -46,11 +46,12 @@ function Navbar() {
                                 <Link className="nav-link items" to="/AboutUs">ABOUT US</Link>
                             </li>
                         </ul>
-                        <a href="#" onClick={() => navigate('/login')}>
-                            <span className="material-symbols-outlined">
-                                account_circle
-                            </span>
-                        </a>
+                        <a className="account-icon" onClick={() => navigate('/login')}>
+                             <span className="material-symbols-outlined">
+                                        account_circle
+                                </span>
+                            </a>
+
                     </div>
                 </div>
             </nav>

@@ -111,3 +111,14 @@ nav {
     font-size: 18px;
   }
 }
+/* Style for the account icon */
+a.account-icon {
+  cursor: pointer; /* Change cursor to pointer */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+a.account-icon:hover {
+  color: yellow; /* Change color on hover */
+  transform: scale(1.1); /* Slight zoom effect on hover */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transition for both color and scaling */
+}
