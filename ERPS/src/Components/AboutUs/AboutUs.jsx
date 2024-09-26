@@ -29,6 +29,11 @@ const AboutUs = () => {
                 user interfaces. Ratheesh led the project’s design and development, ensuring the system’s efficiency and
                 performance.
               </p>
+              <p className="socials">
+                <img src="/socials/github.svg" alt="GitHub Logo" className="social-icon github" />
+                <img src="/socials/linkedin.svg" alt="LinkedIn Logo" className="social-icon linkedin" />
+                <img src="/socials/github.svg" alt="X Logo" className="social-icon x" />
+              </p>
             </div>
 
             <div className="developer-card">
@@ -38,6 +43,12 @@ const AboutUs = () => {
                 A passionate developer focused on problem-solving and back-end architecture. He specializes
                 in ensuring that the system's server-side operations run smoothly, integrating the necessary APIs and
                 database solutions. Krishneshvar was instrumental in making the system secure and scalable.
+              </p>
+              <p className="socials">
+                <img src="/socials/github.svg" alt="GitHub Logo" className="social-icon github" />
+                <img src="/socials/linkedin.svg" alt="LinkedIn Logo" className="social-icon linkedin" />
+                <img src="/socials/github.svg" alt="X Logo" className="social-icon x" />
+                <i class="fi fi-brands-linkedin"></i>
               </p>
             </div>
           </div>
@@ -50,9 +61,15 @@ const AboutUs = () => {
         </p>
 
         <div className='tech-logos'>
-          <img src="/tech-used/react.png" alt="React JS Logo" className='tech' />
-          <img src="/tech-used/node.png" alt="Node JS Logo" className='tech' />
-          <img src="/tech-used/postgre.png" alt="PostgreSQL Logo" className='tech' />
+          <div className="tech-card">
+            <img src="/tech-used/react.png" alt="React JS Logo" className='tech' />
+          </div>
+          <div className="tech-card">
+            <img src="/tech-used/node.png" alt="Node JS Logo" className='tech' />
+          </div>
+          <div className="tech-card">
+            <img src="/tech-used/postgre.png" alt="PostgreSQL Logo" className='tech' />
+          </div>
         </div>
       </section>
     </div>

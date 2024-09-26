@@ -13,7 +13,6 @@
   color: #f0f0f0;
 }
 
-/* Centered page title */
 .page-title {
   text-align: center;
   font-size: 2.25rem;
@@ -54,7 +53,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  flex: 1 1 300px; /* Responsive width */
+  flex: 1 1 300px;
 }
 
 /* Circular developer photos with proper aspect ratio */
@@ -75,6 +74,21 @@
 .tech {
   height: 5rem;
   width: 5rem;
+}
+
+.socials {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon {
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
 }
 
 /* Media query for tablets and smaller screens */
