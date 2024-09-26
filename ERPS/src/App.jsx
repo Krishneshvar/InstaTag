@@ -1,23 +1,31 @@
 import './App.css';
-import Contents from './Components/Contents/Contents';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
-import UserDashboard from './Components/UserDashboard/UserDashboard';
+import Contents from './Components/Contents/Contents';
 import AboutUs from './Components/AboutUs/AboutUs';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './Components/AuthForms/Login';
+import Register from './Components/AuthForms/Register';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <>
+        <Navbar />
+        <Outlet />
+      </>
+    ),
+    children: [
+      { path: "/", element: <Contents /> },
+      { path: "/about-us", element: <AboutUs /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        {/* Define the routes */}
-        <Route path="/" element={<Contents />} />
-        <Route path="/dashboard" element={<UserDashboard />} />
-        <Route path="/AboutUs" element={<AboutUs />} />
-        
-      </Routes>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

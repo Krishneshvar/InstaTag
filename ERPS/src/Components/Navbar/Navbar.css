@@ -108,78 +108,22 @@ nav {
   }
   
   /* Custom link styles */
-  .nav-link.items {
+  .nav-link {
     color: #000;
     text-decoration: none;
     margin-right: 20px;
     font-size: 18px;
+    padding: 1rem;
   }
-<<<<<<< HEAD
-}
+
 /* Style for the account icon */
 a.account-icon {
-  cursor: pointer; /* Change cursor to pointer */
-  transition: color 0.3s ease; /* Smooth transition for color change */
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 a.account-icon:hover {
-  color: yellow; /* Change color on hover */
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  transition: color 0.3s ease, transform 0.3s ease; /* Transition for both color and scaling */
+  color: yellow;
+  transform: scale(1.1);
+  transition: color 0.3s ease, transform 0.3s ease;
 }
-=======
-  
-  
-  /* Media Queries for responsiveness */
-  
-  /* Adjust navbar padding and text size on smaller screens */
-  @media (max-width: 768px) {
-    .navbar {
-      padding: 0.5rem;
-      font-size: 16px;
-    }
-  
-    .nav-link.items {
-      font-size: 16px;
-      margin-right: 10px;
-    }
-  
-    .logo {
-      height: 2.5rem;
-      width: 5rem;
-    }
-  }
-  
-  /* Adjust for small mobile devices */
-  @media (max-width: 480px) {
-    .navbar {
-      padding: 0.5rem;
-      font-size: 14px;
-    }
-  
-    .nav-link.items {
-      font-size: 14px;
-      margin-right: 5px;
-    }
-  
-    .logo {
-      height: 2rem;
-      width: 4rem;
-    }
-  
-    .modal-dialog {
-      max-width: 95%; /* Make modal fill more screen space on mobile */
-      padding: 0.5rem;
-    }
-  
-    .btn-secondary, .reg {
-      padding: 0.5rem 1rem;
-      font-size: 14px;
-    }
-  
-    .material-symbols-outlined {
-      font-size: 18px;
-    }
-  }
-  
->>>>>>> parent of 0a9712d (Login is made as a seperate Component)

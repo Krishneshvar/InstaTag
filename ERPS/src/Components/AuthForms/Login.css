@@ -1,0 +1,33 @@
+.form-container {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    width: 100dvw;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+form {
+    border: 1px solid lightgrey;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.register-route {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.register-route button {
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
