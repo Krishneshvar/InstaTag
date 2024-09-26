@@ -1,0 +1,165 @@
+/* Modal styles */
+.modal-dialog {
+  max-width: auto; /* Makes it responsive on smaller screens */
+  margin: 100px auto;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+.modal-header .btn-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark background overlay */
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #00D1B2;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reg-bound {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reg {
+  background-color: #0d6dfc;
+  padding: 1rem;
+  color: white;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.reg:hover {
+  background-color: #094cbe;
+}
+
+/* Form styles */
+.form-label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Media Queries for responsiveness */
+
+/* Adjust modal and button size for smaller screens */
+@media (max-width: 768px) {
+  .modal-dialog {
+    max-width: 95%;
+    padding: 0.5rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .reg {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-dialog {
+    max-width: 95%;
+    padding: 0.5rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .reg {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+}
+/* Full-screen overlay for the login modal */
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears over all other content */
+}
+
+/* Login modal box */
+.login-modal {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    z-index: 1001; /* Ensures the modal is above the overlay */
+}
+
+/* Form elements and buttons styling */
+.login-modal .form-control {
+    margin-bottom: 1rem;
+}
+
+.login-modal .btn-primary {
+    width: 100%;
+}
+
+.login-modal .btn-secondary {
+    width: 100%;
+    background-color: #6c757d;
+    color: white;
+}
