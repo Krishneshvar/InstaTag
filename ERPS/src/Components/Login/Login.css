@@ -4,8 +4,12 @@
   margin: 100px auto;
   padding: 1rem;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header, .modal-title, .mb-3, .form-label, .modal-body, .reg-bound, .reg-bound p, form {
+  background-color: white !important;
 }
 
 .modal-content {
@@ -13,7 +17,6 @@
 }
 
 .modal-header .btn-close {
-  background: transparent;
   border: none;
   cursor: pointer;
 }
@@ -28,7 +31,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark background overlay */
 }
 
 /* Button styles */
@@ -131,7 +133,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Transparent dark background */
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;

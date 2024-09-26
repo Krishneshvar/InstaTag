@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'; 
@@ -77,9 +76,9 @@ function Login() {
                         )}
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-link" onClick={toggleForm}>
+                        <div type="button" className="btn btn-link" onClick={toggleForm}>
                             {isLogin ? registerQuestion() : 'Already have an account? Login'}
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
