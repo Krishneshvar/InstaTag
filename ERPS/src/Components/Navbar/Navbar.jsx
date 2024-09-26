@@ -1,11 +1,11 @@
 // Navbar.js
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import UserDashboard from '../UserDashboard/UserDashboard';
-import Contents from '../Contents/Contents';
-import AboutUs from '../AboutUs/AboutUs';
 import { Link } from 'react-router-dom';
+import Login from '../AuthForms/Login';
+import Register from '../AuthForms/Register';
 
 function Navbar() {
     const [showModal, setShowModal] = useState(false);
@@ -120,42 +120,12 @@ function Navbar() {
                                 <h5 className="modal-title">{isLogin ? 'Login' : 'Register'}</h5>
                                 <button type="button" className="btn-close" onClick={toggleModal}></button>
                             </div>
+
                             <div className="modal-body">
                                 {/* Login Form */}
-                                {isLogin ? (
-                                    <form onSubmit={handleLogin}>
-                                        <div className="mb-3">
-                                            <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
-                                            <input type="text" className="form-control" id="phoneNumber" placeholder="Enter Phone Number" />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="otp" className="form-label">OTP</label>
-                                            <input type="text" className="form-control" id="otp" placeholder="Enter OTP" />
-                                        </div>
-                                        <button type="submit" className="btn btn-primary">Login</button>
-                                    </form>
-                                ) : (
-                                    <form onSubmit={handleRegister}>
-                                        <div className="mb-3">
-                                            <label htmlFor="vehicleNumber" className="form-label">Vehicle Number</label>
-                                            <input type="text" className="form-control" id="vehicleNumber" placeholder="Enter Vehicle Number" />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="aadharNumber" className="form-label">Aadhaar Number</label>
-                                            <input type="text" className="form-control" id="aadharNumber" placeholder="Enter Aadhaar Number" />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
-                                            <input type="text" className="form-control" id="phoneNumber" placeholder="Enter Phone Number" />
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="otp" className="form-label">OTP</label>
-                                            <input type="text" className="form-control" id="otp" placeholder="Enter OTP" />
-                                        </div>
-                                        <button type="submit" className="btn btn-primary">Register</button>
-                                    </form>
-                                )}
+                                {isLogin ? ( <Login /> ) : ( <Register /> )}
                             </div>
+
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-link" onClick={toggleForm}>
                                     {isLogin ? registerQuestion() : 'Already have an account? Login'}
