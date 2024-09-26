@@ -102,20 +102,11 @@ function Navbar() {
                              <Link className="nav-link items" to="/AboutUs">ABOUT US</Link>
                             </li>
                         </ul>
-<<<<<<< HEAD
-                        <a className="account-icon" onClick={() => navigate('/login')}>
-                             <span className="material-symbols-outlined">
-                                        account_circle
-                                </span>
-                            </a>
-
-=======
                         <a href="#" onClick={toggleModal}>
                             <span className="material-symbols-outlined">
                                 account_circle
                             </span>
                         </a>
->>>>>>> parent of 0a9712d (Login is made as a seperate Component)
                     </div>
                 </div>
             </nav>
