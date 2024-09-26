@@ -1,0 +1,29 @@
+.register-container {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    width: 100dvw;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-form {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 30dvw;
+}
+
+form {
+    border: 1px solid lightgrey;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.login-route {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 1rem;
+}

@@ -1,4 +1,4 @@
-.form-container {
+.login-container {
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -25,9 +25,4 @@ form {
     flex-direction: row;
     gap: 1rem;
     padding: 1rem;
-}
-
-.register-route button {
-    padding: 0.5rem;
-    border-radius: 1rem;
 }

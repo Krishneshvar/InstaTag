@@ -1,9 +1,10 @@
 import './Login.css'
+import { Link } from 'react-router-dom';
 
 function Login() {
     return(
         <>
-        <div className="form-container">
+        <div className="login-container">
             <div className="login-form">
                 <form>
                     <div className="mb-3">
@@ -20,7 +21,9 @@ function Login() {
                     <a>
                         Don't have an account?
                     </a>
-                    <button className='btn-primary'> Register </button>
+                    <Link to={`/register`}>
+                        <button className='btn btn-primary'> Register </button>
+                    </Link>
                 </div>
             </div>
         </div>
