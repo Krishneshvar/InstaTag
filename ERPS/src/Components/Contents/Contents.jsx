@@ -15,15 +15,15 @@ function Contents() {
           <h1 className="display-4 fw-bold text-body-emphasis"> What we provide </h1>
           <div className="d-flex col-lg-6 mx-auto justify-content-between align-items-center cards-container">
             <div className="card">
-              <img src="/fast-icon.png" alt="Faster Icon" className='provides-icon' />
+              <img src="/features/fast-icon.png" alt="Faster Icon" className='provides-icon' />
               Faster
             </div>
             <div className="card">
-              <img src="/safe-icon.png" alt="Safer Icon" className='provides-icon' />
+              <img src="/features/safe-icon.png" alt="Safer Icon" className='provides-icon' />
               Safer
             </div>
             <div className="card">
-              <img src="/automated-icon.png" alt="Automated Icon" className='provides-icon' />
+              <img src="/features/automated-icon.png" alt="Automated Icon" className='provides-icon' />
               Automated
             </div>
           </div>
