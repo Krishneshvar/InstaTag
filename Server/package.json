@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +13,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "pg": "^8.13.0",
+    "qrcode": "^1.5.4",
     "server": "file:",
     "vite-node": "^2.1.1"
   }
