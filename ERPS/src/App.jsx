@@ -5,6 +5,7 @@ import Contents from './Components/Contents/Contents';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Login from './Components/AuthForms/Login';
 import Register from './Components/AuthForms/Register';
+import UserDashboard from './Components/UserDashboard/UserDashboard';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/about-us", element: <AboutUs /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
+      { path: "/user-dashboard", element: <UserDashboard /> },
     ],
   },
 ]);

@@ -1,10 +1,11 @@
 import './Login.css';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,6 +23,7 @@ function Login() {
       
       if (result.success) {
         alert(result.message);
+        navigate('/user-dashboard');
       }
       else {
         alert(result.message);
