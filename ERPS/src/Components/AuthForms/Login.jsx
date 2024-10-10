@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [vehicle_no, setVehicle_no] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ vehicle_no, password })
       });
 
       const result = await response.json();
@@ -40,14 +40,14 @@ function Login() {
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="VehicleNumber" className="form-label">Username</label>
+            <label htmlFor="VehicleNumber" className="form-label">Vehicle Number</label>
             <input
               type="text"
               className="form-control"
               id="VehicleNumber"
-              placeholder="Enter Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter Vehicle number"
+              value={vehicle_no}
+              onChange={(e) => setVehicle_no(e.target.value)}
             />
           </div>
           <div className="mb-3">
