@@ -66,7 +66,7 @@ function Login() {
           {
             error ?
             <span class="badge d-flex align-items-center p-1 pe-2 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill">
-              Warning
+              Please check your vehicle number and password.
             </span> : null
           }
           <button type="submit" className="btn btn-primary">Login</button>

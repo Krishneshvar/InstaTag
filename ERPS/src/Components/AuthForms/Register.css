@@ -21,6 +21,11 @@ form {
     border-radius: 1rem;
 }
 
+.otp-options {
+    width: 100%;
+    gap: 0.5rem;
+}
+
 .login-route {
     display: flex;
     flex-direction: row;
