@@ -30,9 +30,8 @@ const AboutUs = () => {
                 performance.
               </p>
               <p className="socials">
-                <img src="/socials/github.svg" alt="GitHub Logo" className="social-icon github" />
-                <img src="/socials/linkedin.svg" alt="LinkedIn Logo" className="social-icon linkedin" />
-                <img src="/socials/github.svg" alt="X Logo" className="social-icon x" />
+                <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" href="" />
+                <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin" href="" />
               </p>
             </div>
 
@@ -45,10 +44,8 @@ const AboutUs = () => {
                 database solutions. Krishneshvar was instrumental in making the system secure and scalable.
               </p>
               <p className="socials">
-                <img src="/socials/github.svg" alt="GitHub Logo" className="social-icon github" />
-                <img src="/socials/linkedin.svg" alt="LinkedIn Logo" className="social-icon linkedin" />
-                <img src="/socials/github.svg" alt="X Logo" className="social-icon x" />
-                <i class="fi fi-brands-linkedin"></i>
+                <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" href="https://github.com/Krishneshvar" />
+                <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin"  href="https://www.linkedin.com/in/krishneshvar-j" />
               </p>
             </div>
           </div>
@@ -66,6 +63,9 @@ const AboutUs = () => {
           </div>
           <div className="tech-card">
             <img src="/tech-used/node.png" alt="Node JS Logo" className='tech' />
+          </div>
+          <div className="tech-card">
+            <img src="/tech-used/express-js.png" alt="Express JS Logo" className='tech' />
           </div>
           <div className="tech-card">
             <img src="/tech-used/postgre.png" alt="PostgreSQL Logo" className='tech' />

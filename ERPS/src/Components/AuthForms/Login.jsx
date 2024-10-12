@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 function Login() {
   const [vehicle_no, setVehicle_no] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -31,7 +33,7 @@ function Login() {
     }
     catch (error) {
       console.error("Error while sending data to server:", error);
-      alert("There was an error connecting to the server.");
+      setError(true)
     }
   };
 
@@ -61,6 +63,12 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {
+            error ?
+            <span class="badge d-flex align-items-center p-1 pe-2 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill">
+              Warning
+            </span> : null
+          }
           <button type="submit" className="btn btn-primary">Login</button>
         </form>
         <div className="register-route">
