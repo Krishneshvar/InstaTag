@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import QrScanner from 'react-qr-scanner';
+// import { QrScanner } from 'react-qr-scanner';
 import './TollEmp.css';
 
 
@@ -36,29 +36,26 @@ const TollEmp = () => {
     };
 
     return (
-        <div style={{ textAlign: 'center', padding: '2rem' }}>
+        <div className='toll-emp-container'>
             <h2>Toll Employee Interface</h2>
 
             {/* QR Scanner */}
-            <QrScanner
-                delay={300}
-                style={previewStyle}
-                onError={handleError}
-                onScan={handleScan}
-            />
+            {/* <QrScanner delay={300} style={previewStyle} onError={handleError} onScan={handleScan} /> */}
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {/* Vehicle Information Form */}
-            {vehicleData && (
-                <div style={{ marginTop: '1rem', textAlign: 'left' }}>
-                    <h4>Vehicle Information</h4>
-                    <p><strong>Vehicle Number:</strong> {vehicleData.vehicleNumber}</p>
-                    <p><strong>Aadhaar Number:</strong> {vehicleData.aadhaarNumber}</p>
-                    <p><strong>Phone Number:</strong> {vehicleData.phoneNumber}</p>
-                    <button className="btn btn-success" onClick={handleConfirm}>Confirm Transaction</button>
-                </div>
-            )}
+            {
+                vehicleData && (
+                    <div style={{ marginTop: '1rem', textAlign: 'left' }}>
+                        <h4>Vehicle Information</h4>
+                        <p><strong>Vehicle Number:</strong> {vehicleData.vehicleNumber}</p>
+                        <p><strong>Aadhaar Number:</strong> {vehicleData.aadhaarNumber}</p>
+                        <p><strong>Phone Number:</strong> {vehicleData.phoneNumber}</p>
+                        <button className="btn btn-success" onClick={handleConfirm}>Confirm Transaction</button>
+                    </div>
+                )
+            }
         </div>
     );
 };
