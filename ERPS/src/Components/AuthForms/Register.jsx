@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 function Register() {
     const formData = [
-        { id: "vehicleNumber", label: "Vehicle Number", type: "text", placeholder: "Enter Vehicle Number", required: true },
-        { id: "aadharNumber", label: "Engine Number", type: "text", placeholder: "Enter Engine Number", required: true },
-        { id: "chasisNumber", label: "Chasis Number", type: "text", placeholder: "Enter Chasis Number", required: true },
-        { id: "mail", label: "Email", type: "email", placeholder: "Enter Email", required: true },
-        { id: "phno", label: "Phone Number", type: "text", placeholder: "Enter Phone Number", required: true }
+        { id: "vehicleNumber", label: "Vehicle Number", type: "text", required: true },
+        { id: "aadharNumber", label: "Engine Number", type: "text", required: true },
+        { id: "chasisNumber", label: "Chasis Number", type: "text", required: true },
+        { id: "mail", label: "Email", type: "email", required: true },
+        { id: "phno", label: "Phone Number", type: "text", required: true }
     ];
 
     const [otpSent, setOtpSent] = useState(false)
@@ -18,18 +18,20 @@ function Register() {
         <div className="register-container">
             <div className="register-form">
                 <form>
-                    {formData.map((field) => (
-                        <div className="mb-3" key={field.id}>
-                        <label htmlFor={field.id} className="form-label">{field.label}</label>
-                        <input 
-                            type={field.type} 
-                            className="form-control" 
-                            id={field.id} 
-                            placeholder={field.placeholder} 
-                            required={field.required} 
-                        />
-                        </div>
-                    ))}
+                    {
+                        formData.map((field) => (
+                            <div className="mb-3" key={field.id}>
+                            <label htmlFor={field.id} className="form-label">{field.label}</label>
+                            <input 
+                                type={field.type} 
+                                className="form-control" 
+                                id={field.id} 
+                                placeholder={`Enter ${field.label}`} 
+                                required={field.required} 
+                            />
+                            </div>
+                        ))
+                    }
 
                     {
                         otpSent ?
