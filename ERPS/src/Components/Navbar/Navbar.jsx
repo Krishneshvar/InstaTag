@@ -45,7 +45,7 @@ function Navbar() {
               <Link className="nav-link" to="/about-us">About Us</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/toll-emp">Employee</Link> {/* New Employee Link */}
+              <Link className="nav-link" to="/toll-emp">Employee</Link> 
             </li>
           </ul>
           <Link to="/login">
