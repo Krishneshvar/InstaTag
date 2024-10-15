@@ -1,0 +1,8 @@
+.interface {
+    min-height: 100dvh;
+    max-width: 100dvw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
