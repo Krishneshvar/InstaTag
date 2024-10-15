@@ -1,80 +1,133 @@
 /* Container styling */
 .toll-emp-container {
-    padding: 20px;
-    max-width: 600px;
+    padding: 30px;
+    max-width: 650px;
     margin: 0 auto;
     margin-top: 100px;
-    background-color: #f8f9fa;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.toll-emp-container:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Heading styling */
 .toll-emp-container h2 {
-    color: #343a40;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 700;
 }
 
 /* Form information styling */
 .toll-emp-container h4 {
-    color: #495057;
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
+    color: #555;
+    margin-top: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid #28a745;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
 .toll-emp-container p {
     font-size: 16px;
-    color: #212529;
+    color: #666;
+    line-height: 1.6;
 }
 
 /* Button styling */
 .toll-emp-container .btn {
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 16px;
     background-color: #28a745;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+    box-shadow: 0 4px 14px rgba(40, 167, 69, 0.4);
 }
 
 .toll-emp-container .btn:hover {
     background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(40, 167, 69, 0.5);
 }
 
-/* Error message styling */
-.toll-emp-container p[style*="color: red"] {
-    font-size: 14px;
-    color: #dc3545;
-}
-
-/* QR scanner preview styling */
-.qr-scanner-preview {
+/* QR Reader styling */
+#qr-reader {
     margin: 20px auto;
-    height: 240px;
-    width: 320px;
-    background-color: #e9ecef;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 2px solid #ddd;
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+#qr-reader:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Table styling */
+.vehicle-info-table {
+    margin-top: 30px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
     border-radius: 8px;
 }
-.toll-emp-container {
-    text-align: center;
-    padding: 20px;
+
+.vehicle-info-table table {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
 }
 
-.qr-scanner {
-    margin: 20px auto;
-    width: fit-content;
+.vehicle-info-table th, .vehicle-info-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
 }
 
-button {
-    margin-top: 20px;
+.vehicle-info-table th {
+    background-color: #28a745;
+    color: white;
+    font-weight: 600;
+}
+
+.vehicle-info-table tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.vehicle-info-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Success button */
+.btn-success {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
 }
