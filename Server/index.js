@@ -15,7 +15,15 @@ const db = new pg.Client({
   port: process.env.DB_PORT
 });
 
-db.connect();
+db.connect((err) => {
+  if (err) {
+    console.error('Database connection error:', err.stack);
+  }
+  else {
+    console.log('Connected to database.');
+  }
+});
+
 app.use(express.json());
 
 app.use(cors({
@@ -28,10 +36,7 @@ app.post("/check-login", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({
-      success: false,
-      message: "Username and password are required."
-    });
+    return res.status(400).json({ success: false, message: 'Vehicle number and password are required.' });
   }
 
   try {

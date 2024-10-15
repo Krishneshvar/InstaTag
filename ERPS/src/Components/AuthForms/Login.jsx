@@ -11,31 +11,29 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     try {
       const response = await fetch(`http://localhost:3000/check-login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ vehicle_no, password })
+        body: JSON.stringify({ username: vehicle_no, password })  // Changed vehicle_no to username
       });
-
+  
       const result = await response.json();
       
       if (result.success) {
         alert(result.message);
         navigate('/user-dashboard');
-      }
-      else {
+      } else {
         alert(result.message);
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error while sending data to server:", error);
-      setError(true)
+      setError(true);
     }
-  };
+  };    
 
   return (
     <div className="login-container">
@@ -69,7 +67,7 @@ function Login() {
               Please check your vehicle number and password.
             </span> : null
           }
-          <button type="submit" className="btn btn-primary">Login</button>
+          <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Login</button>
         </form>
         <div className="register-route">
           <a>Don't have an account?</a>
