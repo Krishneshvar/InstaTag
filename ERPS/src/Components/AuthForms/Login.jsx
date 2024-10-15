@@ -13,7 +13,7 @@ function Login() {
     event.preventDefault();
   
     try {
-      const response = await fetch(`http://localhost:3000/check-login`, {
+      const response = await fetch(`http://localhost:3000/api/check-login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
