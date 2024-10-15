@@ -1,18 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import userRoutes from './routes/userRoutes.js';  // Import user routes
-import './db/appDB.js';  // Initialize the DB connection
+import userRoutes from './routes/userRoutes.js';
+import './db/appDB.js';
 
 dotenv.config();
-
 const app = express();
-const port = process.env.NODE_PORT;
 
-// Middleware
 app.use(express.json());
 app.use(cors({
-  origin: `http://localhost:${process.env.CLIENT_PORT}`,
+  origin: [`http://localhost:${process.env.CLIENT_PORT}`, `http://localhost:${process.env.EMPLOYEE_PORT}`],
   methods: ['GET', 'POST'],
   credentials: true,
 }));
@@ -20,7 +17,6 @@ app.use(cors({
 // Routes
 app.use("/api", userRoutes);  // Use the user routes
 
-// Start server
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server is running at http://localhost:${process.env.NODE_PORT}`);
 });

@@ -1,20 +1,23 @@
 import QRCode from 'qrcode';
 
 app.get('/generate-qr', async (req, res) => {
-    try {
-      const data = req.query.data || 'Default QR Code Data';
+  try {
+    const dataArray = req.query.data || ['vno', 'eno', 'cno'];
 
-      const qrCodeImage = await QRCode.toDataURL(data);
-  
-      res.send(
-        <html>
+    // Encode array as JSON
+    const jsonData = JSON.stringify(dataArray);
+
+    const qrCodeImage = await QRCode.toDataURL(jsonData);
+
+    res.send(`
+      <html>
         <body>
           <h1>Your QR Code</h1>
-          <img src="${qrCodeImage}" alt="QR Code"/>
+          <img src="${qrCodeImage}" alt="QR Code" />
         </body>
-        </html>
-      );
-    } catch (err) {
-      res.status(500).send('Error generating QR code');
-    }
+      </html>
+    `);
+  } catch (err) {
+    res.status(500).send('Error generating QR code');
+  }
 });

@@ -18,18 +18,19 @@ function Login() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username: vehicle_no, password })  // Changed vehicle_no to username
+        body: JSON.stringify({ username: vehicle_no, password })
       });
   
       const result = await response.json();
       
       if (result.success) {
-        alert(result.message);
         navigate('/user-dashboard');
-      } else {
+      }
+      else {
         alert(result.message);
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Error while sending data to server:", error);
       setError(true);
     }

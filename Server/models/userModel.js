@@ -5,7 +5,8 @@ export async function getUserByVehicleNo(vehicle_no) {
   try {
     const result = await db.query("SELECT vehicle_no, name, email FROM users WHERE vehicle_no = $1;", [vehicle_no]);
     return result.rows.length > 0 ? result.rows[0] : null;
-  } catch (err) {
+  }
+  catch (err) {
     console.error("Error fetching user by vehicle number:", err);
     throw err;
   }
@@ -24,10 +25,12 @@ export async function checkLogin(username, inputPassword) {
 
     if (inputPassword === dbPassword) {
       return { success: true, message: "Login successful." };
-    } else {
+    }
+    else {
       return { success: false, message: "Incorrect password." };
     }
-  } catch (err) {
+  }
+  catch (err) {
     console.error("Error during login check:", err);
     throw err;
   }
