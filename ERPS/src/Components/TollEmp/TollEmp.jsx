@@ -32,8 +32,18 @@ const TollEmp = () => {
     const handleScanSuccess = (decodedText, decodedResult) => {
         try {
             const parsedData = JSON.parse(decodedText); // Assuming QR code contains JSON
-            setVehicleData(prevData => [...prevData, parsedData]); // Add the new data to the table
-            setError(null); // Clear error if the scan is successful
+
+            // Check for duplicate JSON data
+            const isDuplicate = vehicleData.some((vehicle) =>
+                JSON.stringify(vehicle) === JSON.stringify(parsedData)
+            );
+
+            if (!isDuplicate) {
+                setVehicleData((prevData) => [...prevData, parsedData]); // Add the new data if it's not a duplicate
+                setError(null); // Clear error if the scan is successful
+            } else {
+                setError('This vehicle data has already been scanned.');
+            }
         } catch (err) {
             setError('Invalid QR code data');
         }
@@ -41,7 +51,11 @@ const TollEmp = () => {
 
     const handleScanError = (errorMessage) => {
         console.error(errorMessage); // Log the error for debugging
-        setError('Error scanning the QR code. Please try again.');
+        setError('Scanning for QR code.');
+    };
+
+    const handleClearTable = () => {
+        setVehicleData([]); // Clear the vehicle data
     };
 
     return (
@@ -82,6 +96,13 @@ const TollEmp = () => {
                             )}
                         </tbody>
                     </table>
+
+                    {/* Clear Table Button */}
+                    {vehicleData.length > 0 && (
+                        <button className="btn btn-danger" onClick={handleClearTable}>
+                            Clear Table
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
