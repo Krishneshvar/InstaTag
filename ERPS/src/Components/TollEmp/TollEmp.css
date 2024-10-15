@@ -1,65 +1,80 @@
+/* Container styling */
 .toll-emp-container {
-    margin-top: 5%;
-    text-align: center;
-    padding: 2rem;
-    background-color: #f4f4f4;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Error message */
-.error-message {
-    color: red;
-    font-size: 1rem;
-    margin-top: 1rem;
-}
-
-/* Vehicle information container */
-.vehicle-info {
-    text-align: left;
-    background-color: white;
-    padding: 1rem;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 100px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.vehicle-info h4 {
-    color: #555;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+/* Heading styling */
+.toll-emp-container h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.vehicle-info p {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 0.5rem;
+/* Form information styling */
+.toll-emp-container h4 {
+    color: #495057;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-/* Confirm transaction button */
-.btn-confirm {
+.toll-emp-container p {
+    font-size: 16px;
+    color: #212529;
+}
+
+/* Button styling */
+.toll-emp-container .btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
     background-color: #28a745;
     color: white;
-    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.btn-confirm:hover {
+.toll-emp-container .btn:hover {
     background-color: #218838;
 }
 
-.qr-scanner-container {
-    display: inline-block;
-    margin-top: 1.5rem;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+/* Error message styling */
+.toll-emp-container p[style*="color: red"] {
+    font-size: 14px;
+    color: #dc3545;
 }
 
-.qr-scanner-container video {
-    width: 100%;
+/* QR scanner preview styling */
+.qr-scanner-preview {
+    margin: 20px auto;
+    height: 240px;
+    width: 320px;
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 8px;
+}
+.toll-emp-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.qr-scanner {
+    margin: 20px auto;
+    width: fit-content;
+}
+
+button {
+    margin-top: 20px;
 }
