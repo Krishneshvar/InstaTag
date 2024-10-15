@@ -41,16 +41,30 @@ app.post("/check-login", async (req, res) => {
 
   try {
     const loginResult = await checkLogin(username, password);
-    return res.status(loginResult.success ? 200 : 401).json(loginResult);
+    if (loginResult.success) {
+      const user = await getUserByVehicleNo(username);  // Fetch user details
+      return res.status(200).json({ success: true, message: 'Login successful', user });
+    }
+    else {
+      return res.status(401).json(loginResult);
+    }
   }
   catch (err) {
     console.error("Error handling /check-login request:", err);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error."
-    });
+    return res.status(500).json({ success: false, message: "Internal server error." });
   }
 });
+
+async function getUserByVehicleNo(vehicle_no) {
+  try {
+    const result = await db.query("SELECT vehicle_no, name, email FROM users WHERE vehicle_no = $1;", [vehicle_no]);
+    return result.rows.length > 0 ? result.rows[0] : null;
+  }
+  catch (err) {
+    console.error("Error fetching user by vehicle number:", err);
+    return null;
+  }
+}
 
 async function checkLogin(username, inputPassword) {
   try {
