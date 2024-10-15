@@ -5,6 +5,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: 0 0 1rem 1rem;
 }
 
 .two {
