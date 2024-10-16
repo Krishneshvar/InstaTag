@@ -1,10 +1,12 @@
 import './AuthForm.css'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function AuthForm({ onLogin }) {
+function AuthForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,14 +20,11 @@ export default function AuthForm({ onLogin }) {
       });
 
       if (response.ok) {
-        // onLogin();
-        navigate('/scanner');
-      }
-      else {
+        navigate('/toll-emp');
+      } else {
         setError('Invalid credentials');
       }
-    }
-    catch (err) {
+    } catch (err) {
       setError('Login failed. Please try again.');
     }
   };
@@ -68,11 +67,4 @@ export default function AuthForm({ onLogin }) {
   );
 }
 
-function Scanner() {
-  return (
-    <div style={{ maxWidth: '300px', margin: '0 auto', padding: '20px' }}>
-      <h2>Scanner Page</h2>
-      <p>Welcome to the scanner page!</p>
-    </div>
-  );
-}
+export default AuthForm
