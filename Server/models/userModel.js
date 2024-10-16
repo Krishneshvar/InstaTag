@@ -18,7 +18,7 @@ export async function checkLogin(username, inputPassword) {
     const result = await appDB.query("SELECT password FROM users WHERE vehicle_no = $1;", [username]);
 
     if (result.rows.length === 0) {
-      return { success: false, message: "User not found." };
+      return { success: false, message: "Employee not found." };
     }
 
     const dbPassword = result.rows[0].password;
@@ -38,7 +38,7 @@ export async function checkLogin(username, inputPassword) {
 
 export async function empLogin(username, inputPassword) {
   try {
-    const result = await appDB.query("SELECT password FROM users WHERE vehicle_no = $1;", [username]);
+    const result = await appDB.query("SELECT password FROM employees WHERE empid = $1;", [username]);
 
     if (result.rows.length === 0) {
       return { success: false, message: "User not found." };

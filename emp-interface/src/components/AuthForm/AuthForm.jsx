@@ -11,14 +11,14 @@ export default function AuthForm({ onLogin }) {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3000/emp-login', {
+      const response = await fetch('http://localhost:3000/api/emp-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
-        onLogin();
+        // onLogin();
         navigate('/scanner');
       }
       else {
