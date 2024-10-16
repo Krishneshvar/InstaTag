@@ -17,6 +17,6 @@ app.use(cors({
 // Routes
 app.use("/api", userRoutes);  // Use the user routes
 
-app.listen(port, () => {
+app.listen(process.env.NODE_PORT, () => {
   console.log(`Server is running at http://localhost:${process.env.NODE_PORT}`);
 });

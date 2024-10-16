@@ -19,6 +19,7 @@ export default function AuthForm({ onLogin }) {
 
       if (response.ok) {
         onLogin();
+        navigate('/scanner');
       }
       else {
         setError('Invalid credentials');
