@@ -22,6 +22,8 @@ function Register() {
 
     const [otpSent, setOtpSent] = useState(false);
     const [qrCodeUrl, setQrCodeUrl] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     // Handle input changes and update form data
     const handleChange = (e) => {
@@ -34,6 +36,9 @@ function Register() {
     // Generate QR code after form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setError(''); // Reset any previous error
+
         try {
             const response = await axios.get('https://api.qrserver.com/v1/create-qr-code/', {
                 params: {
@@ -43,13 +48,16 @@ function Register() {
             });
 
             setQrCodeUrl(response.request.responseURL); // Get the QR code image URL from the API
+            setFormData({ vehicleNumber: '', aadharNumber: '', chasisNumber: '', mail: '', phno: '' }); // Reset form
         } catch (error) {
             console.error('Error generating QR code:', error);
+            setError('Failed to generate QR code. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <>
         <div className="register-container">
             <div className="register-form">
                 <form onSubmit={handleSubmit}>
@@ -69,27 +77,19 @@ function Register() {
                             </div>
                         ))
                     }
-
-                    {
-                        otpSent ? (
-                            <>
-                                <button type="submit" className="btn btn-primary">Register & Generate QR</button>
-                                {qrCodeUrl && (
-                                    <div className="qr-code-container">
-                                        <h4>Your Registration QR Code:</h4>
-                                        <img src={qrCodeUrl} alt="Generated QR Code" />
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-                            <div className='otp-options'>
-                                <p>Send OTP via:</p>
-                                <button className="btn btn-primary" onClick={() => setOtpSent(true)}>Email</button>
-                                <button className="btn btn-primary" onClick={() => setOtpSent(true)}>Phone Number</button>
-                            </div>
-                        )
-                    }
+    
+                    {otpSent ? (
+                        <button type="submit" className="btn btn-primary" disabled={loading}>
+                            {loading ? 'Generating QR...' : 'Register & Generate QR'}
+                        </button>
+                    ) : (
+                        <div className='otp-options'>
+                            <p>Send OTP via:</p>
+                            <button className="btn btn-primary" onClick={() => setOtpSent(true)}>Email</button>
+                        </div>
+                    )}
                 </form>
+                {error && <p className="error-message">{error}</p>}
                 <div className='login-route'>
                     <span>Already have an account? </span>
                     <Link to="/login">
@@ -97,9 +97,17 @@ function Register() {
                     </Link>
                 </div>
             </div>
+            
+            <div className="qr-code-wrapper">
+                {qrCodeUrl && (
+                    <div className="qr-code-container">
+                        <h4>Your Registration QR Code:</h4>
+                        <img src={qrCodeUrl} alt="Generated QR Code" />
+                    </div>
+                )}
+            </div>
         </div>
-        </>
     );
-}
+}    
 
 export default Register;

@@ -1,34 +1,131 @@
 .register-container {
-    background-color: black;
+    padding-top: 8rem;  
     display: flex;
-    flex-direction: column;
-    height: 100dvh;
-    width: 100dvw;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Center items vertically */
+    height: 100vh;
+    background-color: #f5f5f5; /* Light background */
 }
 
 .register-form {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 1rem;
-    width: 30dvw;
+    background: white;
+    padding: 20px;
+    padding-top: 10rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Adjust width as needed */
+    margin: 0 20px; /* Space between form and QR code */
+    flex: 1; /* Allow the form to grow and take available space */
 }
 
-form {
-    border: 1px solid lightgrey;
-    padding: 1rem;
-    border-radius: 1rem;
+.qr-code-container {
+    text-align: center;
+    margin-top: 20px;
+    flex: 1; /* Allow the QR code to grow and take available space */
 }
 
-.otp-options {
-    width: 100%;
-    gap: 0.5rem;
+.qr-code-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center QR code in its section */
+}
+
+/* Additional styling for form fields to be side by side */
+.form-field-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between fields */
+    margin-bottom: 1.5rem; /* Spacing between field sets */
+}
+
+.form-control {
+    width: calc(50% - 10px); /* Make fields take half of the available width minus space */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Added transform for hover effect */
+    width: 100%; /* Full width for buttons */
+}
+
+/* Colorful buttons for different actions */
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.btn-success {
+    background-color: #28a745; /* Success button color */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Danger button color */
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
 .login-route {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    padding: 1rem;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.login-route span {
+    margin-right: 5px;
+}
+
+.otp-options {
+    margin-top: 15px;
+    text-align: center;
+}
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .register-form {
+        width: 90%; /* Use 90% width for smaller screens */
+        margin: 0; /* Remove margin */
+        padding: 15px; /* Reduce padding */
+    }
+    
+    .form-control {
+        width: 100%; /* Make inputs full width on smaller screens */
+        margin-bottom: 1rem; /* Add margin between inputs */
+    }
+
+    .form-field-container {
+        flex-direction: column; /* Stack fields vertically */
+        align-items: stretch; /* Stretch fields to full width */
+    }
+}
+
+@media (max-width: 480px) {
+    .register-container {
+        padding-top: 6rem; /* Reduce padding for extra small screens */
+    }
+    
+    .register-form {
+        padding: 10px; /* Further reduce padding */
+    }
+    
+    .btn {
+        padding: 8px 12px; /* Smaller button padding */
+    }
 }
