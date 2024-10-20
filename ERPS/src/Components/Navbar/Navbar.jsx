@@ -44,9 +44,9 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/about-us">About Us</Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/toll-emp">Employee</Link> 
-            </li>
+            </li> */}
           </ul>
           <Link to="/login">
             <span className="material-symbols-outlined">account_circle</span>
