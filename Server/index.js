@@ -18,19 +18,20 @@ app.use(cors({
 app.use("/api", userRoutes);
 
 const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization');
-  
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
   if (!token) return res.sendStatus(403);
 
-  jwt.verify(token, 'your_secret_key', (err, user) => {
-    if (err) return res.sendStatus(403);
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: 'Token expired or invalid' });
     req.user = user;
     next();
   });
 };
 
-module.exports = authenticateToken;
-
 app.listen(process.env.NODE_PORT, () => {
   console.log(`Server is running at http://localhost:${process.env.NODE_PORT}`);
 });
+
+export { authenticateToken };

@@ -16,21 +16,20 @@ function Login() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({ vehicle_no, password }),
       });
-      
+
       const result = await response.json();
 
-      if (result.token) {
+      if (response.status === 200 && result.token) {
         // Store the JWT token in localStorage
         localStorage.setItem('token', result.token);
 
         // Redirect to user dashboard with user vehicle number appended in the URL
         navigate(`/user-dashboard?vehicle_no=${vehicle_no}`);
       } else {
-        alert(result.message);
+        alert(result.message || 'Invalid credentials');
       }
     } catch (error) {
       setError(true);
