@@ -2,7 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import userRoutes from './routes/userRoutes.js';
+import router from './routes/userRoutes.js'
 import './db/appDB.js';
 
 dotenv.config();
@@ -15,7 +15,7 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use("/api", userRoutes);
+app.use("/api", router);
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];

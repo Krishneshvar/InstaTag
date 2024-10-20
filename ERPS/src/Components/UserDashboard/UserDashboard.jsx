@@ -5,7 +5,7 @@ import 'chart.js/auto';
 import './UserDashboard.css';
 
 function UserDashboard({ onLogout }) {
-    const { vehicleNumber } = useParams();
+    const { vehicle_no } = useParams();
     const [userData, setUserData] = useState(null); // Store user data
     const [transactions, setTransactions] = useState([]); // Store transactions
     const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ function UserDashboard({ onLogout }) {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/user-details/${vehicleNumber}`);
+                const response = await fetch(`http://localhost:3000/api/user-details/${vehicle_no}`);
                 if (response.ok) {
                     const data = await response.json();
                     setUserData(data.user);  // Set user data
@@ -27,7 +27,7 @@ function UserDashboard({ onLogout }) {
             }
         };
         fetchUserData();
-    }, [vehicleNumber]);    
+    }, [vehicle_no]);    
 
     if (error) return <p>{error}</p>;
     if (!userData) return <p>Loading...</p>;

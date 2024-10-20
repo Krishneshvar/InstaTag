@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [vehicle_no, setVehicle_no] = useState('');
+  const [user_id, setUser_id] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
@@ -17,7 +17,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ vehicle_no, password }),
+        body: JSON.stringify({ user_id, password }),  // Send user_id and password
       });
 
       const result = await response.json();
@@ -26,10 +26,10 @@ function Login() {
         // Store the JWT token in localStorage
         localStorage.setItem('token', result.token);
 
-        // Redirect to user dashboard with user vehicle number appended in the URL
-        navigate(`/user-dashboard?vehicle_no=${vehicle_no}`);
+        // Redirect to user dashboard with user ID appended in the URL
+        navigate(`/user-dashboard/${user_id}`);
       } else {
-        alert(result.message || 'Invalid credentials');
+        alert(result.error || 'Invalid credentials');
       }
     } catch (error) {
       setError(true);
@@ -42,14 +42,14 @@ function Login() {
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="VehicleNumber" className="form-label">Vehicle Number</label>
+            <label htmlFor="userID" className="form-label">User ID</label>
             <input
               type="text"
               className="form-control"
-              id="VehicleNumber"
-              placeholder="Enter Vehicle number"
-              value={vehicle_no}
-              onChange={(e) => setVehicle_no(e.target.value)}
+              id="userID"
+              placeholder="Enter User ID"
+              value={user_id}
+              onChange={(e) => setUser_id(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -65,7 +65,7 @@ function Login() {
           </div>
           {error && (
             <span className="badge d-flex align-items-center p-1 pe-2 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill">
-              Please check your vehicle number and password.
+              Please check your User ID and password.
             </span>
           )}
           <button type="submit" className="btn btn-primary">Login</button>
