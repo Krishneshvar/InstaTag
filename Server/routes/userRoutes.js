@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/login/user', loginUser);
 router.post('/login/employee', loginEmployee);
-router.post('/register/user', registerUser;
+router.post('/register/user', registerUser);
 
 // Dashboard
 router.get('/user-details/:user_id', getUserVehicles);
