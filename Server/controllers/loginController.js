@@ -43,4 +43,40 @@ const loginEmployee = async (req, res) => {
   }
 };
 
-export { loginUser, loginEmployee };
+const getUserVehicles = async (req, res) => {
+  const { user_id } = req.params; // Get user_id from request parameters
+
+  try {
+      const result = await pool.query('SELECT * FROM vehicle_details WHERE user_id = $1', [user_id]);
+      const vehicles = result.rows;
+
+      if (vehicles.length === 0) {
+          return res.status(404).json({ message: 'No vehicles found for this user.' });
+      }
+
+      return res.json(vehicles);
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: err.message });
+  }
+};
+
+const getVehicleDetails = async (req, res) => {
+  const { vehicle_no } = req.params; // Get vehicle_no from request parameters
+
+  try {
+      const result = await pool.query('SELECT * FROM vehicle_details WHERE vehicle_no = $1', [vehicle_no]);
+      const vehicle = result.rows[0];
+
+      if (!vehicle) {
+          return res.status(404).json({ message: 'Vehicle not found.' });
+      }
+
+      return res.json(vehicle);
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: err.message });
+  }
+};
+
+export { loginUser, loginEmployee, getUserVehicles, getVehicleDetails };
