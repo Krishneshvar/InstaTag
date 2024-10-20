@@ -2,16 +2,20 @@
     background-color: black;
     display: flex;
     flex-direction: column;
-    height: 100dvh;
-    width: 100dvw;
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
     justify-content: center;
     align-items: center;
+    padding: 2rem; /* Added padding to prevent content from touching edges */
 }
 
 .login-form {
     background-color: white;
-    padding: 1rem;
+    padding: 2rem; /* Increased padding for better spacing */
     border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+    max-width: 400px; /* Set a max width for better readability */
+    width: 100%; /* Allow the form to be responsive */
 }
 
 form {
@@ -20,9 +24,53 @@ form {
     border-radius: 1rem;
 }
 
+/* Style for the input fields */
+input.form-control {
+    width: calc(100% - 20px); /* Full width minus padding */
+    padding: 12px; /* Increased padding for larger fields */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 1rem; /* Space between fields */
+}
+
+/* Button styling */
+.btn {
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Added transform for hover effect */
+    width: 100%; /* Full width for buttons */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Register route styling */
 .register-route {
     display: flex;
     flex-direction: row;
     gap: 1rem;
     padding: 1rem;
+    justify-content: center; /* Center align register route */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 1rem; /* Reduce padding on smaller screens */
+    }
+
+    .login-form {
+        padding: 1.5rem; /* Adjust padding for smaller screens */
+        width: 90%; /* Use 90% width for smaller screens */
+    }
+
+    input.form-control {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
 }
