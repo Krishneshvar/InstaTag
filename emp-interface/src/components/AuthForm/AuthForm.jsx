@@ -8,24 +8,25 @@ function AuthForm() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/emp-login', {
+      const response = await fetch(`http://localhost:3000/api/emp-login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
       });
-
-      if (response.ok) {
-        navigate('/toll-emp');
+      const result = await response.json();
+  
+      if (result.success) {
+        navigate(result.redirectUrl);  // Redirect to employee dashboard
       } else {
-        setError('Invalid credentials');
+        alert(result.message);
       }
-    } catch (err) {
-      setError('Login failed. Please try again.');
+    } catch (error) {
+      alert("There was an error logging in.");
     }
   };
 

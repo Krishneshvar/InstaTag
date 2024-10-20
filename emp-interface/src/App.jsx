@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <AuthForm /> },
-      { path: "/toll-emp", element: <TollEmp /> },
+      { path: "/toll-emp/:empid", element: <TollEmp /> },
     ],
   },
 ]);

@@ -11,28 +11,27 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
     try {
+      const username = vehicle_no;
       const response = await fetch(`http://localhost:3000/api/check-login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: vehicle_no, password })
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
       });
-  
       const result = await response.json();
-      
+  
       if (result.success) {
-        navigate('/user-dashboard');
-      }
-      else {
+        navigate(result.redirectUrl);  // Redirect to user dashboard
+      } else {
         alert(result.message);
       }
+    } catch (error) {
+      setError(true)
+      alert("There was an error logging in.");
     }
-    catch (error) {
-      console.error("Error while sending data to server:", error);
-      setError(true);
-    }
-  };    
+  };
 
   return (
     <div className="login-container">
@@ -62,7 +61,7 @@ function Login() {
           </div>
           {
             error ?
-            <span class="badge d-flex align-items-center p-1 pe-2 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill">
+            <span className="badge d-flex align-items-center p-1 pe-2 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill">
               Please check your vehicle number and password.
             </span> : null
           }
