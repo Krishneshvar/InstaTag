@@ -21,6 +21,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Contents /> },
       { path: "/about-us", element: <AboutUs /> },
+      {path: "/toll-emp", element: <TollEmp />},
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/user-dashboard/:user_id", element: <UserDashboard /> }, // Updated route

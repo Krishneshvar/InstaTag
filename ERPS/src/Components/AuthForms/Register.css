@@ -10,7 +10,7 @@
 .register-form {
     background: white;
     padding: 20px;
-    padding-top: 10rem;
+    padding-top: 45rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 400px; /* Adjust width as needed */
@@ -31,18 +31,19 @@
     align-items: center; /* Center QR code in its section */
 }
 
-/* Additional styling for form fields to be side by side */
+/* Additional styling for form fields */
 .form-field-container {
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Space between fields */
+    display: flex; /* Flex layout for fields */
+    flex-direction: column; /* Display fields in column */
     margin-bottom: 1.5rem; /* Spacing between field sets */
 }
 
 .form-control {
-    width: calc(50% - 10px); /* Make fields take half of the available width minus space */
+    width: 100%; /* Full width for form fields */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 1rem; /* Add spacing between input fields */
 }
 
 .btn {
@@ -97,12 +98,20 @@
     margin-top: 15px;
     text-align: center;
 }
+
 /* Media queries for responsive design */
+@media (min-width: 768px) {
+    /* On larger screens, keep fields in a column layout */
+    .form-field-container {
+        flex-direction: column;
+    }
+}
+
 @media (max-width: 768px) {
     .register-form {
         width: 90%; /* Use 90% width for smaller screens */
         margin: 0; /* Remove margin */
-        padding: 15px; /* Reduce padding */
+        padding-top: 45rem;
     }
     
     .form-control {
@@ -117,14 +126,6 @@
 }
 
 @media (max-width: 480px) {
-    .register-container {
-        padding-top: 6rem; /* Reduce padding for extra small screens */
-    }
-    
-    .register-form {
-        padding: 10px; /* Further reduce padding */
-    }
-    
     .btn {
         padding: 8px 12px; /* Smaller button padding */
     }
