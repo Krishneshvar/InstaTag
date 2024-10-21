@@ -11,11 +11,10 @@ function AuthForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/login/employee', {
+      const response = await fetch('http://localhost:3000/api/login/emp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({ empid: username, password }),
       });
