@@ -14,7 +14,7 @@ const TollEmp = () => {
     useEffect(() => {
         const fetchEmployeeDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/emp-details/${empid}`);
+                const response = await fetch(`http://localhost:3000/api/toll-emp/${empid}`);
     
                 if (response.ok) {
                     const data = await response.json();

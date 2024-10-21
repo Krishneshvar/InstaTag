@@ -18,7 +18,8 @@ const empLoginController = async (req, res) => {
       const employee = result.rows[0];
   
       // Use bcrypt to compare hashed password
-      const isPasswordValid = await bcrypt.compare(password, employee.password);
+    //   const isPasswordValid = await bcrypt.compare(password, employee.password);
+         const isPasswordValid = (password == employee.password);
   
       if (!isPasswordValid) {
         return res.status(401).json({ message: 'Incorrect password' });

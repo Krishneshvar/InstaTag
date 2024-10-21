@@ -12,4 +12,5 @@ router.post('/login/emp', empLoginController);
 router.get('/user-details/:user_id', getUserVehicles);
 router.get('/vehicle-details/:vehicle_no', getVehicleDetails);
 
+
 export default router;
