@@ -22,7 +22,6 @@ const TollEmp = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setEmployee(data);
-                    console.log('Employee Name:', data.name);
                 } else {
                     setError('Access denied or employee not logged in.');
                     navigate('/');
@@ -37,7 +36,8 @@ const TollEmp = () => {
 
     useEffect(() => {
         if (scannerActive) {
-            const qrCodeRegionId = "reader";
+            const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
+
             html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
 
             const config = {
@@ -46,14 +46,13 @@ const TollEmp = () => {
             };
 
             html5QrCode.current.start(
-                { facingMode: "environment" },
+                { facingMode: "environment" }, // Use environment-facing camera
                 config,
-                async (decodedText) => {
+                (decodedText, decodedResult) => {
                     try {
-                        const scannedData = JSON.parse(decodedText);
-                        setInstaTagId(scannedData.instaTagId || ''); // Set InstaTag ID
-                        await fetchVehicleDetails(scannedData.instaTagId); // Fetch vehicle details
-                        stopScanner();
+                        const scannedData = JSON.parse(decodedText); // Assuming QR contains JSON
+                        setInstaTagId(scannedData.instaTagId || ''); // Set InstaTag ID from the scanned QR data
+                        stopScanner(); // Stop scanning after successful scan
                     } catch (err) {
                         setError('Invalid QR code data format');
                     }
@@ -68,7 +67,7 @@ const TollEmp = () => {
             stopScanner();
         }
 
-        return () => stopScanner();
+        return () => stopScanner(); // Cleanup on unmount
     }, [scannerActive]);
 
     const stopScanner = () => {
@@ -81,15 +80,16 @@ const TollEmp = () => {
         }
     };
 
+    // Modified function to fetch vehicle details from new backend API
     const fetchVehicleDetails = async (instaTagId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`);
+            const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`); // Use the new API endpoint
             if (response.ok) {
                 const vehicleDetails = await response.json();
                 setVehicleData(prevData => [...prevData, vehicleDetails]); // Append the vehicle details
                 setError(null);
             } else {
-                setError('Error fetching vehicle details.');
+                setError('Vehicle or owner not found for the given InstaTag ID.');
             }
         } catch (err) {
             setError('Error fetching vehicle details.');
@@ -137,20 +137,24 @@ const TollEmp = () => {
                     <thead>
                         <tr>
                             <th>Vehicle Number</th>
-                            <th>Owner Name</th>
+                            <th>Vehicle Type</th>
+                            <th>User ID</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
                         {vehicleData.length > 0 ? (
                             vehicleData.map((vehicle, index) => (
                                 <tr key={index}>
-                                    <td>{vehicle.vehicleNumber}</td>
-                                    <td>{vehicle.ownerName}</td> {/* Assuming ownerName is part of vehicle details */}
+                                    <td>{vehicle.vehicle_no}</td>
+                                    <td>{vehicle.vehicle_type}</td>
+                                    <td>{vehicle.user_id}</td>
+                                    <td>{vehicle.email}</td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="2" style={{ textAlign: 'center' }}>
+                                <td colSpan="4" style={{ textAlign: 'center' }}>
                                     No vehicles added yet
                                 </td>
                             </tr>
