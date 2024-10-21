@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
     "emp-interface": "file:",
+    "express": "^4.21.1",
     "html5-qrcode": "^2.3.8",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0"
