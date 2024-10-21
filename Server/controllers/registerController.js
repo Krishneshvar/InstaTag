@@ -1,6 +1,6 @@
 import appDB from '../db/appDB.js';
 import rtoDB from '../db/rtoDB.js';
-import { getCurrentTimestamp } from '../models/userModel.js';
+import { getCurrentTimestamp, concatenateLastFourDigits } from '../models/userModel.js';
 
 const pool = appDB;
 const rtopool = rtoDB;
@@ -44,13 +44,18 @@ const registerUser = async (req, res) => {
 
     const currTimestamp = getCurrentTimestamp();
 
-    // Insert the new user into the `users` table with the generated user_id
     const result = await pool.query(
       'INSERT INTO users (user_id, password, created_at, bank_acc_no, email, ph_no, balance) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
       [newUserId, password, currTimestamp, bankAccount, mail, phno, 0]
     );
 
     const newUser = result.rows[0];
+    const iid = concatenateLastFourDigits(vehicleNumber, chasisNumber, engineNumber);
+
+    const registerVehicle = await pool.query(
+      'INSERT INTO vehicle_details (vehicle_no, vehicle_type, user_id, engine_no, chasis_no, instatag_id, tag_created) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      [vehicleNumber, password, newUser.user_id, engineNumber, chasisNumber, iid, currTimestamp]
+    );
 
     // Respond with the token and new user ID
     return res.status(201).json({ user_id: newUser.user_id });

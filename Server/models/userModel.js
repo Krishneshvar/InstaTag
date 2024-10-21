@@ -38,13 +38,14 @@ export function getCurrentTimestamp() {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-// Function to set login status (for employees)
-export async function setLoginStatus(empid, status) {
-  try {
-    await appDB.query("UPDATE employees SET login = $1 WHERE empid = $2;", [status, empid]);
-  }
-  catch (err) {
-    console.error("Error updating login status:", err);
-    throw err;
-  }
+export function concatenateLastFourDigits(vehicleNumber, chasisNumber, engineNumber) {
+  // Extract the last 4 digits of each number
+  const lastFourVehicle = vehicleNumber.slice(-4);
+  const lastFourChasis = chasisNumber.slice(-4);
+  const lastFourEngine = engineNumber.slice(-4);
+
+  // Concatenate the extracted parts
+  const result = lastFourVehicle + lastFourChasis + lastFourEngine;
+
+  return result;
 }
