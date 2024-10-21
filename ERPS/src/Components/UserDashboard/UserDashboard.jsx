@@ -1,57 +1,56 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom'; // Use Link for navigation
+import { useParams, Link } from 'react-router-dom';
 import './UserDashboard.css';
 
-function UserDashboard({ onLogout }) {
-    const { user_id } = useParams();
-    const [vehicles, setVehicles] = useState([]); // Store vehicles data
-    const [error, setError] = useState(null);
+export default function UserDashboard({ onLogout }) {
+  const { user_id } = useParams();
+  const [vehicles, setVehicles] = useState([]);
+  const [error, setError] = useState(null);
 
-    // Fetch user vehicles when the component mounts
-    useEffect(() => {
-        const fetchUserVehicles = async () => {
-            try {
-                const response = await fetch(`http://localhost:3000/api/user-details/${user_id}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setVehicles(data);  // Set vehicle data directly
-                } else {
-                    throw new Error("Failed to fetch vehicle data");
-                }
-            } catch (err) {
-                setError(err.message);
+  useEffect(() => {
+    const fetchUserVehicles = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/user-details/${user_id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setVehicles(data);
+        } else {
+          throw new Error("Failed to fetch vehicle data");
+        }
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    fetchUserVehicles();
+  }, [user_id]);
+
+  if (error) return <div className="alert alert-danger">{error}</div>;
+  if (!vehicles.length) return <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div>;
+
+  return (
+    <div className="container-fluid dashboard-container flex-column">
+      <div className="row">
+        <div className="col-md-9 main-content">
+          <section id="vehicles" className="mb-5">
+            <h3 className="section-title">Your Vehicles</h3>
+            <div className="row">
+            {
+                vehicles.map(vehicle => (
+                    <div key={vehicle.vehicle_no} className="col-md-4 mb-3">
+                    <div className="card vehicle-card">
+                        <div className="card-body">
+                            <h5 className="card-title">{vehicle.vehicle_type}</h5>
+                            <p className="card-text">{vehicle.vehicle_no}</p>
+                            <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} className="btn btn-primary">View Details</Link>
+                        </div>
+                    </div>
+                    </div>
+                ))
             }
-        };
-        fetchUserVehicles();
-    }, [user_id]);
-
-    if (error) return <p>{error}</p>;
-    if (!vehicles.length) return <p>Loading...</p>;
-
-    return (
-        <div className="dashboard-container">
-            <header className="dashboard-header">
-                <h1>User Dashboard</h1>
-            </header>
-
-            {/* Vehicles List Section */}
-            <div className="vehicles-list">
-                <h2>Your Vehicles</h2>
-                <ul>
-                    {vehicles.map(vehicle => (
-                        <li key={vehicle.vehicle_no}>
-                            <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`}>
-                                {vehicle.vehicle_type} - {vehicle.vehicle_no}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
             </div>
-
-            {/* Optional: Add a Logout Button */}
-            <button onClick={onLogout}>Logout</button>
+          </section>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
-
-export default UserDashboard;
