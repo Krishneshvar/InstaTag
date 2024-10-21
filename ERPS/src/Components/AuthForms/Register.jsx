@@ -1,33 +1,31 @@
 import { useState } from 'react';
 import './Register.css';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';  // For API requests
+import axios from 'axios';
 
 function Register() {
     const formFields = [
         { id: "username", label: "Username", type: "text", required: true },
-        { id: "ownerName", label: "Vehicle Owner Name", type: "text", required: true },
         { id: "vehicleNumber", label: "Vehicle Number", type: "text", required: true },
-        { id: "aadharNumber", label: "Engine Number", type: "text", required: true },
+        { id: "engineNumber", label: "Engine Number", type: "text", required: true },
         { id: "chasisNumber", label: "Chasis Number", type: "text", required: true },
         { id: "mail", label: "Email", type: "email", required: true },
         { id: "phno", label: "Phone Number", type: "text", required: true },
+        { id: "bankAccount", label: "Bank Account Number", type: "text", required: true },
         { id: "password", label: "Password", type: "password", required: true },
-        { id: "confirmPassword", label: "Confirm Password", type: "password", required: true },
-        { id: "bankAccount", label: "Bank Account Number", type: "text", required: true }
+        { id: "confirmPassword", label: "Confirm Password", type: "password", required: true }
     ];
 
     const [formData, setFormData] = useState({
         username: '',
-        ownerName: '',
         vehicleNumber: '',
-        aadharNumber: '',
+        engineNumber: '',
         chasisNumber: '',
         mail: '',
         phno: '',
+        bankAccount: '',
         password: '',
         confirmPassword: '',
-        bankAccount: ''
     });
 
     const [otpSent, setOtpSent] = useState(false);
@@ -37,7 +35,7 @@ function Register() {
     const [error, setError] = useState('');
     const [otp, setOtp] = useState('');
     const [generatedOtp, setGeneratedOtp] = useState('');
-    const navigate = useNavigate(); // For navigation
+    const navigate = useNavigate();
 
     // Handle input changes and update form data
     const handleChange = (e) => {
@@ -84,15 +82,33 @@ function Register() {
         }
 
         // Check vehicle owner name and vehicle number match (case-insensitive)
-        if (formData.ownerName.toLowerCase() !== formData.vehicleNumber.toLowerCase()) {
-            setError('Vehicle owner name and vehicle number do not match');
-            return;
-        }
+        // if (formData.ownerName.toLowerCase() !== formData.vehicleNumber.toLowerCase()) {
+        //     setError('Vehicle owner name and vehicle number do not match');
+        //     return;
+        // }
 
         setLoading(true);
-        setError(''); // Reset any previous error
+        setError('');
 
         try {
+            const res = await fetch('http://localhost:3000/api/register/user', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id, password }),  // Send user_id and password
+            });
+
+            const result = await res.json();
+    
+            if (res.status === 200 && result.token) {
+                // Store the JWT token in localStorage
+                localStorage.setItem('token', result.token);
+        
+                // Redirect to user dashboard with user ID appended in the URL
+                navigate(`/user-dashboard/${user_id}`);
+            }
+
             const response = await axios.get('https://api.qrserver.com/v1/create-qr-code/', {
                 params: {
                     size: '150x150',

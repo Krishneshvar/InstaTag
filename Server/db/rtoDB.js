@@ -2,7 +2,7 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const rtoDB = new pg.Client({
+const rtoDB = new pg.Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.RTO_DB,
