@@ -47,12 +47,21 @@ const empLoginController = async (req, res) => {
             return res.status(404).json({ message: 'Employee not found.' });
         }
 
-        return res.json(employee); // Send employee details as the response
+        // Return the employee details including the name
+        return res.json({
+            empid: employee.empid,
+            name: employee.name, // Include employee name
+            // Add other fields as needed, for example:
+            // email: employee.email,
+            // position: employee.position,
+            // etc.
+        });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: err.message });
     }
 };
+
 
   
 
