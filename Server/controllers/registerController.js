@@ -1,44 +1,62 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import appDB from '../db/appDB.js';
 import rtoDB from '../db/rtoDB.js';
+import { getCurrentTimestamp } from '../models/userModel.js';
 
 const pool = appDB;
 const rtopool = rtoDB;
 
 const registerUser = async (req, res) => {
-  const { vehicleNumber, engineNumber, chasisNumber, mail, phno, bankAccount, password} = req.body;
+  const { vehicleNumber, engineNumber, chasisNumber, mail, phno, bankAccount, password } = req.body;
 
   try {
     // Check if the user already exists in the `users` table
-    const existingUserResult = await pool.query('SELECT * FROM users WHERE user_id = $1', [user_id]);
+    const existingUserResult = await pool.query('SELECT * FROM users WHERE user_id = $1', [vehicleNumber]);
     if (existingUserResult.rows.length > 0) {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    // Fetch vehicle details for validation (optional, depending on your logic)
+    // Fetch vehicle details for validation
     const getVehicleDet = await rtopool.query(
-      'SELECT engine_no, chasis_no, email FROM vehicle_verification WHERE vehicle_no = $1',
-      [user_id]
+      'SELECT mobile_no, engine_no, chasis_no, email FROM vehicle_verification WHERE vehicle_no = $1',
+      [vehicleNumber]
     );
-    
-    // Hash the password before storing
-    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert the new user into the `users` table with all fields
+    if (getVehicleDet.rows.length === 0) {
+      return res.status(404).json({ error: 'Vehicle not found in the system' });
+    }
+
+    const vehicleDet = getVehicleDet.rows[0];
+
+    // Validate that the provided details match the vehicle details
+    if (
+      vehicleDet.mobile_no !== phno ||
+      vehicleDet.engine_no !== engineNumber ||
+      vehicleDet.chasis_no !== chasisNumber ||
+      vehicleDet.email !== mail
+    ) {
+      return res.status(400).json({ error: 'The details do not match the records for the specified vehicle' });
+    }
+
+    // Generate the next available user_id by getting the max user_id and incrementing it
+    const getMaxUserIdResult = await pool.query('SELECT MAX(user_id::int) as max_user_id FROM users');
+    const maxUserId = getMaxUserIdResult.rows[0].max_user_id || 0; // If no user_id, default to 0
+    const newUserId = maxUserId + 1;
+
+    const currTimestamp = getCurrentTimestamp();
+
+    // Insert the new user into the `users` table with the generated user_id
     const result = await pool.query(
-      'INSERT INTO users (user_id, password, bank_acc_no, email, ph_no) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [user_id, hashedPassword, bank_acc_no, email, ph_no]
+      'INSERT INTO users (user_id, password, created_at, bank_acc_no, email, ph_no) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [newUserId, password, currTimestamp, bankAccount, mail, phno]
     );
 
     const newUser = result.rows[0];
 
-    // Generate a JWT token for the new user
-    const token = jwt.sign({ user_id: newUser.user_id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    // Respond with the token and user ID
+    // Respond with the token and new user ID
     return res.status(201).json({ token, user_id: newUser.user_id });
-  } catch (err) {
+  }
+  catch (err) {
+    console.error('Error registering user:', err);
     return res.status(500).json({ error: err.message });
   }
 };

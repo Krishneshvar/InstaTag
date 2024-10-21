@@ -1,16 +1,5 @@
 import appDB from '../db/appDB.js';
-
-// Function to fetch user by vehicle number
-export async function getUserByVehicleNo(vehicle_no) {
-  try {
-    const result = await appDB.query("SELECT vehicle_no, name, email FROM users WHERE vehicle_no = $1;", [vehicle_no]);
-    return result.rows.length > 0 ? result.rows[0] : null;
-  }
-  catch (err) {
-    console.error("Error fetching user by vehicle number:", err);
-    throw err;
-  }
-}
+import rtoDB from '../db/rtoDB.js';
 
 // Function to verify login credentials for users
 export async function checkLogin(username, inputPassword) {
@@ -36,28 +25,21 @@ export async function checkLogin(username, inputPassword) {
   }
 }
 
-// Function to verify login credentials for employees
-export async function empLogin(username, inputPassword) {
-  try {
-    const result = await appDB.query("SELECT password FROM employees WHERE empid = $1;", [username]);
+export async function getCurrentTimestamp() {
+  const now = new Date();
 
-    if (result.rows.length === 0) {
-      return { success: false, message: "User not found." };
-    }
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
 
-    const dbPassword = result.rows[0].password;
-
-    if (inputPassword === dbPassword) {
-      return { success: true, message: "Login successful." };
-    } else {
-      return { success: false, message: "Incorrect password." };
-    }
-  }
-  catch (err) {
-    console.error("Error during login check:", err);
-    throw err;
-  }
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+// Example usage
+console.log(getCurrentTime()); // Outputs: "2024-10-21 21:05:22" (or current time)
 
 // Function to set login status (for employees)
 export async function setLoginStatus(empid, status) {
@@ -66,18 +48,6 @@ export async function setLoginStatus(empid, status) {
   }
   catch (err) {
     console.error("Error updating login status:", err);
-    throw err;
-  }
-}
-
-// Function to get employee details after login (for redirection)
-export async function getEmployeeByEmpId(empid) {
-  try {
-    const result = await appDB.query("SELECT empid, name FROM employees WHERE empid = $1;", [empid]);
-    return result.rows.length > 0 ? result.rows[0] : null;
-  }
-  catch (err) {
-    console.error("Error fetching employee details:", err);
     throw err;
   }
 }

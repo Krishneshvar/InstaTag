@@ -17,7 +17,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ user_id, password }),  // Send user_id and password
+        body: JSON.stringify({ user_id, password }),
       });
 
       const result = await response.json();
