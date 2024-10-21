@@ -15,7 +15,7 @@ rtoDB.connect((err) => {
     console.error('Database connection error:', err.stack);
   }
   else {
-    console.log('Connected to database.');
+    console.log('Connected to RTO DB.');
   }
 });
 

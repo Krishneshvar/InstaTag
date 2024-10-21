@@ -7,7 +7,7 @@ const pool = appDB;
 const rtopool = rtoDB;
 
 const registerUser = async (req, res) => {
-  const { user_id, password, bank_acc_no, email, ph_no } = req.body;  // Added bank_acc_no, email, and ph_no
+  const { vehicleNumber, engineNumber, chasisNumber, mail, phno, bankAccount, password} = req.body;
 
   try {
     // Check if the user already exists in the `users` table

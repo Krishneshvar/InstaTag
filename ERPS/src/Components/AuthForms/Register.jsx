@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import './Register.css';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 function Register() {
     const formFields = [
-        { id: "username", label: "Username", type: "text", required: true },
         { id: "vehicleNumber", label: "Vehicle Number", type: "text", required: true },
         { id: "engineNumber", label: "Engine Number", type: "text", required: true },
         { id: "chasisNumber", label: "Chasis Number", type: "text", required: true },
@@ -17,7 +15,6 @@ function Register() {
     ];
 
     const [formData, setFormData] = useState({
-        username: '',
         vehicleNumber: '',
         engineNumber: '',
         chasisNumber: '',
@@ -25,27 +22,21 @@ function Register() {
         phno: '',
         bankAccount: '',
         password: '',
-        confirmPassword: '',
+        confirmPassword: ''
     });
 
-    const [otpSent, setOtpSent] = useState(false);
-    const [qrCodeUrl, setQrCodeUrl] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [otpLoading, setOtpLoading] = useState(false);
     const [error, setError] = useState('');
-    const [otp, setOtp] = useState('');
-    const [generatedOtp, setGeneratedOtp] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Handle input changes and update form data
     const handleChange = (e) => {
+        setError('');
         setFormData({
             ...formData,
             [e.target.id]: e.target.value
         });
     };
 
-    // Validation for form fields
     const validateForm = () => {
         const { mail, phno, password, confirmPassword } = formData;
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -69,82 +60,42 @@ function Register() {
         return true;
     };
 
-    // Generate QR code after form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
-        if (!validateForm()) return;
-
-        // Validate OTP
-        if (otp !== generatedOtp) {
-            setError('Invalid OTP');
+        if (!validateForm()) {
+            setIsLoading(false);
             return;
         }
-
-        // Check vehicle owner name and vehicle number match (case-insensitive)
-        // if (formData.ownerName.toLowerCase() !== formData.vehicleNumber.toLowerCase()) {
-        //     setError('Vehicle owner name and vehicle number do not match');
-        //     return;
-        // }
-
-        setLoading(true);
-        setError('');
 
         try {
             const res = await fetch('http://localhost:3000/api/register/user', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ user_id, password }),  // Send user_id and password
+                body: JSON.stringify(formData),
             });
 
             const result = await res.json();
-    
+
             if (res.status === 200 && result.token) {
-                // Store the JWT token in localStorage
                 localStorage.setItem('token', result.token);
-        
-                // Redirect to user dashboard with user ID appended in the URL
-                navigate(`/user-dashboard/${user_id}`);
+
+                // Assuming the server sends user_id
+                navigate(`/user-dashboard/${result.user_id}`);
+            } else {
+                setError(result.message || 'Registration failed. Please try again.');
             }
-
-            const response = await axios.get('https://api.qrserver.com/v1/create-qr-code/', {
-                params: {
-                    size: '150x150',
-                    data: JSON.stringify(formData)  // Converting form data to a string to include in the QR code
-                }
-            });
-
-            setQrCodeUrl(response.request.responseURL); // Get the QR code image URL from the API
-            setFormData({ 
-                username: '', ownerName: '', vehicleNumber: '', aadharNumber: '', chasisNumber: '',
-                mail: '', phno: '', password: '', confirmPassword: '', bankAccount: '' 
-            }); // Reset form
-
-            // Redirect to the dashboard after successful submission
-            navigate('/user-dashboard', { state: { qrCodeUrl: response.request.responseURL } });
-        } catch (error) {
-            console.error('Error generating QR code:', error);
-            setError('Failed to generate QR code. Please try again.');
-        } finally {
-            setLoading(false);
         }
-    };
-
-    // Handle OTP Request
-    const handleOtpRequest = () => {
-        setOtpLoading(true);
-        // Generate a 4-digit OTP
-        const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-        setGeneratedOtp(generatedOtp);
-
-        // Simulate sending the OTP to the email (mock)
-        setTimeout(() => {
-            console.log(`OTP sent to email: ${formData.mail}, OTP: ${generatedOtp}`);
-            setOtpSent(true);
-            setOtpLoading(false);
-        }, 2000); // Simulate an API request
+        catch (error) {
+            console.error('Error during registration:', error);
+            setError('Failed to register. Please try again later.');
+        }
+        finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -161,43 +112,15 @@ function Register() {
                                     id={field.id}
                                     placeholder={`Enter ${field.label}`}
                                     required={field.required}
-                                    value={formData[field.id]}  // Bind input to state
+                                    value={formData[field.id]}
                                     onChange={handleChange}
                                 />
                             </div>
                         ))
                     }
-
-                    {otpSent ? (
-                        <>
-                            <div className="mb-3">
-                                <label htmlFor="otp" className="form-label">Enter OTP</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="otp"
-                                    placeholder="Enter the OTP sent to your email"
-                                    value={otp}
-                                    onChange={(e) => setOtp(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary" disabled={loading}>
-                                {loading ? 'Generating QR...' : 'Register & Generate QR'}
-                            </button>
-                        </>
-                    ) : (
-                        <div className='otp-options'>
-                            <p>Send OTP via:</p>
-                            <button
-                                className="btn btn-primary"
-                                onClick={handleOtpRequest}
-                                disabled={otpLoading}
-                            >
-                                {otpLoading ? 'Sending OTP...' : 'Email'}
-                            </button>
-                        </div>
-                    )}
+                    <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                        {isLoading ? 'Registering...' : 'Register'}
+                    </button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
                 <div className='login-route'>
