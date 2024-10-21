@@ -26,7 +26,7 @@ function AuthForm() {
         localStorage.setItem('token', result.token);
 
         // Redirect to employee dashboard with empid appended in the URL
-        navigate(`/toll-emp?empid=${username}`);
+        navigate(`/toll-emp/${username}`);
       } else {
         alert(result.message);
       }

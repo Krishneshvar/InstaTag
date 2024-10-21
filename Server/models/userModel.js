@@ -38,9 +38,6 @@ export async function getCurrentTimestamp() {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-// Example usage
-console.log(getCurrentTime()); // Outputs: "2024-10-21 21:05:22" (or current time)
-
 // Function to set login status (for employees)
 export async function setLoginStatus(empid, status) {
   try {
