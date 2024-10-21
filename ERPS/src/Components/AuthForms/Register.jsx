@@ -80,14 +80,7 @@ function Register() {
 
             const result = await res.json();
 
-            if (res.status === 200 && result.token) {
-                localStorage.setItem('token', result.token);
-
-                // Assuming the server sends user_id
-                navigate(`/user-dashboard/${result.user_id}`);
-            } else {
-                setError(result.message || 'Registration failed. Please try again.');
-            }
+            navigate(`/user-dashboard/${result.user_id}`);
         }
         catch (error) {
             console.error('Error during registration:', error);
