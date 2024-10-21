@@ -10,50 +10,52 @@ const TollEmp = () => {
     const { empid } = useParams();
     const navigate = useNavigate();
     const [employee, setEmployee] = useState(null);
+    const [loading, setLoading] = useState(true); // Added loading state
 
     useEffect(() => {
         const fetchEmployeeDetails = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/api/toll-emp/${empid}`);
-    
                 if (response.ok) {
                     const data = await response.json();
                     setEmployee(data);
-                }
-                else {
+                } else {
                     setError('Access denied or employee not logged in.');
                     navigate('/');
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 setError('Error fetching employee details.');
+            } finally {
+                setLoading(false); // Set loading to false after fetching
             }
         };
-    
+
         fetchEmployeeDetails();
     }, [empid, navigate]);
 
     useEffect(() => {
-        // Initialize the scanner only if it hasn't been initialized already
-        if (!scannerRef.current) {
-            const qrElement = document.getElementById('qr-reader');
-            if (!qrElement) {
-                setError("QR Reader element not found");
-                return;
-            }
-            
-            const scanner = new Html5QrcodeScanner(
-                'qr-reader', // ID of the container element
-                { fps: 10, qrbox: { width: 250, height: 250 } }, // Configuration options
-                false // verbose mode
-            );
-
-            scanner.render(handleScanSuccess, handleScanError);
-            scannerRef.current = scanner; // Store scanner instance
+        const qrElement = document.getElementById('qr-reader');
+        if (qrElement) {
+            setError("QR Reader element not found");
+            return;
         }
 
+        const initializeScanner = () => {
+            if (!scannerRef.current) {
+                const scanner = new Html5QrcodeScanner(
+                    'qr-reader',
+                    { fps: 10, qrbox: { width: 250, height: 250 } },
+                    false
+                );
+
+                scanner.render(handleScanSuccess, handleScanError);
+                scannerRef.current = scanner; // Store scanner instance
+            }
+        };
+
+        initializeScanner();
+
         return () => {
-            // Clear the scanner when the component unmounts
             if (scannerRef.current) {
                 scannerRef.current.clear();
                 scannerRef.current = null; // Ensure it's reset
@@ -61,10 +63,7 @@ const TollEmp = () => {
         };
     }, []);
 
-    if (error) return <p>{error}</p>;
-    if (!employee) return <p>Loading...</p>;
-
-    const handleScanSuccess = (decodedText, decodedResult) => {
+    const handleScanSuccess = (decodedText) => {
         try {
             const parsedData = JSON.parse(decodedText); // Assuming QR code contains JSON
 
@@ -76,24 +75,28 @@ const TollEmp = () => {
             if (!isDuplicate) {
                 setVehicleData((prevData) => [...prevData, parsedData]); // Add the new data if it's not a duplicate
                 setError(null); // Clear error if the scan is successful
-            }
-            else {
+            } else {
                 setError('This vehicle data has already been scanned.');
             }
-        }
-        catch (err) {
+        } catch (err) {
             setError('Invalid QR code data');
         }
     };
 
     const handleScanError = (errorMessage) => {
         console.error(errorMessage); // Log the error for debugging
+        // Optional: Only set error if scanning fails after a timeout
         setError('Scanning for QR code.');
     };
 
     const handleClearTable = () => {
         setVehicleData([]); // Clear the vehicle data
     };
+
+    // Render loading indicator if data is being fetched
+    if (loading) return <p>Loading employee details...</p>;
+    if (error) return <p style={{ color: 'red' }}>{error}</p>;
+    if (!employee) return <p>No employee data found.</p>;
 
     return (
         <div className="toll-emp-container">
@@ -107,7 +110,6 @@ const TollEmp = () => {
                 {/* Vehicle Information Table */}
                 <div className="vehicle-info-table">
                     <h4>Scanned Vehicles</h4>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
                     <table className="table table-striped">
                         <thead>
                             <tr>

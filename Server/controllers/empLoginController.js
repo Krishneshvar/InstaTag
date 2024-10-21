@@ -34,6 +34,26 @@ const empLoginController = async (req, res) => {
       return res.status(500).json({ message: 'Server error' });
     }
   };
+
+  const getEmployeeDetails = async (req, res) => {
+    const { empid } = req.params; // Get empid from request parameters
+
+    try {
+        // Query to get employee details based on the provided empid
+        const result = await pool.query('SELECT * FROM employees WHERE empid = $1', [empid]);
+        const employee = result.rows[0];
+
+        if (!employee) {
+            return res.status(404).json({ message: 'Employee not found.' });
+        }
+
+        return res.json(employee); // Send employee details as the response
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: err.message });
+    }
+};
+
   
 
-export { empLoginController };
+export { empLoginController , getEmployeeDetails};
