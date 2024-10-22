@@ -138,8 +138,8 @@ const TollEmp = () => {
                         <tr>
                             <th>Vehicle Number</th>
                             <th>Vehicle Type</th>
-                            <th>User ID</th>
-                            <th>Email</th>
+                            <th>Owner Name</th>
+                            <th>Insurance Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,8 +148,8 @@ const TollEmp = () => {
                                 <tr key={index}>
                                     <td>{vehicle.vehicle_no}</td>
                                     <td>{vehicle.vehicle_type}</td>
-                                    <td>{vehicle.user_id}</td>
-                                    <td>{vehicle.email}</td>
+                                    <td>{vehicle.owner_name}</td>
+                                    <td>{vehicle.insurance_status}</td>
                                 </tr>
                             ))
                         ) : (
