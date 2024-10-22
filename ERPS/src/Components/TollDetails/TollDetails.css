@@ -1,0 +1,42 @@
+.toll-details {
+    padding: 20px;
+    padding-top: 6rem;
+    background-color: #1a1a1a; /* Dark theme */
+    color: #fff;
+    text-align: center;
+  }
+  
+  .toll-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .toll-item {
+    background-color: #333;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+  }
+  
+  .toll-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .toll-info h2 {
+    margin: 10px 0;
+  }
+  
+  .toll-info p {
+    margin: 5px 0;
+  }
+  
+  .toll-item img {
+    width: 90px; /* Adjust icon width */
+    height: 50px; /* Adjust icon height */
+    margin-bottom: 10px;
+  }
+  

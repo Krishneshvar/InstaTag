@@ -7,7 +7,7 @@ import Login from './Components/AuthForms/Login';
 import Register from './Components/AuthForms/Register';
 import UserDashboard from './Components/UserDashboard/UserDashboard'; // Ensure this is imported
 import VehicleDetails from './Components/UserDashboard/VehicleDetails';
-// import TollEmp from './Components/TollEmp/TollEmp';
+import TollDetails from './Components/TollDetails/TollDetails';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +26,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/user-dashboard/:user_id", element: <UserDashboard /> }, // Updated route
       { path: "/user-dashboard/:user_id/:vehicle_no", element: <VehicleDetails /> },
+      {path: "/toll-details",element:<TollDetails />},
     ],
   },
 ]);
