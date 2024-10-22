@@ -47,6 +47,9 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/toll-details">Toll Details</Link> 
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/contact">Contact</Link> 
+            </li>
           </ul>
           <Link to="/login">
             <span className="material-symbols-outlined">account_circle</span>
