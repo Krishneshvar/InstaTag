@@ -31,24 +31,28 @@ export default function UserDashboard({ onLogout }) {
     <div className="container-fluid dashboard-container flex-column">
         <div className="col-md-9 main-content">
           <section id="vehicles" className="mb-5 justify-content-center align-items-center">
-            <h3 className="section-title">Your Vehicles</h3>
+            <div className='flex-column justify-content-center align-items-center'>
+              <h3 className="section-title p-1 vehicle-title">Your Vehicles</h3>
+              <div className='controls d-flex justify-content-center align-items-center p-1'>
+                <span className="material-symbols-outlined p-1" title='Add Vehicle'>add</span>
+                <span className="material-symbols-outlined p-1" title='Logout'>logout</span>
+              </div>
+            </div>
             {
               vehicles.map(vehicle => (
-                <div key={vehicle.vehicle_no} className="">
-                  <div className="">
-                    <div className="">
-                      <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} style={{ textDecoration: 'none' }}>
-                        <h5 className="card-title" style={{ color: 'white' }}>{vehicle.vehicle_type}</h5>
-                        <p className="card-text">{vehicle.vehicle_no}</p>
-                      </Link>
-                    </div>
+                <div key={vehicle.vehicle_no} className="bgblue">
+                  <div className="vehicle-card">
+                    <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} style={{ textDecoration: 'none' }}>
+                      <h5 className="card-title text-light">{vehicle.vehicle_type}</h5>
+                      <p className="card-text text-light">{vehicle.vehicle_no}</p>
+                    </Link>
                   </div>
                 </div>
               ))
             }
-            <div className='justify-content-center align-items-center'>
+            {/* <div className='justify-content-center align-items-center'>
               <button className='btn btn-danger'>Logout</button>
-            </div>
+            </div> */}
           </section>
         </div>
     </div>

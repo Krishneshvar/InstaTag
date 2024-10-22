@@ -59,9 +59,9 @@ export const getVehicleExpenses = async (req, res) => {
       [vehicle_no]
     );
 
-    // If no results are found, return a 404 error
+    // Return an empty array if no expenses are found
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Vehicle expenses not found.' });
+      return res.status(200).json([]); // Empty array instead of 404
     }
 
     // Map the query results to the desired format

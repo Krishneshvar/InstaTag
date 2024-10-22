@@ -78,7 +78,7 @@ export default function VehicleDetails() {
         </div>
         <div className="use-card">
           <h2 className="">Expense History</h2>
-          <div class="card__content">
+          <div className="card__content">
             {/* <ExpenseChart expenses={expenses} /> */}
           </div>
         </div>
