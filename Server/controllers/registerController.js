@@ -18,7 +18,7 @@ const registerUser = async (req, res) => {
 
     // Fetch vehicle details for validation
     const getVehicleDet = await rtopool.query(
-      'SELECT mobile_no, engine_no, chasis_no, email FROM vehicle_verification WHERE vehicle_no = $1',
+      'SELECT mobile_no, owner_name, engine_no, chasis_no, email, vehicle_type FROM vehicle_verification WHERE vehicle_no = $1',
       [vehicleNumber]
     );
 
@@ -27,6 +27,7 @@ const registerUser = async (req, res) => {
     }
 
     const vehicleDet = getVehicleDet.rows[0];
+    vehicleDet.owner_name
 
     // Validate that the provided details match the vehicle details
     if (
@@ -45,16 +46,16 @@ const registerUser = async (req, res) => {
     const currTimestamp = getCurrentTimestamp();
 
     const result = await pool.query(
-      'INSERT INTO users (user_id, password, created_at, bank_acc_no, email, ph_no, balance) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-      [newUserId, password, currTimestamp, bankAccount, mail, phno, 0]
+      'INSERT INTO users (user_id, password, created_at, bank_acc_no, email, ph_no, balance, login) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      [newUserId, password, currTimestamp, bankAccount, mail, phno, 0, currTimestamp]
     );
 
     const newUser = result.rows[0];
     const iid = concatenateLastFourDigits(vehicleNumber, chasisNumber, engineNumber);
 
     const registerVehicle = await pool.query(
-      'INSERT INTO vehicle_details (vehicle_no, vehicle_type, user_id, engine_no, chasis_no, instatag_id, tag_created) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [vehicleNumber, password, newUser.user_id, engineNumber, chasisNumber, iid, currTimestamp]
+      'INSERT INTO vehicle_details (vehicle_no, vehicle_type, user_id, engine_no, chasis_no, instatag_id, tag_created, owner_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      [vehicleNumber, vehicleDet.vehicle_type, newUser.user_id, engineNumber, chasisNumber, iid, currTimestamp, vehicleDet.owner_name]
     );
 
     const logResult = logData(newUser.user_id, vehicleNumber, "Registration", null, "A new user has registered.")

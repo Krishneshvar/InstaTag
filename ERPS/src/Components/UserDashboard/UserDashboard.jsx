@@ -34,8 +34,8 @@ export default function UserDashboard({ onLogout }) {
             <h3 className="section-title">Your Vehicles</h3>
             {
               vehicles.map(vehicle => (
-                <div key={vehicle.vehicle_no} className="col-md-4 mb-3">
-                  <div className="card__content">
+                <div key={vehicle.vehicle_no} className="">
+                  <div className="">
                     <div className="">
                       <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} style={{ textDecoration: 'none' }}>
                         <h5 className="card-title" style={{ color: 'white' }}>{vehicle.vehicle_type}</h5>
