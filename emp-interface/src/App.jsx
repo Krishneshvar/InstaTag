@@ -2,6 +2,7 @@ import './App.css'
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import AuthForm from './components/AuthForm/AuthForm'
 import TollEmp from './components/TollEmp/TollEmp';
+import ForgotPassword from './components/AuthForm/forgotPassword';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <AuthForm /> },
+      { path: "/forgot-password", element: <ForgotPassword /> },
       { path: "/toll-emp/:empid", element: <TollEmp /> },
     ],
   },

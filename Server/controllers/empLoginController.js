@@ -57,8 +57,27 @@ const empLoginController = async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 };
+const forgotPasswordController = async (req, res) => {
+  const { name, email } = req.body;
+
+  try {
+      // Query the database to find the employee
+      const employee = await db.query('SELECT * FROM employees WHERE name = ? AND emp_email = ?', [name, email]);
+
+      if (employee.length > 0) {
+          // Employee found, send success response
+          // Here you would typically generate a reset password link and send it via email
+          res.status(200).json({ message: 'A reset password link has been sent to your email.' });
+      } else {
+          res.status(404).json({ message: 'No employee found with the provided name and email.' });
+      }
+  } catch (error) {
+      console.error('Error during forgot password request:', error);
+      res.status(500).json({ message: 'An error occurred while processing your request.' });
+  }
+};
 
 
   
 
-export { empLoginController , getEmployeeDetails};
+export { empLoginController , getEmployeeDetails,forgotPasswordController};
