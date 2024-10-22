@@ -1,6 +1,7 @@
 import appDB from '../db/appDB.js';
 import rtoDB from '../db/rtoDB.js';
 import { getCurrentTimestamp, concatenateLastFourDigits } from '../models/userModel.js';
+import { logData } from './logController.js';
 
 const pool = appDB;
 const rtopool = rtoDB;
@@ -37,7 +38,6 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ error: 'The details do not match the records for the specified vehicle' });
     }
 
-    // Generate the next available user_id by getting the max user_id and incrementing it
     const getMaxUserIdResult = await pool.query('SELECT MAX(user_id::int) as max_user_id FROM users');
     const maxUserId = getMaxUserIdResult.rows[0].max_user_id || 0;
     const newUserId = maxUserId + 1;
@@ -56,6 +56,9 @@ const registerUser = async (req, res) => {
       'INSERT INTO vehicle_details (vehicle_no, vehicle_type, user_id, engine_no, chasis_no, instatag_id, tag_created) VALUES ($1, $2, $3, $4, $5, $6, $7)',
       [vehicleNumber, password, newUser.user_id, engineNumber, chasisNumber, iid, currTimestamp]
     );
+
+    const logResult = logData(newUser.user_id, vehicleNumber, "Registration", null, "A new user has registered.")
+    if (!(await logResult).success) return console.log("Error logging data.");
 
     // Respond with the token and new user ID
     return res.status(201).json({ user_id: newUser.user_id });

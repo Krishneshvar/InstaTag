@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.25.7",
     "axios": "^1.7.7",
-    "chart.js": "^4.4.4",
+    "chart.js": "^4.4.5",
     "erps": "file:",
     "html5-qrcode": "^2.3.8",
     "qrcode.react": "^4.0.1",

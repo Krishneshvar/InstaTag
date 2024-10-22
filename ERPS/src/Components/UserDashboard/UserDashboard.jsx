@@ -31,7 +31,7 @@ export default function UserDashboard({ onLogout }) {
     <div className="container-fluid dashboard-container flex-column">
       <div className="row">
         <div className="col-md-9 main-content">
-          <section id="vehicles" className="mb-5">
+          <section id="vehicles" className="mb-5 justify-content-center align-items-center">
             <h3 className="section-title">Your Vehicles</h3>
             <div className="row">
             {
@@ -47,6 +47,9 @@ export default function UserDashboard({ onLogout }) {
                     </div>
                 ))
             }
+            </div>
+            <div className='justify-content-center align-items-center'>
+              <button className='btn btn-danger'>Logout</button>
             </div>
           </section>
         </div>
