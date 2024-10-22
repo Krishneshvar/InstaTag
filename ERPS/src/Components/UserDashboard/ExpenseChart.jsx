@@ -6,20 +6,21 @@ export default function ExpenseChart({ expenses }) {
   const chartInstance = useRef(null);
 
   useEffect(() => {
+    // Destroy the existing chart before creating a new one
+    if (chartInstance.current) {
+      chartInstance.current.destroy();
+    }
+
     if (chartRef.current) {
-      // Destroy previous chart instance if it exists
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
+      const ctx = chartRef.current.getContext('2d');
 
       // Prepare data for the chart
       const data = expenses.map(expense => ({
         x: new Date(expense.timestamp),
-        y: expense.amount
+        y: expense.amount,
       }));
 
-      // Create new chart instance
-      const ctx = chartRef.current.getContext('2d');
+      // Create a new chart
       chartInstance.current = new Chart(ctx, {
         type: 'line',
         data: {
@@ -33,6 +34,7 @@ export default function ExpenseChart({ expenses }) {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           scales: {
             x: {
               type: 'time',
@@ -62,13 +64,13 @@ export default function ExpenseChart({ expenses }) {
       });
     }
 
-    // Cleanup function
+    // Cleanup function to destroy the chart instance on component unmount or re-render
     return () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
       }
     };
-  }, [expenses]);
+  }, [expenses]); // Depend on the 'expenses' prop
 
   return (
     <div className="chart-container" style={{ position: 'relative', height: '60vh', width: '100%' }}>

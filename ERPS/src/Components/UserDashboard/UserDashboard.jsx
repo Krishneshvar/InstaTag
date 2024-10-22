@@ -29,31 +29,28 @@ export default function UserDashboard({ onLogout }) {
 
   return (
     <div className="container-fluid dashboard-container flex-column">
-      <div className="row">
         <div className="col-md-9 main-content">
           <section id="vehicles" className="mb-5 justify-content-center align-items-center">
             <h3 className="section-title">Your Vehicles</h3>
-            <div className="row">
             {
-                vehicles.map(vehicle => (
-                    <div key={vehicle.vehicle_no} className="col-md-4 mb-3">
-                    <div className="card vehicle-card">
-                        <div className="card-body">
-                            <h5 className="card-title">{vehicle.vehicle_type}</h5>
-                            <p className="card-text">{vehicle.vehicle_no}</p>
-                            <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} className="btn btn-primary">View Details</Link>
-                        </div>
+              vehicles.map(vehicle => (
+                <div key={vehicle.vehicle_no} className="col-md-4 mb-3">
+                  <div className="card__content">
+                    <div className="">
+                      <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} style={{ textDecoration: 'none' }}>
+                        <h5 className="card-title" style={{ color: 'white' }}>{vehicle.vehicle_type}</h5>
+                        <p className="card-text">{vehicle.vehicle_no}</p>
+                      </Link>
                     </div>
-                    </div>
-                ))
+                  </div>
+                </div>
+              ))
             }
-            </div>
             <div className='justify-content-center align-items-center'>
               <button className='btn btn-danger'>Logout</button>
             </div>
           </section>
         </div>
-      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ExpenseChart from './ExpenseChart';
+import './UserDashboard.css'
 
 export default function VehicleDetails() {
   const { user_id, vehicle_no } = useParams();
@@ -58,55 +59,33 @@ export default function VehicleDetails() {
   );
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-lg-10 offset-lg-1">
-          <div className="card shadow-sm mb-4">
-            <div className="card-body">
-              <h1 className="card-title text-center mb-4">Vehicle Details</h1>
-              <div className="row mb-4">
-                <div className="col-md-6">
-                  <h2 className="h4 mb-3">{vehicleData.vehicle_type}</h2>
-                  <p className="lead">{vehicleData.vehicle_no}</p>
-                </div>
-                <div className="col-md-6 text-md-end">
-                  <p className="mb-1"><strong>Tag ID:</strong> {vehicleData.instagat_id}</p>
-                  <p><strong>Tag Created:</strong> {new Date(vehicleData.tag_created).toLocaleDateString()}</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <div className="card h-100">
-                    <div className="card-body">
-                      <h3 className="card-title h5">Engine Details</h3>
-                      <p className="card-text"><strong>Engine Number:</strong> {vehicleData.engine_no}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <div className="card h-100">
-                    <div className="card-body">
-                      <h3 className="card-title h5">Chassis Details</h3>
-                      <p className="card-text"><strong>Chassis Number:</strong> {vehicleData.chasis_no}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <div className="details-container">
+      <div className="col-lg-10 offset-lg-1 pt-5">
+        <div className="card-body pt-5">
+          <h1 className="card-title text-center mb-4 pt-6">Vehicle Details</h1>
+          <div className="row mb-4">
+            <div className="col-md-6">
+              <h2 className="h4 mb-3">{vehicleData.vehicle_type}</h2>
+              <p className="lead">{vehicleData.vehicle_no}</p>
+              <p className="card-text"><strong>Engine Number:</strong> {vehicleData.engine_no}</p>
+              <p className="card-text"><strong>Chassis Number:</strong> {vehicleData.chasis_no}</p>
+            </div>
+            <div className="col-md-6 text-md-end">
+              <p className="mb-1"><strong>Tag ID:</strong> {vehicleData.instagat_id}</p>
+              <p><strong>Tag Created:</strong> {new Date(vehicleData.tag_created).toLocaleDateString()}</p>
             </div>
           </div>
-
-          <div className="card shadow-sm mb-4">
-            <div className="card-body">
-              <h2 className="card-title h4 mb-4">Expense History</h2>
-              <ExpenseChart expenses={expenses} />
-            </div>
+        </div>
+        <div className="use-card">
+          <h2 className="">Expense History</h2>
+          <div class="card__content">
+            {/* <ExpenseChart expenses={expenses} /> */}
           </div>
-
-          <div className="text-center mt-4">
-            <Link to={`/user-dashboard/${user_id}`} className="btn btn-primary">
-              Back to Dashboard
-            </Link>
-          </div>
+        </div>
+        <div className="text-center mt-4">
+          <Link to={`/user-dashboard/${user_id}`} className="btn btn-primary">
+            Back to Dashboard
+          </Link>
         </div>
       </div>
     </div>
