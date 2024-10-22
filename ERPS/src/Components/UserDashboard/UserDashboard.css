@@ -14,6 +14,13 @@
     overflow: auto; /* Allow vertical scrolling if needed */
 }
 
+.card-title {
+    background: linear-gradient(to right, #f32170, #ff6b08,#cf23cf, #eedd44);
+    /* linear-gradient(135deg, #fffffff5, #3a4b8a, #ffffff98); */
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
 .vehicle-title, .controls {
     width: 100%;
 }

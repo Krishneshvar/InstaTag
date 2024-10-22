@@ -42,11 +42,10 @@ export default function UserDashboard({ onLogout }) {
               </button>
             </div>
           </div>
-          {/* Use d-flex to center bgblue divs */}
           <div className="d-flex flex-wrap justify-content-center">
             {
               vehicles.map(vehicle => (
-                <div key={vehicle.vehicle_no} className="bgblue m-2"> {/* Add margin for spacing */}
+                <div key={vehicle.vehicle_no} className="bgblue m-2">
                   <div className="vehicle-card">
                     <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} style={{ textDecoration: 'none' }}>
                       <h5 className="card-title text-light">{vehicle.vehicle_type}</h5>
