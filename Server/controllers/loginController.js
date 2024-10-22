@@ -71,7 +71,7 @@ const getVehicleDetailsByInstaTag = async (req, res) => {
       const result = await pool.query(
           `SELECT v.vehicle_no, v.vehicle_type, u.user_id, u.email
            FROM vehicle_details v 
-           JOIN user_details u ON v.user_id = u.user_id 
+           JOIN users u ON v.user_id = u.user_id 
            WHERE v.instatag_id = $1`, 
           [instatag_id]
       );
