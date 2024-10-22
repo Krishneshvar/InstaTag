@@ -4,11 +4,13 @@ import { registerUser } from '../controllers/registerController.js';
 import { empLoginController, getEmployeeDetails } from '../controllers/empLoginController.js';
 import { getVehicleExpenses } from '../models/userModel.js';
 import { generateQR } from '../GenerateQR.js';
+import { requestOTP } from '../controllers/mailController.js';
 const router = express.Router();
 
 router.post('/login/user', loginUser);
-router.post('/register/user', registerUser);
 router.post('/login/emp', empLoginController);
+router.post('/register/user', registerUser);
+router.post('/request-otp', requestOTP);
 
 // Dashboard
 router.get('/user-details/:user_id', getUserVehicles);

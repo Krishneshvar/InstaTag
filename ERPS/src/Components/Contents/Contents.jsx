@@ -16,15 +16,18 @@ function Contents() {
           <div className="d-flex col-lg-6 mx-auto justify-content-between align-items-center cards-container">
             <div className="card">
               <img src="/features/fast-icon.png" alt="Faster Icon" className='provides-icon' />
-              Faster
+              <h2>Faster</h2>
+              <p>A faster service to improve efficiency on the go...</p>
             </div>
             <div className="card">
               <img src="/features/safe-icon.png" alt="Safer Icon" className='provides-icon' />
-              Safer
+              <h2>Safer</h2>
+              <p>A safer service so all your data is kept safe to ourselves.</p>
             </div>
             <div className="card">
-              <img src="/features/automated-icon.png" alt="Automated Icon" className='provides-icon' />
-              Automated
+              <img src="/features/real-time-updates.png" alt="Real Time Updates Icon" className='provides-icon' />
+              <h3>Timely Updates</h3>
+              <p>Every transaction made regarding your InstTag is updated to you timely.</p>
             </div>
           </div>
         </div>
