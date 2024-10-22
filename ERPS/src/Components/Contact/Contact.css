@@ -1,0 +1,57 @@
+.contact-page {
+    padding: 30px 0;
+    padding-top: 3rem;
+  }
+  
+  .contact-header h1 {
+    font-size: 3rem;
+    color: #333;
+  }
+  
+  .contact-header p.lead {
+    font-size: 1.2rem;
+    color: #777;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+  
+  .list-unstyled {
+    padding: 0;
+    list-style: none;
+  }
+  
+  .list-unstyled li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .social-icons img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    transition: transform 0.3s;
+  }
+  
+  .social-icons img:hover {
+    transform: scale(1.1);
+  }
+  
