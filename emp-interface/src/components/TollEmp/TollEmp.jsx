@@ -1,147 +1,171 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
 import './TollEmp.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const TollEmp = () => {
     const [vehicleData, setVehicleData] = useState([]);
     const [error, setError] = useState(null);
-    const scannerRef = useRef(null);
     const { empid } = useParams();
     const navigate = useNavigate();
     const [employee, setEmployee] = useState(null);
+    const [instaTagId, setInstaTagId] = useState(''); // InstaTag ID state
+    const [scannerActive, setScannerActive] = useState(false);
+    const html5QrCode = useRef(null);
 
     useEffect(() => {
         const fetchEmployeeDetails = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/api/toll-emp/${empid}`);
-    
                 if (response.ok) {
                     const data = await response.json();
                     setEmployee(data);
-                }
-                else {
+                } else {
                     setError('Access denied or employee not logged in.');
                     navigate('/');
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 setError('Error fetching employee details.');
             }
         };
-    
+
         fetchEmployeeDetails();
     }, [empid, navigate]);
 
     useEffect(() => {
-        // Initialize the scanner only if it hasn't been initialized already
-        if (!scannerRef.current) {
-            const qrElement = document.getElementById('qr-reader');
-            if (!qrElement) {
-                setError("QR Reader element not found");
-                return;
-            }
-            
-            const scanner = new Html5QrcodeScanner(
-                'qr-reader', // ID of the container element
-                { fps: 10, qrbox: { width: 250, height: 250 } }, // Configuration options
-                false // verbose mode
-            );
+        if (scannerActive) {
+            const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
 
-            scanner.render(handleScanSuccess, handleScanError);
-            scannerRef.current = scanner; // Store scanner instance
+            html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
+
+            const config = {
+                fps: 10,
+                qrbox: 250
+            };
+
+            html5QrCode.current.start(
+                { facingMode: "environment" }, // Use environment-facing camera
+                config,
+                (decodedText, decodedResult) => {
+                    try {
+                        const scannedData = JSON.parse(decodedText); // Assuming QR contains JSON
+                        setInstaTagId(scannedData.instaTagId || ''); // Set InstaTag ID from the scanned QR data
+                        stopScanner(); // Stop scanning after successful scan
+                    } catch (err) {
+                        setError('Invalid QR code data format');
+                    }
+                },
+                (errorMessage) => {
+                    console.log(`QR code scan error: ${errorMessage}`);
+                }
+            ).catch((err) => {
+                setError(`Unable to start scanning: ${err}`);
+            });
+        } else {
+            stopScanner();
         }
 
-        return () => {
-            // Clear the scanner when the component unmounts
-            if (scannerRef.current) {
-                scannerRef.current.clear();
-                scannerRef.current = null; // Ensure it's reset
+        return () => stopScanner(); // Cleanup on unmount
+    }, [scannerActive]);
+
+    const stopScanner = () => {
+        if (html5QrCode.current) {
+            html5QrCode.current.stop().then(() => {
+                console.log("QR Code scanning stopped.");
+            }).catch(err => {
+                console.error(`Error stopping QR Code scanning: ${err}`);
+            });
+        }
+    };
+
+    // Modified function to fetch vehicle details from new backend API
+    const fetchVehicleDetails = async (instaTagId) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`); // Use the new API endpoint
+            if (response.ok) {
+                const vehicleDetails = await response.json();
+                setVehicleData(prevData => [...prevData, vehicleDetails]); // Append the vehicle details
+                setError(null);
+            } else {
+                setError('Vehicle or owner not found for the given InstaTag ID.');
             }
-        };
-    }, []);
+        } catch (err) {
+            setError('Error fetching vehicle details.');
+        }
+    };
 
     if (error) return <p>{error}</p>;
     if (!employee) return <p>Loading...</p>;
 
-    const handleScanSuccess = (decodedText, decodedResult) => {
-        try {
-            const parsedData = JSON.parse(decodedText); // Assuming QR code contains JSON
-
-            // Check for duplicate JSON data
-            const isDuplicate = vehicleData.some((vehicle) =>
-                JSON.stringify(vehicle) === JSON.stringify(parsedData)
-            );
-
-            if (!isDuplicate) {
-                setVehicleData((prevData) => [...prevData, parsedData]); // Add the new data if it's not a duplicate
-                setError(null); // Clear error if the scan is successful
-            }
-            else {
-                setError('This vehicle data has already been scanned.');
-            }
-        }
-        catch (err) {
-            setError('Invalid QR code data');
-        }
-    };
-
-    const handleScanError = (errorMessage) => {
-        console.error(errorMessage); // Log the error for debugging
-        setError('Scanning for QR code.');
-    };
-
     const handleClearTable = () => {
-        setVehicleData([]); // Clear the vehicle data
+        setVehicleData([]);
     };
 
     return (
         <div className="toll-emp-container">
             <h2>Toll Employee Interface</h2>
             <h2>Welcome, {employee.name} (ID: {employee.empid})</h2>
+            <button onClick={() => setScannerActive(prev => !prev)} className="scan-button">
+                <FontAwesomeIcon icon={faCamera} /> {scannerActive ? 'Stop Scanning' : 'Start Scanning'}
+            </button>
 
-            <div className="toll-emp-wrapper">
-                {/* QR Scanner */}
-                <div id="qr-reader" style={{ width: '320px', height: '320px' }}></div>
-
-                {/* Vehicle Information Table */}
-                <div className="vehicle-info-table">
-                    <h4>Scanned Vehicles</h4>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Vehicle Number</th>
-                                <th>Aadhaar Number</th>
-                                <th>Phone Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {vehicleData.length > 0 ? (
-                                vehicleData.map((vehicle, index) => (
-                                    <tr key={index}>
-                                        <td>{vehicle.vehicleNumber}</td>
-                                        <td>{vehicle.aadhaarNumber}</td>
-                                        <td>{vehicle.phoneNumber}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="3" style={{ textAlign: 'center' }}>
-                                        No vehicles scanned yet
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-
-                    {/* Clear Table Button */}
-                    {vehicleData.length > 0 && (
-                        <button className="btn btn-danger" onClick={handleClearTable}>
-                            Clear Table
-                        </button>
-                    )}
+            {scannerActive && (
+                <div>
+                    <div id="reader" style={{ width: '100%', height: '250px' }}></div>
                 </div>
+            )}
+
+            <form onSubmit={(e) => e.preventDefault()} className="vehicle-form">
+                <input
+                    type="text"
+                    placeholder="InstaTag ID"
+                    value={instaTagId}
+                    onChange={(e) => setInstaTagId(e.target.value)}
+                    required
+                />
+                <button type="submit" onClick={() => fetchVehicleDetails(instaTagId)}>
+                    <FontAwesomeIcon icon={faUserPlus} /> Fetch Vehicle
+                </button>
+            </form>
+
+            <div className="vehicle-info-table">
+                <h4>Entered Vehicles</h4>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Vehicle Type</th>
+                            <th>User ID</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {vehicleData.length > 0 ? (
+                            vehicleData.map((vehicle, index) => (
+                                <tr key={index}>
+                                    <td>{vehicle.vehicle_no}</td>
+                                    <td>{vehicle.vehicle_type}</td>
+                                    <td>{vehicle.user_id}</td>
+                                    <td>{vehicle.email}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4" style={{ textAlign: 'center' }}>
+                                    No vehicles added yet
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+                {vehicleData.length > 0 && (
+                    <button className="btn btn-danger" onClick={handleClearTable}>
+                        <FontAwesomeIcon icon={faTrashAlt} /> Clear Table
+                    </button>
+                )}
             </div>
         </div>
     );
