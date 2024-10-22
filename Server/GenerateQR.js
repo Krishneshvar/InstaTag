@@ -1,14 +1,18 @@
 import QRCode from 'qrcode';
 
-app.get('/generate-qr', async (req, res) => {
+export const generateQR = async (req, res) => {
   try {
-    const dataArray = req.query.data || ['vno', 'eno', 'cno'];
+    // Capture the value from the 'data' query parameter
+    const data = req.query.data; // Expecting ?data=1001
 
-    // Encode array as JSON
-    const jsonData = JSON.stringify(dataArray);
+    if (!data) {
+      return res.status(400).send('No data provided');
+    }
 
-    const qrCodeImage = await QRCode.toDataURL(jsonData);
+    // Generate QR code
+    const qrCodeImage = await QRCode.toDataURL(data); // Directly use data
 
+    // Send the QR code image in HTML response
     res.send(`
       <html>
         <body>
@@ -18,6 +22,7 @@ app.get('/generate-qr', async (req, res) => {
       </html>
     `);
   } catch (err) {
+    console.error(err); // Log the error for debugging
     res.status(500).send('Error generating QR code');
   }
-});
+};
