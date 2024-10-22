@@ -15,6 +15,7 @@ const TollEmp = () => {
     const [scannerActive, setScannerActive] = useState(false);
     const html5QrCode = useRef(null);
 
+    // Fetch employee details when the component mounts
     useEffect(() => {
         const fetchEmployeeDetails = async () => {
             try {
@@ -34,6 +35,7 @@ const TollEmp = () => {
         fetchEmployeeDetails();
     }, [empid, navigate]);
 
+    // QR code scanning logic
     useEffect(() => {
         if (scannerActive) {
             const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
@@ -41,14 +43,14 @@ const TollEmp = () => {
             html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
 
             const config = {
-                fps: 10,
-                qrbox: 250
+                fps: 10, // Frames per second
+                qrbox: 250 // Size of the scanning box
             };
 
             html5QrCode.current.start(
-                { facingMode: "environment" }, // Use environment-facing camera
+                { facingMode: "environment" }, // Use the environment-facing camera
                 config,
-                (decodedText, decodedResult) => {
+                (decodedText) => {
                     try {
                         const scannedData = JSON.parse(decodedText); // Assuming QR contains JSON
                         setInstaTagId(scannedData.instaTagId || ''); // Set InstaTag ID from the scanned QR data
@@ -80,7 +82,7 @@ const TollEmp = () => {
         }
     };
 
-    // Modified function to fetch vehicle details from new backend API
+    // Fetch vehicle details using the InstaTag ID
     const fetchVehicleDetails = async (instaTagId) => {
         try {
             const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`); // Use the new API endpoint
@@ -107,6 +109,7 @@ const TollEmp = () => {
         <div className="toll-emp-container">
             <h2>Toll Employee Interface</h2>
             <h2>Welcome, {employee.name} (ID: {employee.empid})</h2>
+
             <button onClick={() => setScannerActive(prev => !prev)} className="scan-button">
                 <FontAwesomeIcon icon={faCamera} /> {scannerActive ? 'Stop Scanning' : 'Start Scanning'}
             </button>
