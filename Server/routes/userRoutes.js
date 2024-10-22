@@ -10,7 +10,6 @@ import handleTransaction from '../controllers/handleTransaction.js';
 const router = express.Router();
 
 router.post('/login/user', loginUser);
-router.post('/register/user', registerUser);
 router.post('/login/emp', empLoginController);
 // router.post('/forgot-password', ForgotPassword)
 

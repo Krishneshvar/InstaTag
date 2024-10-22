@@ -11,7 +11,8 @@ function Register() {
         { id: "phno", label: "Phone Number", type: "text", required: true },
         { id: "bankAccount", label: "Bank Account Number", type: "text", required: true },
         { id: "password", label: "Password", type: "password", required: true },
-        { id: "confirmPassword", label: "Confirm Password", type: "password", required: true }
+        { id: "confirmPassword", label: "Confirm Password", type: "password", required: true },
+        { id: "otp", label: "OTP", type: "text" }
     ];
 
     const [formData, setFormData] = useState({
@@ -27,6 +28,7 @@ function Register() {
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [otpSent, setOtpSent] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -58,6 +60,26 @@ function Register() {
         }
 
         return true;
+    };
+
+    const handleSendOTP = async () => {
+        setOtpSent(true);
+        const response = await fetch('http://localhost:3000/api/request-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.message);
+        }
+        else {
+            const errorData = await response.json();
+            alert(errorData.error);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -111,9 +133,18 @@ function Register() {
                             </div>
                         ))
                     }
-                    <button type="submit" className="btn btn-primary" disabled={isLoading}>
-                        {isLoading ? 'Registering...' : 'Register'}
-                    </button>
+                    {
+                        otpSent ? (
+                            <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                                {isLoading ? 'Registering...' : 'Register'}
+                            </button>
+                        ) : (
+                            <button className="btn btn-primary" onClick={handleSendOTP}>
+                                Send OTP via Mail
+                            </button>
+                        )
+                        
+                    }
                 </form>
                 {error && <p className="error-message">{error}</p>}
                 <div className='login-route'>
