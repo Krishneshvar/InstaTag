@@ -48,7 +48,7 @@ export default function UserDashboard({ onLogout }) {
                 <div key={vehicle.vehicle_no} className="bgblue m-2">
                   <div className="vehicle-card">
                     <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} style={{ textDecoration: 'none' }}>
-                      <h5 className="card-title text-light">{vehicle.vehicle_type}</h5>
+                      <h5 className="text-light">{vehicle.vehicle_type}</h5>
                       <p className="card-text text-light">{vehicle.vehicle_no}</p>
                     </Link>
                   </div>
