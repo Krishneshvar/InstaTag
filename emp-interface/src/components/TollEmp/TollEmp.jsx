@@ -37,32 +37,21 @@ const TollEmp = () => {
     useEffect(() => {
         if (scannerActive) {
             const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
-
+    
             html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
-
+    
             const config = {
                 fps: 10,
                 qrbox: 250
             };
-
+    
             html5QrCode.current.start(
                 { facingMode: "environment" }, // Use environment-facing camera
                 config,
-                (decodedText, decodedResult) => {
-                    try {
-                        const scannedData = JSON.parse(decodedText); // Assuming QR contains JSON
-                        const scannedInstaTagId = scannedData.instaTagId || '';
-
-                        if (scannedInstaTagId) {
-                            setInstaTagId(scannedInstaTagId); // Set InstaTag ID from the scanned QR data
-                            fetchVehicleDetails(scannedInstaTagId); // Automatically fetch vehicle details
-                            stopScanner(); // Stop scanning after successful scan
-                        } else {
-                            setError('InstaTag ID not found in QR code.');
-                        }
-                    } catch (err) {
-                        setError('Invalid QR code data format');
-                    }
+                (decodedText) => {
+                    setInstaTagId(decodedText); // Set the plain text from QR code directly to InstaTag ID
+                    fetchVehicleDetails(decodedText); // Automatically fetch details after scanning
+                    stopScanner(); // Stop scanning after successful scan
                 },
                 (errorMessage) => {
                     console.log(`QR code scan error: ${errorMessage}`);
@@ -73,7 +62,7 @@ const TollEmp = () => {
         } else {
             stopScanner();
         }
-
+    
         return () => stopScanner(); // Cleanup on unmount
     }, [scannerActive]);
 
@@ -109,6 +98,36 @@ const TollEmp = () => {
     const handleClearTable = () => {
         setVehicleData([]);
     };
+    const handleTransaction = async () => {
+        if (vehicleData.length === 0) {
+            setError('No vehicle details to process.');
+            return;
+        }
+    
+        const vehicle = vehicleData[0]; // Assuming processing the first vehicle in the list
+        const vehicleNo = vehicle.vehicle_no;
+    
+        try {
+            // Call backend API to trigger the transaction
+            const response = await fetch('http://localhost:3000/api/transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ vehicleNo })
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Transaction successful. New balance: ${result.newBalance}`);
+            } else {
+                setError('Transaction failed. Please try again.');
+            }
+        } catch (err) {
+            setError('Error processing the transaction.');
+        }
+    };
+    
     return (
         <div className="toll-emp-container">
             <h2>Toll Employee Interface</h2>
@@ -138,42 +157,49 @@ const TollEmp = () => {
             </form>
 
             <div className="vehicle-info-table">
-                <h4>Entered Vehicles</h4>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Vehicle Number</th>
-                            <th>Vehicle Type</th>
-                            <th>Owner Name</th>
-                            <th>Insurance Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {vehicleData.length > 0 ? (
-                            vehicleData.map((vehicle, index) => (
-                                <tr key={index}>
-                                    <td>{vehicle.vehicle_no}</td>
-                                    <td>{vehicle.vehicle_type}</td>
-                                    <td>{vehicle.owner_name}</td>
-                                    <td>{vehicle.insurance_status}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="4" style={{ textAlign: 'center' }}>
-                                    No vehicles added yet
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-                {vehicleData.length > 0 && (
-                    <button className="btn btn-danger" onClick={handleClearTable}>
-                        <FontAwesomeIcon icon={faTrashAlt} /> Clear Table
-                    </button>
-                )}
-            </div>
+    <h4>Entered Vehicles</h4>
+    {error && <p style={{ color: 'red' }}>{error}</p>}
+    <table className="table table-striped">
+        <thead>
+            <tr>
+                <th>Vehicle Number</th>
+                <th>Vehicle Type</th>
+                <th>Owner Name</th>
+                <th>Insurance Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {vehicleData.length > 0 ? (
+                vehicleData.map((vehicle, index) => (
+                    <tr key={index}>
+                        <td>{vehicle.vehicle_no}</td>
+                        <td>{vehicle.vehicle_type}</td>
+                        <td>{vehicle.owner_name}</td>
+                        <td>{vehicle.insurance_status}</td>
+                    </tr>
+                ))
+            ) : (
+                <tr>
+                    <td colSpan="4" style={{ textAlign: 'center' }}>
+                        No vehicles added yet
+                    </td>
+                </tr>
+            )}
+        </tbody>
+    </table>
+
+    {vehicleData.length > 0 && (
+        <>
+            <button className="btn btn-success" onClick={handleTransaction}>
+                Trigger Transaction
+            </button>
+            <button className="btn btn-danger" onClick={handleClearTable}>
+                <FontAwesomeIcon icon={faTrashAlt} /> Clear Table
+            </button>
+        </>
+    )}
+</div>
+
         </div>
     );
 };
