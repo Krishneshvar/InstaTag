@@ -50,11 +50,7 @@ const empLoginController = async (req, res) => {
         // Return the employee details including the name
         return res.json({
             empid: employee.empid,
-            name: employee.name, // Include employee name
-            // Add other fields as needed, for example:
-            // email: employee.email,
-            // position: employee.position,
-            // etc.
+            name: employee.name, 
         });
     } catch (err) {
         console.error(err);

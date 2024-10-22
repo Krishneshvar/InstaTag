@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Html5Qrcode } from 'html5-qrcode';
 import './TollEmp.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCab, faCamera, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCab, faCamera, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const TollEmp = () => {
     const [vehicleData, setVehicleData] = useState([]);
@@ -36,29 +36,31 @@ const TollEmp = () => {
 
     useEffect(() => {
         if (scannerActive) {
-            const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
+            if (!html5QrCode.current) {
+                const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
     
-            html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
+                html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
     
-            const config = {
-                fps: 10,
-                qrbox: 250
-            };
+                const config = {
+                    fps: 10,
+                    qrbox: 250
+                };
     
-            html5QrCode.current.start(
-                { facingMode: "environment" }, // Use environment-facing camera
-                config,
-                (decodedText) => {
-                    setInstaTagId(decodedText); // Set the plain text from QR code directly to InstaTag ID
-                    fetchVehicleDetails(decodedText); // Automatically fetch details after scanning
-                    stopScanner(); // Stop scanning after successful scan
-                },
-                (errorMessage) => {
-                    console.log(`QR code scan error: ${errorMessage}`);
-                }
-            ).catch((err) => {
-                setError(`Unable to start scanning: ${err}`);
-            });
+                html5QrCode.current.start(
+                    { facingMode: "environment" }, // Use environment-facing camera
+                    config,
+                    (decodedText) => {
+                        setInstaTagId(decodedText);
+                        fetchVehicleDetails(decodedText);
+                        stopScanner(); // Stop scanning after successful scan
+                    },
+                    (errorMessage) => {
+                        console.log(`QR code scan error: ${errorMessage}`);
+                    }
+                ).catch((err) => {
+                    setError(`Unable to start scanning: ${err}`);
+                });
+            }
         } else {
             stopScanner();
         }
@@ -76,7 +78,6 @@ const TollEmp = () => {
         }
     };
 
-    // Modified function to fetch vehicle details from new backend API
     const fetchVehicleDetails = async (instaTagId) => {
         try {
             const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`); // Use the new API endpoint
@@ -92,19 +93,7 @@ const TollEmp = () => {
         }
     };
 
-    if (error) return <p>{error}</p>;
-    if (!employee) return <p>Loading...</p>;
-
-    const handleClearTable = () => {
-        setVehicleData([]);
-    };
-    const handleTransaction = async () => {
-        if (vehicleData.length === 0) {
-            setError('No vehicle details to process.');
-            return;
-        }
-    
-        const vehicle = vehicleData[0]; // Assuming processing the first vehicle in the list
+    const handleTransaction = async (vehicle) => {
         const vehicleNo = vehicle.vehicle_no;
     
         try {
@@ -127,7 +116,14 @@ const TollEmp = () => {
             setError('Error processing the transaction.');
         }
     };
-    
+
+    const handleClearTable = () => {
+        setVehicleData([]);
+    };
+
+    if (error) return <p>{error}</p>;
+    if (!employee) return <p>Loading...</p>;
+
     return (
         <div className="toll-emp-container">
             <h2>Toll Employee Interface</h2>
@@ -157,48 +153,49 @@ const TollEmp = () => {
             </form>
 
             <div className="vehicle-info-table">
-    <h4>Entered Vehicles</h4>
-    {error && <p style={{ color: 'red' }}>{error}</p>}
-    <table className="table table-striped">
-        <thead>
-            <tr>
-                <th>Vehicle Number</th>
-                <th>Vehicle Type</th>
-                <th>Owner Name</th>
-                <th>Insurance Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {vehicleData.length > 0 ? (
-                vehicleData.map((vehicle, index) => (
-                    <tr key={index}>
-                        <td>{vehicle.vehicle_no}</td>
-                        <td>{vehicle.vehicle_type}</td>
-                        <td>{vehicle.owner_name}</td>
-                        <td>{vehicle.insurance_status}</td>
-                    </tr>
-                ))
-            ) : (
-                <tr>
-                    <td colSpan="4" style={{ textAlign: 'center' }}>
-                        No vehicles added yet
-                    </td>
-                </tr>
-            )}
-        </tbody>
-    </table>
+                <h4>Entered Vehicles</h4>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Vehicle Type</th>
+                            <th>Owner Name</th>
+                            <th>Insurance Status</th>
+                            <th>Actions</th> {/* New column for actions */}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {vehicleData.length > 0 ? (
+                            vehicleData.map((vehicle, index) => (
+                                <tr key={index}>
+                                    <td>{vehicle.vehicle_no}</td>
+                                    <td>{vehicle.vehicle_type}</td>
+                                    <td>{vehicle.owner_name}</td>
+                                    <td>{vehicle.insurance_status}</td>
+                                    <td>
+                                        <button className="btn btn-success" onClick={() => handleTransaction(vehicle)}>
+                                            Trigger Transaction
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5" style={{ textAlign: 'center' }}>
+                                    No vehicles added yet
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
 
-    {vehicleData.length > 0 && (
-        <>
-            <button className="btn btn-success" onClick={handleTransaction}>
-                Trigger Transaction
-            </button>
-            <button className="btn btn-danger" onClick={handleClearTable}>
-                <FontAwesomeIcon icon={faTrashAlt} /> Clear Table
-            </button>
-        </>
-    )}
-</div>
+                {vehicleData.length > 0 && (
+                    <button className="btn btn-danger" onClick={handleClearTable}>
+                        <FontAwesomeIcon icon={faTrashAlt} /> Clear Table
+                    </button>
+                )}
+            </div>
 
         </div>
     );
