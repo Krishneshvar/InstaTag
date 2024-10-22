@@ -62,25 +62,29 @@ function Register() {
         return true;
     };
 
-    const handleSendOTP = async () => {
-        setOtpSent(true);
-        const response = await fetch('http://localhost:3000/api/request-otp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email }),
-        });
+    const handleSendOTP = async (e) => {
+        e.preventDefault(); // Prevent the form from submitting when sending OTP
+        try {
+            const response = await fetch('http://localhost:3000/api/request-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: formData.mail }), // Correctly send the user's email
+            });
     
-        if (response.ok) {
-            const data = await response.json();
-            alert(data.message);
+            if (response.ok) {
+                const data = await response.json();
+                alert(data.message); // Notify the user of successful OTP sending
+                setOtpSent(true); // Only set OTP sent if the request was successful
+            } else {
+                const errorData = await response.json();
+                alert(errorData.error); // Display any error messages from the server
+            }
+        } catch (error) {
+            alert('Failed to send OTP. Please try again.');
         }
-        else {
-            const errorData = await response.json();
-            alert(errorData.error);
-        }
-    };
+    };    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -135,15 +139,28 @@ function Register() {
                     }
                     {
                         otpSent ? (
+                            <>
+                            <div className="mb-3">
+                                <label htmlFor="otp" className="form-label">OTP</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="otp"
+                                    placeholder="Enter OTP"
+                                    value={formData.otp}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
                             <button type="submit" className="btn btn-primary" disabled={isLoading}>
                                 {isLoading ? 'Registering...' : 'Register'}
                             </button>
+                            </>
                         ) : (
                             <button className="btn btn-primary" onClick={handleSendOTP}>
                                 Send OTP via Mail
                             </button>
                         )
-                        
                     }
                 </form>
                 {error && <p className="error-message">{error}</p>}
