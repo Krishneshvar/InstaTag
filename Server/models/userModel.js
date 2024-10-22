@@ -1,5 +1,4 @@
 import appDB from '../db/appDB.js';
-import rtoDB from '../db/rtoDB.js';
 
 // Function to verify login credentials for users
 export async function checkLogin(username, inputPassword) {
@@ -49,3 +48,33 @@ export function concatenateLastFourDigits(vehicleNumber, chasisNumber, engineNum
 
   return result;
 }
+
+export const getVehicleExpenses = async (req, res) => {
+  const { vehicle_no } = req.params;
+
+  try {
+    // Query the database for vehicle expenses
+    const result = await appDB.query(
+      "SELECT transac_time, toll_amt FROM transactions WHERE vehicle_no = $1;",
+      [vehicle_no]
+    );
+
+    // If no results are found, return a 404 error
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Vehicle expenses not found.' });
+    }
+
+    // Map the query results to the desired format
+    const expenses = result.rows.map(row => ({
+      timestamp: row.transac_time,
+      amount: parseFloat(row.toll_amt)
+    }));
+
+    // Return the formatted expenses array
+    return res.status(200).json(expenses);
+
+  } catch (error) {
+    console.error('Error fetching vehicle expenses:', error);
+    return res.status(500).json({ message: 'Error fetching vehicle expenses.' });
+  }
+};
