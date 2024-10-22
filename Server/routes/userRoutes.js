@@ -5,7 +5,11 @@ import { empLoginController, forgotPasswordController, getEmployeeDetails } from
 import { getVehicleExpenses } from '../models/userModel.js';
 import { generateQR } from '../GenerateQR.js';
 import handleTransaction from '../controllers/handleTransaction.js';
+<<<<<<< HEAD
 import { requestOTP } from '../controllers/mailController.js';
+=======
+
+>>>>>>> 281b8d1a9b3d125ebca183abf21801bf73013c97
 // import ForgotPassword from '../../emp-interface/src/components/AuthForm/forgotPassword.jsx';
 const router = express.Router();
 
