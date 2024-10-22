@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Html5Qrcode } from 'html5-qrcode';
 import './TollEmp.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCab, faCamera, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const TollEmp = () => {
     const [vehicleData, setVehicleData] = useState([]);
@@ -15,7 +15,6 @@ const TollEmp = () => {
     const [scannerActive, setScannerActive] = useState(false);
     const html5QrCode = useRef(null);
 
-    // Fetch employee details when the component mounts
     useEffect(() => {
         const fetchEmployeeDetails = async () => {
             try {
@@ -35,7 +34,6 @@ const TollEmp = () => {
         fetchEmployeeDetails();
     }, [empid, navigate]);
 
-    // QR code scanning logic
     useEffect(() => {
         if (scannerActive) {
             const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
@@ -43,18 +41,25 @@ const TollEmp = () => {
             html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
 
             const config = {
-                fps: 10, // Frames per second
-                qrbox: 250 // Size of the scanning box
+                fps: 10,
+                qrbox: 250
             };
 
             html5QrCode.current.start(
-                { facingMode: "environment" }, // Use the environment-facing camera
+                { facingMode: "environment" }, // Use environment-facing camera
                 config,
-                (decodedText) => {
+                (decodedText, decodedResult) => {
                     try {
                         const scannedData = JSON.parse(decodedText); // Assuming QR contains JSON
-                        setInstaTagId(scannedData.instaTagId || ''); // Set InstaTag ID from the scanned QR data
-                        stopScanner(); // Stop scanning after successful scan
+                        const scannedInstaTagId = scannedData.instaTagId || '';
+
+                        if (scannedInstaTagId) {
+                            setInstaTagId(scannedInstaTagId); // Set InstaTag ID from the scanned QR data
+                            fetchVehicleDetails(scannedInstaTagId); // Automatically fetch vehicle details
+                            stopScanner(); // Stop scanning after successful scan
+                        } else {
+                            setError('InstaTag ID not found in QR code.');
+                        }
                     } catch (err) {
                         setError('Invalid QR code data format');
                     }
@@ -82,7 +87,7 @@ const TollEmp = () => {
         }
     };
 
-    // Fetch vehicle details using the InstaTag ID
+    // Modified function to fetch vehicle details from new backend API
     const fetchVehicleDetails = async (instaTagId) => {
         try {
             const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`); // Use the new API endpoint
@@ -104,7 +109,6 @@ const TollEmp = () => {
     const handleClearTable = () => {
         setVehicleData([]);
     };
-
     return (
         <div className="toll-emp-container">
             <h2>Toll Employee Interface</h2>
@@ -129,7 +133,7 @@ const TollEmp = () => {
                     required
                 />
                 <button type="submit" onClick={() => fetchVehicleDetails(instaTagId)}>
-                    <FontAwesomeIcon icon={faUserPlus} /> Fetch Vehicle
+                    <FontAwesomeIcon icon={faCab} /> Fetch Vehicle
                 </button>
             </form>
 
