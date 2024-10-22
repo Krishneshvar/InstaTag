@@ -28,19 +28,25 @@ export default function UserDashboard({ onLogout }) {
   if (!vehicles.length) return <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div>;
 
   return (
-    <div className="container-fluid dashboard-container flex-column">
-        <div className="col-md-9 main-content">
-          <section id="vehicles" className="mb-5 justify-content-center align-items-center">
-            <div className='flex-column justify-content-center align-items-center'>
-              <h3 className="section-title p-1 vehicle-title">Your Vehicles</h3>
-              <div className='controls d-flex justify-content-center align-items-center p-1'>
+    <div className="container-fluid dashboard-container">
+      <div className="col-md-9 main-content">
+        <section id="vehicles" className="d-flex flex-column justify-content-center align-items-center">
+          <div className='flex-column justify-content-center align-items-center'>
+            <h1 className="section-title p-1 vehicle-title">Your Vehicles</h1>
+            <div className='controls d-flex justify-content-center align-items-center p-1'>
+              <button className='control-btn'>
                 <span className="material-symbols-outlined p-1" title='Add Vehicle'>add</span>
+              </button>
+              <button className='control-btn'>
                 <span className="material-symbols-outlined p-1" title='Logout'>logout</span>
-              </div>
+              </button>
             </div>
+          </div>
+          {/* Use d-flex to center bgblue divs */}
+          <div className="d-flex flex-wrap justify-content-center">
             {
               vehicles.map(vehicle => (
-                <div key={vehicle.vehicle_no} className="bgblue">
+                <div key={vehicle.vehicle_no} className="bgblue m-2"> {/* Add margin for spacing */}
                   <div className="vehicle-card">
                     <Link to={`/user-dashboard/${user_id}/${vehicle.vehicle_no}`} style={{ textDecoration: 'none' }}>
                       <h5 className="card-title text-light">{vehicle.vehicle_type}</h5>
@@ -50,11 +56,9 @@ export default function UserDashboard({ onLogout }) {
                 </div>
               ))
             }
-            {/* <div className='justify-content-center align-items-center'>
-              <button className='btn btn-danger'>Logout</button>
-            </div> */}
-          </section>
-        </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

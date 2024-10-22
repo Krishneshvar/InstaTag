@@ -1,32 +1,41 @@
 .dashboard-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-height: 100dvh;
-    max-width: 100dvw;
+    justify-content: flex-start;
+    min-height: 100vh; /* Ensure the page covers the full viewport height */
+    max-width: 100vw;
     align-items: center;
     padding: 3rem;
     padding-top: 6rem;
-    background-repeat: no-repeat;
     background-color: #1a1a1a;
     color: #ffffff;
     margin: auto;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    overflow: auto; /* Allow vertical scrolling if needed */
 }
 
-.vehicle-title, .controls { width: 100%; }
+.vehicle-title, .controls {
+    width: 100%;
+}
+
+.control-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+}
 
 .main-content {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-grow: 1; /* Allows content to grow */
 }
 
 .details-container {
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    height: 100dvh;
+    min-height: 100dvh; /* Ensure full height of the viewport */
     max-width: 100dvw;
     background-color: #1a1a1a;
     color: #ffffff;
@@ -50,17 +59,32 @@
 
 .use-card {
     width: 100%;
-    height: 10rem;
+    flex-grow: 1; /* Allow the card to grow with content */
+    padding: 1.5rem;
     border-radius: 20px;
-    padding: 0.5rem;
     box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+    background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; /* Center the content */
 }
 
 .card__content {
     background: rgb(5, 6, 45);
     border-radius: 17px;
     width: 100%;
-    height: 70%;
-    padding: 1rem;
+    padding: 1.5rem;
+    height: 100%; /* Ensure the content fills available space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20rem; /* Ensures there's some base height */
+    flex-grow: 1; /* Let it expand with the chart */
+}
+
+.chart-container {
+    width: 100%; /* Let the chart take the full width */
+    height: 100%; /* Adjust to take available height */
+    max-height: 40rem; /* Limit the height to avoid overflowing */
 }

@@ -1,80 +1,60 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import React from 'react';
+import { Line } from 'react-chartjs-2';
+import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-export default function ExpenseChart({ expenses }) {
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
+// Register chart.js components
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-  useEffect(() => {
-    // Destroy the existing chart before creating a new one
-    if (chartInstance.current) {
-      chartInstance.current.destroy();
-    }
+const ExpenseChart = ({ expenses }) => {
+  // Prepare data for the chart
+  const chartData = {
+    labels: expenses.map(expense => new Date(expense.timestamp).toLocaleDateString()), // Format dates
+    datasets: [
+      {
+        label: 'Expense Amount',
+        data: expenses.map(expense => expense.amount),
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: true,
+        tension: 0.2, // For smooth lines
+      },
+    ],
+  };
 
-    if (chartRef.current) {
-      const ctx = chartRef.current.getContext('2d');
-
-      // Prepare data for the chart
-      const data = expenses.map(expense => ({
-        x: new Date(expense.timestamp),
-        y: expense.amount,
-      }));
-
-      // Create a new chart
-      chartInstance.current = new Chart(ctx, {
-        type: 'line',
-        data: {
-          datasets: [{
-            label: 'Amount Spent',
-            data: data,
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-          }]
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Date',
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              type: 'time',
-              time: {
-                unit: 'month'
-              },
-              title: {
-                display: true,
-                text: 'Date'
-              }
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'Amount ($)'
-              }
-            }
-          },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: (context) => `Amount: $${context.parsed.y.toFixed(2)}`
-              }
-            }
-          }
-        }
-      });
-    }
-
-    // Cleanup function to destroy the chart instance on component unmount or re-render
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
-  }, [expenses]); // Depend on the 'expenses' prop
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Amount (₹)',
+        },
+        beginAtZero: true,
+      },
+    },
+  };
 
   return (
-    <div className="chart-container" style={{ position: 'relative', height: '60vh', width: '100%' }}>
-      <canvas ref={chartRef} />
+    <div className='chart-container'>
+      <Line data={chartData} options={options} />
     </div>
   );
-}
+};
+
+export default ExpenseChart;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ExpenseChart from './ExpenseChart';
-import './UserDashboard.css'
+import './UserDashboard.css';
 
 export default function VehicleDetails() {
   const { user_id, vehicle_no } = useParams();
@@ -79,7 +79,11 @@ export default function VehicleDetails() {
         <div className="use-card">
           <h2 className="">Expense History</h2>
           <div className="card__content">
-            {/* <ExpenseChart expenses={expenses} /> */}
+            {expenses.length === 0 ? (
+              <p>No expenses found for this vehicle.</p>
+            ) : (
+              <ExpenseChart expenses={expenses} />
+            )}
           </div>
         </div>
         <div className="text-center mt-4">
