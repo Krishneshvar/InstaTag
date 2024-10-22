@@ -3,7 +3,7 @@ import QRCode from 'qrcode';
 export const generateQR = async (req, res) => {
   try {
     // Capture the value from the 'data' query parameter
-    const data = req.query.data; // Expecting ?data=1001
+    const data = req.query.data;
 
     if (!data) {
       return res.status(400).send('No data provided');
@@ -22,7 +22,7 @@ export const generateQR = async (req, res) => {
       </html>
     `);
   } catch (err) {
-    console.error(err); // Log the error for debugging
+    console.error(err);
     res.status(500).send('Error generating QR code');
   }
 };
