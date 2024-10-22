@@ -15,7 +15,7 @@ router.get('/vehicle-details/:vehicle_no', getVehicleDetails);
 router.get('/toll-emp/:empid', getEmployeeDetails);
 router.get('/vehicle/:instatag_id',getVehicleDetailsByInstaTag);
 
-// 
+// Vehicle data
 router.get('/vehicle-expenses/:vehicle_no', getVehicleExpenses)
 
 export default router;

@@ -113,7 +113,7 @@ const TollEmp = () => {
 
             {scannerActive && (
                 <div>
-                    <div id="reader" style={{ width: '100%', height: '250px' }}></div>
+                    <div id="reader" style={{ width: '50dvw', height: '100%' }}></div>
                 </div>
             )}
 

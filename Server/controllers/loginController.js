@@ -89,5 +89,4 @@ const getVehicleDetailsByInstaTag = async (req, res) => {
   }
 };
 
-
 export { loginUser, getUserVehicles, getVehicleDetails , getVehicleDetailsByInstaTag};
