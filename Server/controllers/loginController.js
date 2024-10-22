@@ -67,30 +67,24 @@ const getVehicleDetailsByInstaTag = async (req, res) => {
   const { instatag_id } = req.params; // Get instatag_id from request parameters
 
   try {
-      // Query to get vehicle details including vehicle number, type, and owner name
-      const result = await pool.query(
-          `SELECT v.vehicle_no, v.vehicle_type, v.owner_name
-           FROM vehicle_details v 
-           WHERE v.instatag_id = $1`, 
-          [instatag_id]
-      );
+    // Query to get vehicle details including vehicle number, type, owner name, and insurance status
+    const result = await pool.query(
+      `SELECT v.vehicle_no, v.vehicle_type, v.owner_name, 'active' AS insurance_status
+       FROM vehicle_details v 
+       WHERE v.instatag_id = $1`,
+      [instatag_id]
+    );
 
-      const vehicleDetails = result.rows[0];
+    const vehicleDetails = result.rows[0];
 
-      if (!vehicleDetails) {
-          return res.status(404).json({ message: 'Vehicle or owner not found for the given InstaTag ID.' });
-      }
+    if (!vehicleDetails) {
+      return res.status(404).json({ message: 'Vehicle or owner not found for the given InstaTag ID.' });
+    }
 
-      // Add the insurance status as "active"
-      const response = {
-          ...vehicleDetails,   // Spread the vehicle details from the query
-          insurance_status: 'active' // Always set insurance status to "active"
-      };
-
-      return res.json(response);
+    return res.json(vehicleDetails);
   } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: err.message });
+    console.error(err);
+    return res.status(500).json({ error: err.message });
   }
 };
 

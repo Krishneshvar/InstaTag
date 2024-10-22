@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Html5Qrcode } from 'html5-qrcode';
 import './TollEmp.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCab, faCamera, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCab, faCamera, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const TollEmp = () => {
     const [vehicleData, setVehicleData] = useState([]);
@@ -36,44 +36,35 @@ const TollEmp = () => {
 
     useEffect(() => {
         if (scannerActive) {
-            const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
-
-            html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
-
-            const config = {
-                fps: 10,
-                qrbox: 250
-            };
-
-            html5QrCode.current.start(
-                { facingMode: "environment" }, // Use environment-facing camera
-                config,
-                (decodedText, decodedResult) => {
-                    try {
-                        const scannedData = JSON.parse(decodedText); // Assuming QR contains JSON
-                        const scannedInstaTagId = scannedData.instaTagId || '';
-
-                        if (scannedInstaTagId) {
-                            setInstaTagId(scannedInstaTagId); // Set InstaTag ID from the scanned QR data
-                            fetchVehicleDetails(scannedInstaTagId); // Automatically fetch vehicle details
-                            stopScanner(); // Stop scanning after successful scan
-                        } else {
-                            setError('InstaTag ID not found in QR code.');
-                        }
-                    } catch (err) {
-                        setError('Invalid QR code data format');
+            if (!html5QrCode.current) {
+                const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
+    
+                html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
+    
+                const config = {
+                    fps: 10,
+                    qrbox: 250
+                };
+    
+                html5QrCode.current.start(
+                    { facingMode: "environment" }, // Use environment-facing camera
+                    config,
+                    (decodedText) => {
+                        setInstaTagId(decodedText);
+                        fetchVehicleDetails(decodedText);
+                        stopScanner(); // Stop scanning after successful scan
+                    },
+                    (errorMessage) => {
+                        console.log(`QR code scan error: ${errorMessage}`);
                     }
-                },
-                (errorMessage) => {
-                    console.log(`QR code scan error: ${errorMessage}`);
-                }
-            ).catch((err) => {
-                setError(`Unable to start scanning: ${err}`);
-            });
+                ).catch((err) => {
+                    setError(`Unable to start scanning: ${err}`);
+                });
+            }
         } else {
             stopScanner();
         }
-
+    
         return () => stopScanner(); // Cleanup on unmount
     }, [scannerActive]);
 
@@ -87,7 +78,6 @@ const TollEmp = () => {
         }
     };
 
-    // Modified function to fetch vehicle details from new backend API
     const fetchVehicleDetails = async (instaTagId) => {
         try {
             const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`); // Use the new API endpoint
@@ -103,12 +93,37 @@ const TollEmp = () => {
         }
     };
 
-    if (error) return <p>{error}</p>;
-    if (!employee) return <p>Loading...</p>;
+    const handleTransaction = async (vehicle) => {
+        const vehicleNo = vehicle.vehicle_no;
+    
+        try {
+            // Call backend API to trigger the transaction
+            const response = await fetch('http://localhost:3000/api/transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ vehicleNo })
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Transaction successful. New balance: ${result.newBalance}`);
+            } else {
+                setError('Transaction failed. Please try again.');
+            }
+        } catch (err) {
+            setError('Error processing the transaction.');
+        }
+    };
 
     const handleClearTable = () => {
         setVehicleData([]);
     };
+
+    if (error) return <p>{error}</p>;
+    if (!employee) return <p>Loading...</p>;
+
     return (
         <div className="toll-emp-container">
             <h2>Toll Employee Interface</h2>
@@ -147,6 +162,7 @@ const TollEmp = () => {
                             <th>Vehicle Type</th>
                             <th>Owner Name</th>
                             <th>Insurance Status</th>
+                            <th>Actions</th> {/* New column for actions */}
                         </tr>
                     </thead>
                     <tbody>
@@ -157,23 +173,30 @@ const TollEmp = () => {
                                     <td>{vehicle.vehicle_type}</td>
                                     <td>{vehicle.owner_name}</td>
                                     <td>{vehicle.insurance_status}</td>
+                                    <td>
+                                        <button className="btn btn-success" onClick={() => handleTransaction(vehicle)}>
+                                            Trigger Transaction
+                                        </button>
+                                    </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" style={{ textAlign: 'center' }}>
+                                <td colSpan="5" style={{ textAlign: 'center' }}>
                                     No vehicles added yet
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </table>
+
                 {vehicleData.length > 0 && (
                     <button className="btn btn-danger" onClick={handleClearTable}>
                         <FontAwesomeIcon icon={faTrashAlt} /> Clear Table
                     </button>
                 )}
             </div>
+
         </div>
     );
 };

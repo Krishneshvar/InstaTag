@@ -1,6 +1,7 @@
 import './AuthForm.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
+
 
 function AuthForm() {
   const [username, setUsername] = useState('');
@@ -63,7 +64,7 @@ function AuthForm() {
             style={{ width: '100%', padding: '5px' }}
           />
         </div>
-        <a href=""> Forgot password? </a>
+        <Link to="/forgot-password">Forgot password?</Link>
         <button type="submit" className="login-btn">
           Login
         </button>
