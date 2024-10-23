@@ -9,6 +9,7 @@ import UserDashboard from './Components/UserDashboard/UserDashboard'; // Ensure 
 import VehicleDetails from './Components/UserDashboard/VehicleDetails';
 import TollDetails from './Components/TollDetails/TollDetails';
 import Contact from './Components/Contact/Contact';
+import Footer from './Components/Footer/Footer';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Outlet />
+        <Footer />
       </>
     ),
     children: [

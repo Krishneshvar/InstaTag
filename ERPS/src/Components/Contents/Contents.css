@@ -113,8 +113,6 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px, rgba(0, 73, 144, 0.5) 5px 10px 15px !important;
 }
 
-footer { padding: 1rem; }
-
 @media (min-width: 992px) {
   .rounded-lg-3 { border-radius: .3rem; }
 }
