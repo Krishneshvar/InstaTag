@@ -11,6 +11,8 @@
 .two {
   height: 100dvh;
   padding: 1rem;
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px, rgba(0, 73, 144, 0.5) 5px 10px 15px;
 }
 
 /* navbar */
@@ -106,6 +108,12 @@
   width: 70dvw;
   flex-wrap: wrap;
 }
+
+.flow-div, .img-fluid {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px, rgba(0, 73, 144, 0.5) 5px 10px 15px !important;
+}
+
+footer { padding: 1rem; }
 
 @media (min-width: 992px) {
   .rounded-lg-3 { border-radius: .3rem; }
