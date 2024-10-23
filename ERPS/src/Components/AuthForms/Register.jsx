@@ -175,6 +175,7 @@ function Register() {
     return (
         <div className="register-container">
             <div className="register-form">
+            <h1 className='d-flex justify-content-center align-items-center'>Register</h1>
                 <form>
                     {
                         formFields.map((field) => (

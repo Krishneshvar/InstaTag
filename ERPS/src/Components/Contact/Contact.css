@@ -10,10 +10,6 @@
 .contact-page::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-image: url('your-image1.jpg'), url('your-image2.jpg'); /* Add multiple background images */
   background-size: cover;
   background-position: center;
@@ -44,14 +40,15 @@
 .container {
   display: flex;
   justify-content: space-around;
+  gap: 1rem;
   align-items: start;
 }
 
 form {
   border: none;
-  box-shadow: 1px 3px 16px 10px rgba(255,255,255,0.2);
-  -webkit-box-shadow: 1px 3px 16px 10px rgba(255,255,255,0.2);
-  -moz-box-shadow: 1px 3px 16px 10px rgba(255,255,255,0.2);
+  box-shadow: 1px 1px 5px 5px rgba(255,255,255,0.2);
+  -webkit-box-shadow: 1px 1px 5px 5px rgba(255,255,255,0.2);
+  -moz-box-shadow: 1px 1px 5px 5px rgba(255,255,255,0.2);
 }
 
 h2 {
@@ -76,7 +73,7 @@ h2 {
 
 .social-icons {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .social-icons img {
