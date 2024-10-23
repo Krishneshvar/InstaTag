@@ -93,7 +93,6 @@ function Contents()
             </div>
           </div>
         </div>
-        <div className="b-example-divider mb-0"></div>
       </main>
     </>
   );
