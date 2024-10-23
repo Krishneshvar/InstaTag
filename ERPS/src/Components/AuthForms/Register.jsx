@@ -29,8 +29,9 @@ function Register() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
-    const [otp, setOtp] = useState('');
+    const [otpVerified, setOtpVerified] = useState(false); // New state for OTP verification
     const [otpExpiryTime, setOtpExpiryTime] = useState(null);
+    const [step, setStep] = useState('initial'); // State to manage current step (initial, otpSent, otpVerified)
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -67,49 +68,66 @@ function Register() {
     const handleSendOTP = async (e) => {
         e.preventDefault();
         setError('');
-    
+
         try {
-            // Ensure email is present before making the request
             if (!formData.mail) {
                 setError('Please enter your email.');
                 return;
             }
-    
+
             const response = await fetch('http://localhost:3000/api/request-otp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formData.mail }), // Ensure this matches the server-side expectations
+                body: JSON.stringify({ email: formData.mail }),
             });
-    
+
             if (response.ok) {
                 const data = await response.json();
                 alert(data.message); // Notify the user
-                setOtp(data.otp); // Store OTP in state
                 setOtpExpiryTime(Date.now() + data.expiresIn); // Set expiration time
-                setOtpSent(true);
+                setOtpSent(true); // Move to OTP input step
+                setStep('otpSent');
             } else {
                 const errorData = await response.json();
-                alert(errorData.message); // Notify about the error
+                setError(errorData.message);
             }
         } catch (error) {
-            console.error('Failed to send OTP:', error);
             setError('Failed to send OTP. Please try again.');
+            console.error('Failed to send OTP:', error);
         }
-    };    
+    };
 
-    useEffect(() => {
-        if (otpSent && otpExpiryTime) {
-            const timer = setTimeout(() => {
-                setOtpSent(false); // Invalidate OTP after 2 minutes
-                setFormData({ ...formData, otp: '' }); // Clear the user's OTP input
-                alert('OTP has expired. Please request a new one.');
-            }, otpExpiryTime - Date.now());
-
-            return () => clearTimeout(timer);
+    const handleVerifyOTP = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+    
+        try {
+            const res = await fetch('http://localhost:3000/api/validate-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: formData.mail, otp: formData.otp }),
+            });
+    
+            const result = await res.json();
+    
+            if (result.success) {
+                setOtpVerified(true); // OTP is verified, allow registration
+                setStep('otpVerified');
+                alert('OTP verified successfully.');
+            } else {
+                setError(result.message);
+            }
+        } catch (error) {
+            console.error('Error during OTP verification:', error);
+            setError('Failed to verify OTP. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
-    }, [otpSent, otpExpiryTime]);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -122,46 +140,42 @@ function Register() {
         }
     
         try {
-            // Verify OTP by sending it along with the email
-            const res = await fetch('http://localhost:3000/api/request-otp', {
+            // Proceed with registration after OTP verification
+            const registrationRes = await fetch('http://localhost:3000/api/register/user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formData.mail, otp: formData.otp }), // Send both email and OTP
+                body: JSON.stringify(formData),
             });
     
-            const result = await res.json();
-    
-            if (result.success) {
-                // Proceed with registration after OTP verification
-                const registrationRes = await fetch('http://localhost:3000/api/register/user', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                });
-    
-                const registrationResult = await registrationRes.json();
-    
-                // Redirect to user dashboard
-                navigate(`/user-dashboard/${registrationResult.user_id}`);
-            } else {
-                setError(result.message);
-            }
+            const registrationResult = await registrationRes.json();
+            navigate(`/user-dashboard/${registrationResult.user_id}`);
         } catch (error) {
             console.error('Error during registration:', error);
-            setError('Failed to verify OTP. Please try again later.');
+            setError('Failed to register. Please try again.');
         } finally {
             setIsLoading(false);
         }
-    };        
+    };
+
+    useEffect(() => {
+        if (otpSent && otpExpiryTime) {
+            const timer = setTimeout(() => {
+                setOtpSent(false); // Invalidate OTP after 2 minutes
+                setFormData({ ...formData, otp: '' }); // Clear the user's OTP input
+                alert('OTP has expired. Please request a new one.');
+                setStep('initial');
+            }, otpExpiryTime - Date.now());
+
+            return () => clearTimeout(timer);
+        }
+    }, [otpSent, otpExpiryTime]);
 
     return (
         <div className="register-container">
             <div className="register-form">
-                <form onSubmit={handleSubmit}>
+                <form>
                     {
                         formFields.map((field) => (
                             <div className="mb-3" key={field.id}>
@@ -174,12 +188,13 @@ function Register() {
                                     required={field.required}
                                     value={formData[field.id]}
                                     onChange={handleChange}
+                                    disabled={step === 'otpVerified' && (field.id === 'password' || field.id === 'confirmPassword')}
                                 />
                             </div>
                         ))
                     }
                     {
-                        otpSent && (
+                        step === 'otpSent' && (
                             <div className="mb-3">
                                 <label htmlFor="otp" className="form-label">Enter OTP</label>
                                 <input
@@ -194,19 +209,29 @@ function Register() {
                             </div>
                         )
                     }
+                    {error && <p className="error-message">{error}</p>}
                     {
-                        otpSent ? (
-                            <button type="submit" className="btn btn-primary" disabled={isLoading}>
-                                {isLoading ? 'Registering...' : 'Register'}
-                            </button>
-                        ) : (
+                        step === 'initial' && (
                             <button className="btn btn-primary" onClick={handleSendOTP}>
                                 Send OTP via Mail
                             </button>
                         )
                     }
+                    {
+                        step === 'otpSent' && (
+                            <button className="btn btn-primary" onClick={handleVerifyOTP}>
+                                {isLoading ? 'Verifying OTP...' : 'Verify OTP'}
+                            </button>
+                        )
+                    }
+                    {
+                        step === 'otpVerified' && (
+                            <button type="submit" className="btn btn-primary" onClick={handleSubmit} disabled={isLoading}>
+                                {isLoading ? 'Registering...' : 'Register'}
+                            </button>
+                        )
+                    }
                 </form>
-                {error && <p className="error-message">{error}</p>}
                 <div className='login-route'>
                     <span>Already have an account? </span>
                     <Link to="/login">
