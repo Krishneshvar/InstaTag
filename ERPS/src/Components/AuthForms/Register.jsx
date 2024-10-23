@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Register.css';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -11,8 +11,7 @@ function Register() {
         { id: "phno", label: "Phone Number", type: "text", required: true },
         { id: "bankAccount", label: "Bank Account Number", type: "text", required: true },
         { id: "password", label: "Password", type: "password", required: true },
-        { id: "confirmPassword", label: "Confirm Password", type: "password", required: true },
-        { id: "otp", label: "OTP", type: "text" }
+        { id: "confirmPassword", label: "Confirm Password", type: "password", required: true }
     ];
 
     const [formData, setFormData] = useState({
@@ -23,12 +22,15 @@ function Register() {
         phno: '',
         bankAccount: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        otp: ''
     });
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
+    const [otp, setOtp] = useState('');
+    const [otpExpiryTime, setOtpExpiryTime] = useState(null);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -63,59 +65,98 @@ function Register() {
     };
 
     const handleSendOTP = async (e) => {
-        e.preventDefault(); // Prevent the form from submitting when sending OTP
+        e.preventDefault();
+        setError('');
+    
         try {
+            // Ensure email is present before making the request
+            if (!formData.mail) {
+                setError('Please enter your email.');
+                return;
+            }
+    
             const response = await fetch('http://localhost:3000/api/request-otp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formData.mail }), // Correctly send the user's email
+                body: JSON.stringify({ email: formData.mail }), // Ensure this matches the server-side expectations
             });
     
             if (response.ok) {
                 const data = await response.json();
-                alert(data.message); // Notify the user of successful OTP sending
-                setOtpSent(true); // Only set OTP sent if the request was successful
+                alert(data.message); // Notify the user
+                setOtp(data.otp); // Store OTP in state
+                setOtpExpiryTime(Date.now() + data.expiresIn); // Set expiration time
+                setOtpSent(true);
             } else {
                 const errorData = await response.json();
-                alert(errorData.error); // Display any error messages from the server
+                alert(errorData.message); // Notify about the error
             }
         } catch (error) {
-            alert('Failed to send OTP. Please try again.');
+            console.error('Failed to send OTP:', error);
+            setError('Failed to send OTP. Please try again.');
         }
     };    
+
+    useEffect(() => {
+        if (otpSent && otpExpiryTime) {
+            const timer = setTimeout(() => {
+                setOtpSent(false); // Invalidate OTP after 2 minutes
+                setFormData({ ...formData, otp: '' }); // Clear the user's OTP input
+                alert('OTP has expired. Please request a new one.');
+            }, otpExpiryTime - Date.now());
+
+            return () => clearTimeout(timer);
+        }
+    }, [otpSent, otpExpiryTime]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
+    
+        // Validate form data
         if (!validateForm()) {
             setIsLoading(false);
             return;
         }
-
+    
         try {
-            const res = await fetch('http://localhost:3000/api/register/user', {
+            // Verify OTP by sending it along with the email
+            const res = await fetch('http://localhost:3000/api/request-otp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ email: formData.mail, otp: formData.otp }), // Send both email and OTP
             });
-
+    
             const result = await res.json();
-
-            navigate(`/user-dashboard/${result.user_id}`);
-        }
-        catch (error) {
+    
+            if (result.success) {
+                // Proceed with registration after OTP verification
+                const registrationRes = await fetch('http://localhost:3000/api/register/user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+    
+                const registrationResult = await registrationRes.json();
+    
+                // Redirect to user dashboard
+                navigate(`/user-dashboard/${registrationResult.user_id}`);
+            } else {
+                setError(result.message);
+            }
+        } catch (error) {
             console.error('Error during registration:', error);
-            setError('Failed to register. Please try again later.');
-        }
-        finally {
+            setError('Failed to verify OTP. Please try again later.');
+        } finally {
             setIsLoading(false);
         }
-    };
+    };        
 
     return (
         <div className="register-container">
@@ -138,10 +179,9 @@ function Register() {
                         ))
                     }
                     {
-                        otpSent ? (
-                            <>
+                        otpSent && (
                             <div className="mb-3">
-                                <label htmlFor="otp" className="form-label">OTP</label>
+                                <label htmlFor="otp" className="form-label">Enter OTP</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -152,10 +192,13 @@ function Register() {
                                     required
                                 />
                             </div>
+                        )
+                    }
+                    {
+                        otpSent ? (
                             <button type="submit" className="btn btn-primary" disabled={isLoading}>
                                 {isLoading ? 'Registering...' : 'Register'}
                             </button>
-                            </>
                         ) : (
                             <button className="btn btn-primary" onClick={handleSendOTP}>
                                 Send OTP via Mail
