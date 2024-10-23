@@ -6,7 +6,7 @@ import { getVehicleExpenses } from '../models/userModel.js';
 import { generateQR } from '../GenerateQR.js';
 import handleTransaction from '../controllers/handleTransaction.js';
 import { requestOTP, validateOTP } from '../controllers/mailController.js';
-import { createCustomerSupportQuery } from '../controllers/customerSupportController.js';
+
 const router = express.Router();
 
 router.post('/login/user', loginUser);
@@ -15,7 +15,6 @@ router.post('/forgot-password', forgotPasswordController);
 router.post('/register/user', registerUser);
 router.post('/request-otp', requestOTP);
 router.post('/validate-otp', validateOTP);
-router.post('/contact', createCustomerSupportQuery);
 
 // Dashboard
 router.get('/user-details/:user_id', getUserVehicles);
