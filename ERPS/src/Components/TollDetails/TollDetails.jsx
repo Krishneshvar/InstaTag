@@ -1,5 +1,4 @@
-import React from 'react';
-import './TollDetails.css'; // Import your CSS file
+import './TollDetails.css';
 
 const TollDetails = () => {
   // Hardcoded toll data with more vehicle types
@@ -17,19 +16,21 @@ const TollDetails = () => {
     <div className="toll-details">
       <h1>Toll Rates</h1>
       <div className="toll-list">
-        {tollData.map((toll) => (
-          <div className="glass" data-text={toll.vehicle_type} style={{ "--r": Math.floor(Math.random() * 30) }} key={toll.toll_id}>
-            <img
-              src={`/icons/${toll.vehicle_type.toLowerCase()}.png`}
-              alt={`${toll.vehicle_type} icon`}
-            />
-            <div className="toll-info">
-              <h2>{toll.vehicle_type}</h2>
-              <p>Booth No: {toll.booth_no}</p>
-              <p>Toll Amount: ₹{toll.toll_amt}</p>
+        {
+          tollData.map((toll) => (
+            <div className="glass" data-text={toll.vehicle_type} style={{ "--r": Math.floor(Math.random() * 30) }} key={toll.toll_id}>
+              <img
+                src={`/icons/${toll.vehicle_type.toLowerCase()}.png`}
+                alt={`${toll.vehicle_type} icon`}
+              />
+              <div className="toll-info">
+                <h2>{toll.vehicle_type}</h2>
+                <p>Booth No: {toll.booth_no}</p>
+                <p>Toll Amount: ₹{toll.toll_amt}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   );
