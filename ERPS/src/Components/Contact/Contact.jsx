@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Contact.css';
+import axios from 'axios';  // Import axios to make HTTP requests
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,11 +16,30 @@ const Contact = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., send data to a server)
-    setFormSubmitted(true);
+  
+    try {
+      // Send form data to the backend using fetch
+      const response = await fetch('http://localhost:5137/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      // Check if the form was successfully submitted
+      if (response.status === 201) {
+        setFormSubmitted(true);
+      } else {
+        console.error('Form submission failed:', response.status);
+      }
+    } catch (error) {
+      console.error('There was an error submitting the form:', error);
+    }
   };
+  
 
   return (
     <div className="contact-page">
