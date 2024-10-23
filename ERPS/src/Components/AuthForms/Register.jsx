@@ -115,7 +115,7 @@ function Register() {
             const result = await res.json();
     
             if (result.success) {
-                setOtpVerified(true); // OTP is verified, allow registration
+                setOtpVerified(true);
                 setStep('otpVerified');
                 alert('OTP verified successfully.');
             } else {
