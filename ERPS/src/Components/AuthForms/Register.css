@@ -1,34 +1,20 @@
 .register-container {
-    padding-top: 8rem;  
+    padding: 1rem;
+    padding-top: 6rem;
     display: flex;
     justify-content: center;
     align-items: center; /* Center items vertically */
-    height: 100vh;
+    min-height: 100vh;
     background-color: #f5f5f5; /* Light background */
 }
 
 .register-form {
     background: white;
-    padding: 20px;
-    padding-top: 45rem;
-    border-radius: 8px;
+    padding: 1rem;
+    border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 400px; /* Adjust width as needed */
-    margin: 0 20px; /* Space between form and QR code */
+    width: 80%;
     flex: 1; /* Allow the form to grow and take available space */
-}
-
-.qr-code-container {
-    text-align: center;
-    margin-top: 20px;
-    flex: 1; /* Allow the QR code to grow and take available space */
-}
-
-.qr-code-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; /* Center QR code in its section */
 }
 
 /* Additional styling for form fields */
@@ -40,7 +26,7 @@
 
 .form-control {
     width: 100%; /* Full width for form fields */
-    padding: 10px;
+    padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 1rem; /* Add spacing between input fields */
@@ -67,24 +53,6 @@
     transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
-.btn-success {
-    background-color: #28a745; /* Success button color */
-}
-
-.btn-success:hover {
-    background-color: #218838; /* Darker shade on hover */
-    transform: scale(1.05); /* Slight zoom effect on hover */
-}
-
-.btn-danger {
-    background-color: #dc3545; /* Danger button color */
-}
-
-.btn-danger:hover {
-    background-color: #c82333; /* Darker shade on hover */
-    transform: scale(1.05); /* Slight zoom effect on hover */
-}
-
 .login-route {
     margin-top: 15px;
     text-align: center;
@@ -108,16 +76,6 @@
 }
 
 @media (max-width: 768px) {
-    .register-form {
-        width: 90%; /* Use 90% width for smaller screens */
-        margin: 0; /* Remove margin */
-        padding-top: 45rem;
-    }
-    
-    .form-control {
-        width: 100%; /* Make inputs full width on smaller screens */
-        margin-bottom: 1rem; /* Add margin between inputs */
-    }
 
     .form-field-container {
         flex-direction: column; /* Stack fields vertically */

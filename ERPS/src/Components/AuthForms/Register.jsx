@@ -115,7 +115,7 @@ function Register() {
             const result = await res.json();
     
             if (result.success) {
-                setOtpVerified(true); // OTP is verified, allow registration
+                setOtpVerified(true);
                 setStep('otpVerified');
                 alert('OTP verified successfully.');
             } else {
@@ -175,6 +175,7 @@ function Register() {
     return (
         <div className="register-container">
             <div className="register-form">
+            <h1 className='d-flex justify-content-center align-items-center'>Register</h1>
                 <form>
                     {
                         formFields.map((field) => (

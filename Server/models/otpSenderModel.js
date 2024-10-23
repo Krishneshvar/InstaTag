@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import { mailHTML } from './mailModel.js';
 
 dotenv.config();
 
@@ -14,12 +15,14 @@ const transporter = nodemailer.createTransport({
 
 // Function to send OTP via email
 export const sendOTP = async (email, otp) => {
-    // Create the email options
+    
+    otp = mailHTML(otp);
+
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Your OTP Code',
-        text: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
+        html: `${otp}`,
     };
 
     try {

@@ -35,68 +35,64 @@ function Contents()
 
         <div className="b-example-divider"></div>
 
-        <div className="bg-dark text-secondary px-4 py-5 text-center">
-  <div className="py-5">
-    <h1 className="display-5 fw-bold text-white">Instatag FASTag Transaction Process Flow</h1>
-    <div className="col-lg-8 mx-auto">
-      <p className="fs-5 mb-4 text-white">
-        The below diagram illustrates the transaction flow of the Instatag system. The transaction from the toll plaza is processed by the backend system, validated through the Instatag Mapper, and then debited via the issuing bank.
-      </p>
-      <img 
-        src="icons/toll_model.jpg" 
-        alt="Instatag Transaction Flow Diagram" 
-        className="img-fluid mb-5" 
-        style={{ maxWidth: '100%', height: 'auto' }} 
-      />
+        <div className="text-secondary px-4 py-5 text-center">
+          <div className="py-5">
+            <h1 className="display-5 fw-bold">Instatag Transaction Process Flow</h1>
+            <div className="col-lg-8 mx-auto">
+              <p className="fs-5 mb-4">
+                The below diagram illustrates the transaction flow of the Instatag system. The transaction from the toll plaza is processed by the backend system, validated through the Instatag Mapper, and then debited via the issuing bank.
+              </p>
+              <img 
+                src="icons/toll_model.jpg" 
+                alt="Instatag Transaction Flow Diagram" 
+                className="img-fluid mb-5 rounded" 
+                style={{ maxWidth: '100%', height: 'auto' }} 
+              />
 
-      <div className="flowchart">
-        <div className="flow-step">
-          <h4>LEG 1</h4>
-          <p>When a vehicle passes through the toll plaza, the system captures details (Tag ID, TID, Vehicle Type) and sends them for processing.</p>
+              <div className="flowchart">
+                <div className="flow-step flow-div">
+                  <h4>LEG 1</h4>
+                  <p>When a vehicle passes through the toll plaza, the system captures details (Tag ID, TID, Vehicle Type) and sends them for processing.</p>
+                </div>
+                <div className="flow-arrow text-dark">↓</div>
+                <div className="flow-step flow-div">
+                  <h4>LEG 2</h4>
+                  <p>The system sends a validation request to the Instatag Mapper.</p>
+                </div>
+                <div className="flow-arrow text-dark">↓</div>
+                <div className="flow-step flow-div">
+                  <h4>LEG 3</h4>
+                  <p>The Instatag Mapper responds with vehicle details or an error if the Tag ID is not registered.</p>
+                </div>
+                <div className="flow-arrow text-dark">↓</div>
+                <div className="flow-step flow-div">
+                  <h4>LEG 4</h4>
+                  <p>After validation, the backend calculates the toll fare and initiates a debit request.</p>
+                </div>
+                <div className="flow-arrow text-dark">↓</div>
+                <div className="flow-step flow-div">
+                  <h4>LEG 5</h4>
+                  <p>The system sends the debit request to the issuing bank.</p>
+                </div>
+                <div className="flow-arrow text-dark">↓</div>
+                <div className="flow-step flow-div">
+                  <h4>LEG 6</h4>
+                  <p>The bank debits the tag holder's account and sends an SMS notification.</p>
+                </div>
+                <div className="flow-arrow text-dark">↓</div>
+                <div className="flow-step flow-div">
+                  <h4>LEG 7</h4>
+                  <p>The bank response is sent to the backend system.</p>
+                </div>
+                <div className="flow-arrow text-dark">↓</div>
+                <div className="flow-step flow-div">
+                  <h4>LEG 8</h4>
+                  <p>The toll plaza system is notified, and the barrier is controlled based on the transaction status.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flow-arrow">↓</div>
-        <div className="flow-step">
-          <h4>LEG 2</h4>
-          <p>The system sends a validation request to the Instatag Mapper.</p>
-        </div>
-        <div className="flow-arrow">↓</div>
-        <div className="flow-step">
-          <h4>LEG 3</h4>
-          <p>The Instatag Mapper responds with vehicle details or an error if the Tag ID is not registered.</p>
-        </div>
-        <div className="flow-arrow">↓</div>
-        <div className="flow-step">
-          <h4>LEG 4</h4>
-          <p>After validation, the backend calculates the toll fare and initiates a debit request.</p>
-        </div>
-        <div className="flow-arrow">↓</div>
-        <div className="flow-step">
-          <h4>LEG 5</h4>
-          <p>The system sends the debit request to the issuing bank.</p>
-        </div>
-        <div className="flow-arrow">↓</div>
-        <div className="flow-step">
-          <h4>LEG 6</h4>
-          <p>The bank debits the tag holder's account and sends an SMS notification.</p>
-        </div>
-        <div className="flow-arrow">↓</div>
-        <div className="flow-step">
-          <h4>LEG 7</h4>
-          <p>The bank response is sent to the backend system.</p>
-        </div>
-        <div className="flow-arrow">↓</div>
-        <div className="flow-step">
-          <h4>LEG 8</h4>
-          <p>The toll plaza system is notified, and the barrier is controlled based on the transaction status.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-        <div className="b-example-divider mb-0"></div>
       </main>
     </>
   );
