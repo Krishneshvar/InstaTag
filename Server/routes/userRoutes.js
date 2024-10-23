@@ -6,6 +6,7 @@ import { getVehicleExpenses } from '../models/userModel.js';
 import { generateQR } from '../GenerateQR.js';
 import handleTransaction from '../controllers/handleTransaction.js';
 import { requestOTP, validateOTP } from '../controllers/mailController.js';
+
 const router = express.Router();
 
 router.post('/login/user', loginUser);
