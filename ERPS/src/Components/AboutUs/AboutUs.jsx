@@ -30,8 +30,12 @@ const AboutUs = () => {
                 performance.
               </p>
               <p className="socials">
-                <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" href="" />
-                <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin" href="" />
+                <a href="https://github.com/ratheesh-kmr" target="_blank">
+                  <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" />  
+                </a>
+                <a href="http://www.linkedin.com/in/ratheesh-kumar-" target="_blank">
+                  <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin" />
+                </a>
               </p>
             </div>
 
@@ -45,10 +49,10 @@ const AboutUs = () => {
               </p>
               <p className="socials">
                 <a href="https://github.com/Krishneshvar" target="_blank">
-                <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" />  
+                  <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" />  
                 </a>
                 <a href="https://www.linkedin.com/in/krishneshvar-j" target="_blank">
-                <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin" />
+                  <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin" />
                 </a>
               </p>
             </div>
