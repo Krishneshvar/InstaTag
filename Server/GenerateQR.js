@@ -10,7 +10,7 @@ export const generateQR = async (req, res) => {
     }
 
     // Generate QR code
-    const qrCodeImage = await QRCode.toDataURL(data); // Directly use data
+    const qrCodeImage = await QRCode.toDataURL(data);
 
     // Send the QR code image in HTML response
     res.send(`

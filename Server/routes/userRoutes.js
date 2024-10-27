@@ -1,5 +1,5 @@
 import express from 'express';
-import { loginUser, getUserVehicles, getVehicleDetails, getVehicleDetailsByInstaTag } from '../controllers/loginController.js'
+import { loginUser, getUserVehicles, getVehicleDetails, getVehicleDetailsByInstaTag, verifyToken } from '../controllers/loginController.js'
 import { registerUser } from '../controllers/registerController.js';
 import { empLoginController, forgotPasswordController, getEmployeeDetails } from '../controllers/empLoginController.js';
 import { getVehicleExpenses } from '../models/userModel.js';
@@ -19,6 +19,9 @@ router.post('/validate-otp', validateOTP);
 // Dashboard
 router.get('/user-details/:user_id', getUserVehicles);
 router.get('/vehicle-details/:vehicle_no', getVehicleDetails);
+router.get('/user-dashboard/:user_id', verifyToken, (req, res) => {
+    res.json({ message: 'Welcome to your dashboard' });
+});
 
 //Employee
 router.get('/toll-emp/:empid', getEmployeeDetails);
