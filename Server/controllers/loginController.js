@@ -12,7 +12,7 @@ const loginUser = async (req, res) => {
 
     if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
-    const validPassword = (password == user.password); //await bcrypt.compare(password, user.password);
+    const validPassword = (password == user.password);
     if (!validPassword) return res.status(401).json({ error: 'Invalid credentials' });
 
     const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -26,7 +26,7 @@ const loginUser = async (req, res) => {
 
 
 const getUserVehicles = async (req, res) => {
-  const { user_id } = req.params; // Get user_id from request parameters
+  const { user_id } = req.params;
 
   try {
       const result = await pool.query('SELECT * FROM vehicle_details WHERE user_id = $1', [user_id]);
@@ -44,7 +44,7 @@ const getUserVehicles = async (req, res) => {
 };
 
 const getVehicleDetails = async (req, res) => {
-  const { vehicle_no } = req.params; // Get vehicle_no from request parameters
+  const { vehicle_no } = req.params;
 
   try {
       const result = await pool.query('SELECT * FROM vehicle_details WHERE vehicle_no = $1', [vehicle_no]);
@@ -61,13 +61,10 @@ const getVehicleDetails = async (req, res) => {
   }
 };
 
-//to get the vehicle details in employee
-
 const getVehicleDetailsByInstaTag = async (req, res) => {
   const { instatag_id } = req.params; // Get instatag_id from request parameters
 
   try {
-    // Query to get vehicle details including vehicle number, type, owner name, and insurance status
     const result = await pool.query(
       `SELECT v.vehicle_no, v.vehicle_type, v.owner_name, 'active' AS insurance_status
        FROM vehicle_details v 

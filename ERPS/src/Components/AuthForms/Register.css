@@ -1,6 +1,5 @@
 .register-container {
-    padding: 1rem;
-    padding-top: 6rem;
+    padding: 6rem 10rem 1rem 10rem;
     display: flex;
     justify-content: center;
     align-items: center; /* Center items vertically */
@@ -68,23 +67,14 @@
 }
 
 /* Media queries for responsive design */
-@media (min-width: 768px) {
-    /* On larger screens, keep fields in a column layout */
-    .form-field-container {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 768px) {
-
-    .form-field-container {
-        flex-direction: column; /* Stack fields vertically */
-        align-items: stretch; /* Stretch fields to full width */
+@media (max-width: 700px) {
+    .register-container {
+        padding: 6rem 1rem 1rem 1rem;
     }
 }
 
 @media (max-width: 480px) {
     .btn {
-        padding: 8px 12px; /* Smaller button padding */
+        padding: 8px 12px;
     }
 }

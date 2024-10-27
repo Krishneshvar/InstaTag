@@ -44,8 +44,12 @@ const AboutUs = () => {
                 database solutions. Krishneshvar was instrumental in making the system secure and scalable.
               </p>
               <p className="socials">
-                <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" href="https://github.com/Krishneshvar" />
-                <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin"  href="https://www.linkedin.com/in/krishneshvar-j" />
+                <a href="https://github.com/Krishneshvar" target="_blank">
+                <img src="/socials/github.png" alt="GitHub Logo" className="social-icon github" />  
+                </a>
+                <a href="https://www.linkedin.com/in/krishneshvar-j" target="_blank">
+                <img src="/socials/linkedin.png" alt="LinkedIn Logo" className="social-icon linkedin" />
+                </a>
               </p>
             </div>
           </div>
