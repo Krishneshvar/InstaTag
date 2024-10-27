@@ -128,11 +128,47 @@
   }
 }
 
+@media (max-width: 865px) {
+  .provides-icon {
+    height: 3rem;
+    width: 3rem;
+  }
+}
+
+@media (max-width: 435px) {
+  .card h2, .card h3 {
+    font-size: 1rem;
+  }
+  .provides-icon {
+    height: 2rem;
+    width: 2rem;
+  }
+}
+
+@media (max-width: 435px) {
+  .card h2 {
+    font-size: 1rem;
+  }
+  .card h3 {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .card p {
+    font-size: 0.8rem;
+  }
+  .provides-icon {
+    height: 2rem;
+    width: 2rem;
+  }
+}
+
 @keyframes fadeIn {
   to {
     opacity: 1;
   }
 }
+
+ /* Flowchart Styles */
 .flowchart {
   display: flex;
   flex-direction: column;

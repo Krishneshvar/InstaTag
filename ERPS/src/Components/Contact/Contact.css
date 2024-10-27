@@ -1,21 +1,24 @@
 .contact-page {
   padding: 30px 0;
   padding-top: 3rem;
-  background-color: #121212; /* Dark background for the page */
-  color: #e0e0e0; /* Light text color */
-  position: relative; /* Position for the moving background */
-  overflow: hidden; /* Prevents overflow of background images */
+  background-color: #121212;
+  color: #e0e0e0;
+  position: relative;
+  overflow: hidden;
 }
 
 .contact-page::before {
   content: '';
   position: absolute;
-  background-image: url('your-image1.jpg'), url('your-image2.jpg'); /* Add multiple background images */
   background-size: cover;
   background-position: center;
-  animation: moveBackground 20s linear infinite; /* Animation for moving background */
-  opacity: 0.5; /* Adjust opacity for a subtle effect */
-  z-index: -1; /* Place behind other content */
+  animation: moveBackground 20s linear infinite;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.cust-support {
+  padding-top: 2rem;
 }
 
 @keyframes moveBackground {

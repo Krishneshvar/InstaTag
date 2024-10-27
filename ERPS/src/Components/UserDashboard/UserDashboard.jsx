@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import './UserDashboard.css';
 
 export default function UserDashboard({ onLogout }) {
   const { user_id } = useParams();
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserVehicles = async () => {
@@ -24,6 +25,10 @@ export default function UserDashboard({ onLogout }) {
     fetchUserVehicles();
   }, [user_id]);
 
+  const logout = () => {
+    navigate('/login');
+  }
+
   if (error) return <div className="alert alert-danger">{error}</div>;
   if (!vehicles.length) return <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div>;
 
@@ -38,7 +43,7 @@ export default function UserDashboard({ onLogout }) {
                 <span className="material-symbols-outlined p-1" title='Add Vehicle'>add</span>
               </button>
               <button className='control-btn'>
-                <span className="material-symbols-outlined p-1" title='Logout'>logout</span>
+                <span className="material-symbols-outlined p-1" title='Logout' onClick={logout}>logout</span>
               </button>
             </div>
           </div>

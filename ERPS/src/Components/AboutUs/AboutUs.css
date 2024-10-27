@@ -29,6 +29,10 @@
   padding: 0 2rem;
 }
 
+.about-content h1 {
+  font-size: 10rem;
+}
+
 /* Developer section with responsive layout */
 .developers, .tech-used {
   display: flex;

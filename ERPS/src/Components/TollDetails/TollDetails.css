@@ -1,10 +1,11 @@
 .toll-details {
   padding: 1rem;
   padding-top: 6rem;
-  height: 90dvh;
+  min-height: 95dvh;
   background-color: #1a1a1a; /* Dark theme */
   color: #fff;
   text-align: center;
+  flex-grow: 1;
 }
 
 .toll-list {

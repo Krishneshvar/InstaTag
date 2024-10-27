@@ -1,10 +1,10 @@
 .register-container {
     padding: 6rem 10rem 1rem 10rem;
     display: flex;
+    background-color: black;
     justify-content: center;
-    align-items: center; /* Center items vertically */
+    align-items: center;
     min-height: 100vh;
-    background-color: #f5f5f5; /* Light background */
 }
 
 .register-form {
@@ -13,43 +13,43 @@
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
-    flex: 1; /* Allow the form to grow and take available space */
+    flex: 1;
 }
 
 /* Additional styling for form fields */
 .form-field-container {
-    display: flex; /* Flex layout for fields */
-    flex-direction: column; /* Display fields in column */
-    margin-bottom: 1.5rem; /* Spacing between field sets */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
 }
 
 .form-control {
-    width: 100%; /* Full width for form fields */
+    width: 100%;
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 1rem; /* Add spacing between input fields */
+    margin-bottom: 1rem;
 }
 
 .btn {
-    background-color: #007bff; /* Primary button color */
+    background-color: #007bff;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s; /* Added transform for hover effect */
-    width: 100%; /* Full width for buttons */
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
 }
 
 /* Colorful buttons for different actions */
 .btn-primary {
-    background-color: #007bff; /* Primary button color */
+    background-color: #007bff;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .login-route {

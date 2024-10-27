@@ -102,7 +102,7 @@ const Contact = () => {
             }
           </div>
 
-          <div className="col-md-6">
+          <div className="col-md-6 cust-support">
             <h2>Customer Support</h2>
             <ul className="list-unstyled">
               <li>

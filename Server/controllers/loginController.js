@@ -23,8 +23,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-
-
 const getUserVehicles = async (req, res) => {
   const { user_id } = req.params;
 
@@ -62,7 +60,7 @@ const getVehicleDetails = async (req, res) => {
 };
 
 const getVehicleDetailsByInstaTag = async (req, res) => {
-  const { instatag_id } = req.params; // Get instatag_id from request parameters
+  const { instatag_id } = req.params;
 
   try {
     const result = await pool.query(
