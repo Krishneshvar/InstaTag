@@ -26,8 +26,11 @@ export default function UserDashboard({ onLogout }) {
   }, [user_id]);
 
   const logout = () => {
+    localStorage.removeItem("token");
     navigate('/login');
   }
+
+  const handleChangePass = () => { navigate('/change-pass'); }
 
   if (error) return <div className="alert alert-danger">{error}</div>;
   if (!vehicles.length) return <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div>;
@@ -44,6 +47,9 @@ export default function UserDashboard({ onLogout }) {
               </button>
               <button className='control-btn'>
                 <span className="material-symbols-outlined p-1" title='Logout' onClick={logout}>logout</span>
+              </button>
+              <button className='control-btn'>
+                <span class="material-symbols-outlined" title='Change Password' onClick={handleChangePass}>lock</span>
               </button>
             </div>
           </div>

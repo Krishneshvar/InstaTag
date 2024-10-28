@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import appDB from '../db/appDB.js';
+import { logData } from './logController.js';
 
 const pool = appDB;
 
@@ -16,6 +17,9 @@ const loginUser = async (req, res) => {
     if (!validPassword) return res.status(401).json({ error: 'Invalid credentials' });
 
     const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    logData(user_id, "", "Login", "", `User has logged in`);
+
     return res.json({ token, user_id: user.user_id });
   }
   catch (err) {
@@ -35,7 +39,8 @@ const getUserVehicles = async (req, res) => {
       }
 
       return res.json(vehicles);
-  } catch (err) {
+  }
+  catch (err) {
       console.error(err);
       return res.status(500).json({ error: err.message });
   }

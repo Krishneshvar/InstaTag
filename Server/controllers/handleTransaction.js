@@ -1,4 +1,5 @@
 import appDB from '../db/appDB.js';
+import { logData } from './logController.js';
 const pool = appDB;
 
 const handleTransaction = async (req, res) => {
@@ -23,8 +24,8 @@ const handleTransaction = async (req, res) => {
         }
 
         const tollAmount = tollRate.rows[0].toll_amount;
-        const tollId = tollRate.rows[0].toll_id; // Get toll_id from the query
-        const boothNo = tollRate.rows[0].booth_no; // Get booth_no from the query
+        const tollId = tollRate.rows[0].toll_id;
+        const boothNo = tollRate.rows[0].booth_no;
 
         // Fetch the user and their balance from users table
         const user = await pool.query('SELECT balance FROM users WHERE user_id = $1', [userId]);
@@ -46,16 +47,19 @@ const handleTransaction = async (req, res) => {
         await pool.query('UPDATE users SET balance = $1 WHERE user_id = $2', [balance, userId]);
 
         // Insert a new transaction record and get the transaction ID
-        const status = 'completed'; // Status of the transaction
+        const status = 'completed';
         const result = await pool.query(
             'INSERT INTO transactions (user_id, vehicle_no, toll_id, booth_no, toll_amt, status, instatag_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING transac_id',
             [userId, vehicleNo, tollId, boothNo, tollAmount, status, instaTagId]
         );
 
-        const transactionId = result.rows[0].transac_id; // Get the auto-generated transaction ID
+        const transactionId = result.rows[0].transac_id;
+
+        logData(userId, vehicleNo, "Transaction", 'null', `Paid ${tollAmount} at ${tollId}`);
 
         return res.json({ newBalance: balance, transactionId });
-    } catch (err) {
+    }
+    catch (err) {
         console.error(err);
         return res.status(500).json({ message: 'Transaction error' });
     }
