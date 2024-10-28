@@ -55,7 +55,7 @@ const handleTransaction = async (req, res) => {
 
         const transactionId = result.rows[0].transac_id;
 
-        logData(userId, vehicleNo, "Transaction", 'null', `Paid ${tollAmount} at ${tollId}`);
+        // logData(userId, vehicleNo, "Transaction", 'null', `Paid ${tollAmount} at ${tollId}`);
 
         return res.json({ newBalance: balance, transactionId });
     }

@@ -8,7 +8,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: [`http://localhost:${process.env.CLIENT_PORT}`, `http://localhost:${process.env.EMPLOYEE_PORT}`],
+  origin: [`http://localhost:${process.env.CLIENT_PORT}`, `http://localhost:${process.env.EMPLOYEE_PORT}`,
+    `http://192.0.0.4:${process.env.CLIENT_PORT}`, `http://192.168.43.245:${process.env.CLIENT_PORT}`,
+    `http://192.168.43.148:${process.env.CLIENT_PORT}`
+  ],
   methods: ['GET', 'POST'],
   credentials: true,
 }));
