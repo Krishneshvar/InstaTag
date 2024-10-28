@@ -48,6 +48,9 @@ const TollEmp = () => {
                     qrbox: 250
                 };
     
+                // Variable to track the last scanned QR code to prevent duplicate processing
+                let lastScannedCode = null;
+    
                 html5QrCode.current.start(
                     { facingMode: "environment" },
                     config,
@@ -57,9 +60,12 @@ const TollEmp = () => {
                             const bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
                             const decodedText = bytes.toString(CryptoJS.enc.Utf8);
     
-                            setInstaTagId(decodedText);
-                            fetchVehicleDetails(decodedText);
-                            stopScanner();
+                            // Avoid duplicate processing by checking if the same code is scanned repeatedly
+                            if (decodedText && decodedText !== lastScannedCode) {
+                                lastScannedCode = decodedText; // Update last scanned code
+                                setInstaTagId(decodedText);
+                                fetchVehicleDetails(decodedText);
+                            }
                         } catch (err) {
                             setError('Error decrypting QR code data');
                             console.error(err);
@@ -76,19 +82,22 @@ const TollEmp = () => {
             stopScanner();
         }
     
-        return () => stopScanner(); // Cleanup on unmount
+        return () => {
+            // Cleanup on unmount
+            stopScanner();
+        };
     }, [scannerActive]);
-
-    const stopScanner = () => {
-        if (html5QrCode.current) {
-            html5QrCode.current.stop().then(() => {
+    
+    const stopScanner = async () => {
+        if (html5QrCode.current && html5QrCode.current.isScanning) {
+            try {
+                await html5QrCode.current.stop();
                 console.log("QR Code scanning stopped.");
-            }).catch(err => {
+            } catch (err) {
                 console.error(`Error stopping QR Code scanning: ${err}`);
-            });
+            }
         }
     };
-
     const fetchVehicleDetails = async (instaTagId) => {
         try {
             const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`);
