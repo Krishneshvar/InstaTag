@@ -100,7 +100,7 @@ const TollEmp = () => {
     };
     const fetchVehicleDetails = async (instaTagId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`);
+            const response = await fetch(`http://192.168.43.148:3000/api/vehicle/${instaTagId}`);
             if (response.ok) {
                 const vehicleDetails = await response.json();
                 setVehicleData(prevData => [...prevData, vehicleDetails]);
@@ -117,7 +117,7 @@ const TollEmp = () => {
     
         try {
             // Call backend API to trigger the transaction
-            const response = await fetch('http://localhost:3000/api/transaction', {
+            const response = await fetch('http://192.168.43.148:3000/api/transaction', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

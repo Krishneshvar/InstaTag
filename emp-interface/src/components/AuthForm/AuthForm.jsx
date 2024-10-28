@@ -12,7 +12,7 @@ function AuthForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/login/emp', {
+      const response = await fetch('http://192.168.43.148:3000/api/login/emp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
