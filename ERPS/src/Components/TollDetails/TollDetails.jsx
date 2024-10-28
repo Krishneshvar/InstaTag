@@ -7,8 +7,6 @@ const TollDetails = () => {
     { vehicle_type: 'Truck', toll_id: 2, booth_no: 'B1', toll_amt: 100 },
     { vehicle_type: 'Bus', toll_id: 3, booth_no: 'C1', toll_amt: 75 },
     { vehicle_type: 'Van', toll_id: 4, booth_no: 'E1', toll_amt: 60 },
-    { vehicle_type: 'SUV', toll_id: 5, booth_no: 'F1', toll_amt: 80 },
-    { vehicle_type: 'Motorcycle', toll_id: 6, booth_no: 'G1', toll_amt: 25 },
     { vehicle_type: 'Heavy_Truck', toll_id: 7, booth_no: 'H1', toll_amt: 150 },
   ];
 
