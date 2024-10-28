@@ -77,8 +77,7 @@ const validateOTP = async (req, res) => {
     }
 };
 
-const sendTransac = async (req, res) => {
-    const { instatag_id, amt, bal } = req.body;
+const sendTransac = async (instatag_id, amt, bal) => {
 
     try {
         // Ensure the email is provided
@@ -89,12 +88,6 @@ const sendTransac = async (req, res) => {
         // Check if the email exists in the database
         const user_id = await appDB.query('SELECT user_id FROM vehicle_details WHERE instatag_id = $1', [instatag_id]);
         const email = await appDB.query('SELECT email from users WHERE user_id = $1', [user_id]);
-        
-        // Store OTP in memory with an expiry time
-        otpMemory[email] = {
-            otp: generatedOtp,
-            expiry: Date.now() + 2 * 60 * 1000 // OTP is valid for 2 minutes
-        };
 
         // Send OTP via email
         await sendTransacMail(email, amt, bal);
@@ -111,4 +104,4 @@ const sendTransac = async (req, res) => {
     }
 };
 
-export { requestOTP, validateOTP };
+export { requestOTP, validateOTP, sendTransac };
