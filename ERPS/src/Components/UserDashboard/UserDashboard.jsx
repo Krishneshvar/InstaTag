@@ -11,7 +11,7 @@ export default function UserDashboard({ onLogout }) {
   useEffect(() => {
     const fetchUserVehicles = async () => {
       try {
-        const response = await fetch(`http://192.168.43.245:3000/api/user-details/${user_id}`);
+        const response = await fetch(`http://192.168.43.148:3000/api/user-details/${user_id}`);
         if (response.ok) {
           const data = await response.json();
           setVehicles(data);

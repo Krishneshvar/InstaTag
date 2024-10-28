@@ -33,3 +33,22 @@ export const sendOTP = async (email, otp) => {
         throw new Error('Could not send OTP');
     }
 };
+
+export const sendTransacMail = async (email, amt, bal) => {
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Your Toll Transaction',
+        text: `Dear customer, ₹${amt} has been deducted from your InstaTag. Your current balance amount: ₹${bal}.`,
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Toll transaction mail sent successfully', otp);
+    }
+    catch (error) {
+        console.error('Error sending transaction mail', error);
+        throw new Error('Could not send transaction mail');
+    }
+};

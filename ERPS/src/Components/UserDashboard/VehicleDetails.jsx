@@ -12,7 +12,7 @@ export default function VehicleDetails() {
   useEffect(() => {
     const fetchVehicleDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.43.245:3000/api/vehicle-details/${vehicle_no}`);
+        const response = await fetch(`http://192.168.43.148:3000/api/vehicle-details/${vehicle_no}`);
         if (response.ok) {
           const data = await response.json();
           setVehicleData(data);
@@ -26,7 +26,7 @@ export default function VehicleDetails() {
 
     const fetchExpenses = async () => {
       try {
-        const response = await fetch(`http://192.168.43.245:3000/api/vehicle-expenses/${vehicle_no}`);
+        const response = await fetch(`http://192.168.43.148:3000/api/vehicle-expenses/${vehicle_no}`);
         if (response.ok) {
           const data = await response.json();
           setExpenses(data);
