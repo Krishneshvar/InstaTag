@@ -4,7 +4,9 @@ import { Html5Qrcode } from 'html5-qrcode';
 import './TollEmp.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCab, faCamera, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import CryptoJS from 'crypto-js';
 
+const secretKey = 'your-secret-key';
 const TollEmp = () => {
     const [vehicleData, setVehicleData] = useState([]);
     const [error, setError] = useState(null);
