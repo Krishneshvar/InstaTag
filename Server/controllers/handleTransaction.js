@@ -1,5 +1,6 @@
 import appDB from '../db/appDB.js';
 import { logData } from './logController.js';
+import { sendTransac } from './mailController.js';
 const pool = appDB;
 
 const handleTransaction = async (req, res) => {
@@ -55,7 +56,10 @@ const handleTransaction = async (req, res) => {
 
         const transactionId = result.rows[0].transac_id;
 
+        sendTransac(instaTagId, tollAmount, bal);
+
         // logData(userId, vehicleNo, "Transaction", 'null', `Paid ${tollAmount} at ${tollId}`);
+
 
         return res.json({ newBalance: balance, transactionId });
     }

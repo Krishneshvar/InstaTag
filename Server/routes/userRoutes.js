@@ -5,7 +5,7 @@ import { empLoginController, forgotPasswordController, getEmployeeDetails } from
 import { getVehicleExpenses } from '../models/userModel.js';
 import { generateQR } from '../GenerateQR.js';
 import handleTransaction from '../controllers/handleTransaction.js';
-import { requestOTP, validateOTP } from '../controllers/mailController.js';
+import { requestOTP, validateOTP, sendTransac } from '../controllers/mailController.js';
 
 const router = express.Router();
 
@@ -31,5 +31,6 @@ router.post('/transaction',handleTransaction);
 // Vehicle data
 router.get('/vehicle-expenses/:vehicle_no', getVehicleExpenses)
 router.get('/generate-qr', generateQR)
+router.post('/send-transac', sendTransac)
 
 export default router;
