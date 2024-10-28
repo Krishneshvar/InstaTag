@@ -24,7 +24,7 @@ const empLoginController = async (req, res) => {
       // Generate and return the token
       const token = jwt.sign({ empid: employee.empid }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-      logData("", 'null', "Login", empid, "Employee has logged in.");
+      // logData("", 'null', "Login", empid, "Employee has logged in.");
 
       return res.json({ token });
     }

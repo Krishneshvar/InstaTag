@@ -1,18 +1,25 @@
 import QRCode from 'qrcode';
+import CryptoJS from 'crypto-js';
+import dotenv from 'dotenv'
+dotenv.config()
+
+
+const secretKey = process.env.SECRET_KEY; // Use a secure, unique key
 
 export const generateQR = async (req, res) => {
   try {
-    // Capture the value from the 'data' query parameter
     const data = req.query.data;
 
     if (!data) {
       return res.status(400).send('No data provided');
     }
 
-    // Generate QR code
-    const qrCodeImage = await QRCode.toDataURL(data);
+    // Encrypt the data
+    const encryptedData = CryptoJS.AES.encrypt(data, secretKey).toString();
 
-    // Send the QR code image in HTML response
+    // Generate QR code with encrypted data
+    const qrCodeImage = await QRCode.toDataURL(encryptedData);
+
     res.send(`
       <html>
         <body>

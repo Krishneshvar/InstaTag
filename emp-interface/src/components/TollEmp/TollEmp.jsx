@@ -37,7 +37,7 @@ const TollEmp = () => {
     useEffect(() => {
         if (scannerActive) {
             if (!html5QrCode.current) {
-                const qrCodeRegionId = "reader"; // ID of the div for the QR code reader
+                const qrCodeRegionId = "reader";
     
                 html5QrCode.current = new Html5Qrcode(qrCodeRegionId);
     
@@ -47,12 +47,21 @@ const TollEmp = () => {
                 };
     
                 html5QrCode.current.start(
-                    { facingMode: "environment" }, // Use environment-facing camera
+                    { facingMode: "environment" },
                     config,
-                    (decodedText) => {
-                        setInstaTagId(decodedText);
-                        fetchVehicleDetails(decodedText);
-                        stopScanner(); // Stop scanning after successful scan
+                    (encryptedText) => {
+                        // Decrypt the QR code data
+                        try {
+                            const bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
+                            const decodedText = bytes.toString(CryptoJS.enc.Utf8);
+    
+                            setInstaTagId(decodedText);
+                            fetchVehicleDetails(decodedText);
+                            stopScanner();
+                        } catch (err) {
+                            setError('Error decrypting QR code data');
+                            console.error(err);
+                        }
                     },
                     (errorMessage) => {
                         console.log(`QR code scan error: ${errorMessage}`);
@@ -80,10 +89,10 @@ const TollEmp = () => {
 
     const fetchVehicleDetails = async (instaTagId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`); // Use the new API endpoint
+            const response = await fetch(`http://localhost:3000/api/vehicle/${instaTagId}`);
             if (response.ok) {
                 const vehicleDetails = await response.json();
-                setVehicleData(prevData => [...prevData, vehicleDetails]); // Append the vehicle details
+                setVehicleData(prevData => [...prevData, vehicleDetails]);
                 setError(null);
             } else {
                 setError('Vehicle or owner not found for the given InstaTag ID.');
@@ -92,7 +101,6 @@ const TollEmp = () => {
             setError('Error fetching vehicle details.');
         }
     };
-
     const handleTransaction = async (vehicle) => {
         const vehicleNo = vehicle.vehicle_no;
     
