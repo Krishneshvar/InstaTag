@@ -39,10 +39,8 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ error: 'The details do not match the records for the specified vehicle' });
     }
 
-    const getMaxUserIdResult = await pool.query('SELECT MAX(user_id::int) as max_user_id FROM users');
-    const maxUserId = getMaxUserIdResult.rows[0].max_user_id || 0;
-    const newUserId = maxUserId + 1;
-
+    const newUserId = Math.floor(100000 + Math.random() * 900000).toString();
+   
     const currTimestamp = getCurrentTimestamp();
 
     const result = await pool.query(

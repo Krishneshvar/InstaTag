@@ -75,7 +75,7 @@ function Register() {
                 return;
             }
 
-            const response = await fetch('http://localhost:3000/api/request-otp', {
+            const response = await fetch('http://192.168.43.148:3000/api/request-otp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ function Register() {
         setIsLoading(true);
     
         try {
-            const res = await fetch('http://localhost:3000/api/validate-otp', {
+            const res = await fetch('http://192.168.43.148:3000/api/validate-otp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ function Register() {
     
         try {
             // Proceed with registration after OTP verification
-            const registrationRes = await fetch('http://localhost:3000/api/register/user', {
+            const registrationRes = await fetch('http://192.168.43.148:3000/api/register/user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
