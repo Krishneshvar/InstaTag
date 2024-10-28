@@ -43,13 +43,7 @@ export default function UserDashboard({ onLogout }) {
             <h1 className="section-title p-1 vehicle-title">Your Vehicles</h1>
             <div className='controls d-flex justify-content-center align-items-center p-1'>
               <button className='control-btn'>
-                <span className="material-symbols-outlined p-1" title='Add Vehicle'>add</span>
-              </button>
-              <button className='control-btn'>
                 <span className="material-symbols-outlined p-1" title='Logout' onClick={logout}>logout</span>
-              </button>
-              <button className='control-btn'>
-                <span class="material-symbols-outlined" title='Change Password' onClick={handleChangePass}>lock</span>
               </button>
             </div>
           </div>

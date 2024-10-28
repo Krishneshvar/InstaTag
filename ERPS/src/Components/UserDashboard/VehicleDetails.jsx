@@ -69,9 +69,10 @@ export default function VehicleDetails() {
               <p className="lead">{vehicleData.vehicle_no}</p>
               <p className="card-text"><strong>Engine Number:</strong> {vehicleData.engine_no}</p>
               <p className="card-text"><strong>Chassis Number:</strong> {vehicleData.chasis_no}</p>
+              <p className="card-text"><strong>User ID:</strong> {vehicleData.user_id}</p>
             </div>
             <div className="col-md-6 text-md-end">
-              <p className="mb-1"><strong>Tag ID:</strong> {vehicleData.instagat_id}</p>
+              <p className="mb-1"><strong>Tag ID: "Please manually visit and verify in the nearest InstaTag office to get your InstaTag."</strong> {vehicleData.instagat_id}</p>
               <p><strong>Tag Created:</strong> {new Date(vehicleData.tag_created).toLocaleDateString()}</p>
             </div>
           </div>

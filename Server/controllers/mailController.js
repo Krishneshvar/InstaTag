@@ -1,5 +1,6 @@
-import { sendOTP } from "../models/otpSenderModel.js";
+import { sendOTP, sendTransacMail } from "../models/otpSenderModel.js";
 import rtoDB from "../db/rtoDB.js";
+import appDB from '../db/appDB.js'
 
 let otpMemory = {};
 
@@ -73,6 +74,40 @@ const validateOTP = async (req, res) => {
     } catch (error) {
         console.error('Error during OTP validation:', error);
         return res.status(500).json({ success: false, message: 'Failed to validate OTP. Please try again later.' });
+    }
+};
+
+const sendTransac = async (req, res) => {
+    const { instatag_id, amt, bal } = req.body;
+
+    try {
+        // Ensure the email is provided
+        if (!instatag_id || !amt || !bal) {
+            return res.status(400).json({ success: false, message: 'Required details for mail is missing.' });
+        }
+
+        // Check if the email exists in the database
+        const user_id = await appDB.query('SELECT user_id FROM vehicle_details WHERE instatag_id = $1', [instatag_id]);
+        const email = await appDB.query('SELECT email from users WHERE user_id = $1', [user_id]);
+        
+        // Store OTP in memory with an expiry time
+        otpMemory[email] = {
+            otp: generatedOtp,
+            expiry: Date.now() + 2 * 60 * 1000 // OTP is valid for 2 minutes
+        };
+
+        // Send OTP via email
+        await sendTransacMail(email, amt, bal);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Transaction mail successfully sent.',
+            expiresIn: 2 * 60 * 1000
+        });
+    }
+    catch (error) {
+        console.error('Error during OTP request:', error);
+        return res.status(500).json({ success: false, message: 'Failed to send mail.' });
     }
 };
 
