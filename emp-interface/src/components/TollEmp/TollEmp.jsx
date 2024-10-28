@@ -127,7 +127,8 @@ const TollEmp = () => {
     
             if (response.ok) {
                 const result = await response.json();
-                alert(`Transaction successful. New balance: ${result.newBalance}`);
+                alert(`Transaction successful. New balance: ${result.newBalance}`); 
+                handleClearTable();
             } else {
                 setError('Transaction failed. Please try again.');
             }
